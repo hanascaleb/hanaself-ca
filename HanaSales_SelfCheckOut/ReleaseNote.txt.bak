@@ -1,0 +1,168 @@
+<Self Check Out Release Note>
+
+1. v1.0.0
+- 벤쿠버 토론토 요청사항 모두 처리 완료.
+- 적용된 내용, Mix & Match, Print Status, Discount Barcode, Category 삭제(다운타운)
+
+2. v1.0.1 - 2022/11/18
+- 토론토 꼬리표 출력 요청으로 수정. - 이은희 부팀장.
+
+3. v1.0.2 - 2022/11/21
+- 벤쿠버 Eco Fee 계산 모듈 버그로 수정. - 김성민 부점장 요청.
+
+4. v1.0.3 - 2022/11/23
+- 토론토 Mix & Match 아이템 등록시 Discount 항목에 Tax Code 추가로 수정.
+
+5. v1.0.4 - 2022/11/24
+- Search 창에서 선택한 아이템의 Unit 정보가 없는 경우 Error처리 추가로 수정.
+
+6. v1.0.5 - 2022/11/30
+- 저울 바코드 상품에 대해서 "23xxxx"로 되어 있는 형태 스캔 될 수 있도록 수정.
+
+7. v1.0.6 - 2022/12/28
+- Total DC의 경우 tCust에 카드 번호 넣도록 수정.
+
+8. v1.0.7 - 2023/01/16
+- 영수증 출력 중 Membership Card의 정보가 완벽하지 않은 경우에도 영수증 바코드출력 가능하도록 수정.
+
+9. v1.0.8 - 2023/01/18
+- BBQ Gift Certificate 컬럼 추가로 Payment Insert 부분 수정.
+
+10. v1.0.9 - 2023/01/30
+- Gift Certificate Diff 컬럼 추가로 Payment Insert 부분 수정.
+
+11. v1.0.10 - 2023/02/21
+- 미국 셀프 사용을 위한 버그 및 기능 수정 1차 완료.
+
+12. v1.0.11 - 2023/03/07
+- 벤쿠버 저울 무게 표시 부분 수정. 인스펙션 중 발견한 버그 수정.
+
+13. v1.0.12 - 2023/03/29
+- 토론토 Discount Barcode 사용 안되도록 수정.
+
+14. v1.0.13 - 2023/04/10
+- 벤쿠버 직원할인 10% -> 5% 변경 수정.
+
+15. v1.0.14 - 2023/04/19
+- 영수증 리턴폴리시 삭제, HP Point Balance 금액으로 표시.
+
+16. v1.0.15 - 2023/04/24
+- 코퀴틀람 부직포 백 사용으로 Bag code 변경.
+
+17. v1.0.16 - 2023/05/18
+- 리치몬드힐 매장 꼬리표 추가.
+
+18. v1.0.17 - 2023/05/31
+- 리치몬드힐 매장 백 코드 변경 (5555 -> 5556).
+
+19. v1.0.18 - 2023/07/06
+- 영수증에 Survey QR 출력 로직 추가
+
+20. v1.0.19 - 2023/08/08
+- 영수증에 Hpoint Balance 금액으로 환산하고, 멘트 추가.
+
+21. v1.0.20 - 2023/08/28
+- 미국 Search Engine 수정 완료.
+
+22. v1.0.21 - 2023/08/30
+- Back 버튼 Add Bag, Payment 화면에서 활성화 함.
+
+23. v1.0.22 - 2023/09/13
+- Customer 추가 대기시간 출력 및 기능 구현.
+
+24. v1.0.23 - 2023/09/15
+- Auto Update PGM- HanaSales_SelfCheckOut_Startup 추가.
+
+25. v1.0.24 - 2023/09/18
+- Add Bag 화면에서 헬프모드 빠져나왔을때 Back 버튼 사라지는 부분 수정함.
+
+26. v1.0.25 - 2023/09/19
+- Item Scan 화면에서 Help Mode 들어가면 Back 버튼 EXIT로 표시, 
+- Search Category 화면에서 Back 버튼 클릭시 Search 화면 종료.
+- Start 화면에서 저울 안되도록 수정, 멤버쉽 화면 갔다가 다시 Back 하면 저울스캔 안되도록 함.
+
+27. v1.0.26 - 2023/09/20
+- 타임아웃으로 Void 되어 Start화면으로 넘어 갈때 저울 Disable 되도록 함.
+- Search 화면에서 Key in Item 눌렀을 때 Popular 버튼 비활성화.
+- Suspend시 영수증 바코드에 1Z2로 들어가도록 수정.
+- Help Mode 들어갔다가 다시 일반 모드 되었을때 저울 동작 가능하도록 수정.
+
+28. v1.0.27 - 2023/10/22
+- Station OPEN/CLOSE 기능 추가.
+- 프로그램 시작을 CLOSE로 되도록 수정.
+- ETC ITEM KEY IN 버튼 추가.
+- 일반 모드에서 Master Key 스캔시 Help Mode로 바로 진입되도록 수정.
+- Search Key IN 버튼 크기 조절.
+
+29. v1.0.28 - 2023/10/23
+- Item Correct, Void, Reprint, Suspend 동작시 Manager Key 스캔하도록 하는 로직 추가.
+
+30. v1.0.29 - 2023/10/31
+- Close 화면에서 Manager Key Scan시 OPEN, 나머지들은 다 리턴
+- OPEN(Start화면) 에서 Manager Key Scan시 Close, 상품, 멤버쉽 스캔시 아이템 입력 화면으로 이동
+- Membership 입력 화면에서 상품, 멤버쉽 스캔시 아이템 입력 화면으로 이동
+- ETC Manual Item 입력 화면에서 . 삭제, 숫자 넣으면 자동으로 소수점 2자리로 나눠서 가격 입력되도록 수정.
+- ETC Manual Item 버튼 클릭시 Manager Key 누르도록 함.
+- Hanaro에서 Display Enable/Disable 설정에 따라 이미지 리스트에 표시 되도록 수정.
+
+31. v1.0.30 - 2023/11/16
+- Help Mode로 결제를 완료 하고 난 뒤 ETC ITEM 버튼 활성화되는 버그 수정.
+- 멤버쉽이 스캔 된 상태에서 다시 멤버쉽을 스캔했을 경우 메세지 출력되도록 수정.
+
+32. v1.0.31 - 2023/11/21
+- 상품 스캔시 prodTax에 공백이면, 카테고리 Tax 코드로 적용되도록 수정.
+- Tax 상품 T 표시 되도록 수정.
+- 기타 버그 수정
+
+33. v1.0.32 - 2023/11/24
+- 영수증 Tax 상품에 T표시되는 부분 수정.
+
+34. v1.0.33 - 2023/12/01
+- ETC Manual Key In 메뉴에서 TAX 선택항목 추가.
+- Start 화면에 EMG Exit 버튼 활성화
+
+35. v1.0.34 - 2024/01/16
+- 오로라 매장 적용, Manual ETC Item 입력메뉴에서 오로라 매장에서 사용 하는 코드로 변경.
+
+36. v1.0.35 - 2024/02/06
+- Start 누른 후에 멤버쉽 입력 화면에서 저울로 멤버쉽 카드 스캔 했을때 스캔했을때 처리되는 부분 수정.
+
+36. v1.0.36 - 2024/02/12
+- 중복 실행 방지 되도록 수정 추가함.
+- On Screen에 Age Check 인 경우 Next 버튼이 넘어 가지 않는 버그 수정.
+- Age Check 시 입력하는 Date of Birth 로그남기도록 수정, 입력값이 6자리가 아니면 에러 출력 추가.
+
+37. v1.0.37 - 2024/02/16
+- 오로라매장 Help Mode 에서 기능키 클릭시 Manager Key Scan 하지 않도록 수정.
+
+38. v1.0.38 - 2024/03/04
+- EBT 결제시 Bag Examption 되는 로직 중 Cash, Change에 Paybalance 금액이 들어가는 부분 수정. 
+- 2995000000009 항목 추가시 카테고리 999 / 02로 되도로 수정.
+
+39. v1.0.39 - 2024/03/20
+- EBT 결제시 Tax Exemption 될때 사용되는 변수 GdblEBTTax1Total 관련 Item Correct 할때도 전체 금액에 대해서 반영 되도록 수정함.
+- Payment 에서 하나라도 결제가 되어 있는 경우 (ex. EBT 결제) Item, Correct나 Void, Back, ETC ITEM KEYIN 기능 안되도록 수정(단, Suspend, Reprint 제외).
+
+40. v1.0.41 - 2024/06/04 유타 West Jordan 매장 지원 by Robin
+- 86 매장의 Reusable Bag 처리 임시 막음
+- EBT 결제 버튼 Disable: Form Property의 Enagled 값도 false로 처리
+ 
+41. v1.0.42 - 2024/06/12 
+- 다운타운 매장 Item Discount Barcode 스캔시 멀티 갯수인 경우 처리 되는 부분 수정.
+- ProdCat3로 Image Display 여부 결정하는 부분 벤쿠버, 토론토는 임시로 예외처리. HANARO에 추가 될 때 다시 적용될 예정.
+
+42. v1.0.43 - 2024/06/13
+- West Jordan ETC Manual 기능에서 HW 선택 했을 때 Tax 확인해서 처리되는 부분 수정함.
+- Image Update 동작 이후에 경광봉 상태 정리, Start 화면인 경우 Green, Close 화면인 경우 Red.
+- 다운타운 Help Mode에서 기능들 사용시 Manager Key Scan 추가로 요청 조건 해제.
+- West Jordan 매장 인 경우 Bag 선택 화면 없게 수정.
+
+43. v1.0.44 - 2024/06/18
+- 멤버쉽 스캔 후 아이템(12자리바코드) 스캔 했을 때 멤버쉽 정보 초기화 되는 부분 수정함.
+
+44. v1.0.49 - 2025/06/10
+- 미국 Search 버튼 클릭 후 카테고리 클릭시 아이템 출력되는 부분에서 ProdCat3 항목 체크 하는 부분 버그로 이미지 밀려서 출력되는 부분 수정함.
+- Membership Promotion 아이템 적용.
+
+45. v1.0.50 - 2025/06/11
+- 오로라 Bag 코드 변경, FoodStamp 적용 안되도록 수정.
