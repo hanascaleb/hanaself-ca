@@ -91,3 +91,7 @@ Desktop.ini
 secrets.json
 appsettings.Development.json
 appsettings.Local.json
+
+
+# Image foler
+/hanas.exes/Image
