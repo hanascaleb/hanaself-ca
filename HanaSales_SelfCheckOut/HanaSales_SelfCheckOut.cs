@@ -115,7 +115,7 @@ namespace HanaSales_SelfCheckOut
         string GstrStorePassword = "o8gcZZsXcPI=";
 
         // 테스트 모드
-        bool GblTestMode = true;
+        bool GblTestMode = false;
 
         // 프린트 영수증 번호
         string GstrPrtInvno = "";
