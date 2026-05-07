@@ -10544,8 +10544,8 @@ namespace HanaSales_SelfCheckOut
                     {
                         string strCurDate = DateTime.Now.ToString("yyyy-MM-dd");
 
-                        // Vancouver area, 2026-05-08 ~ 2026-05-10, the total amount of specific items exceeds $30, a Free Gift coupon
-                        if ((Convert.ToDateTime("2026-05-08") <= Convert.ToDateTime(strCurDate)) && (Convert.ToDateTime("2026-05-10") >= Convert.ToDateTime(strCurDate)))                        
+                        // Vancouver area, 2026-05-07 ~ 2026-05-10, the total amount of specific items exceeds $30, a Free Gift coupon
+                        if ((Convert.ToDateTime("2026-05-07") <= Convert.ToDateTime(strCurDate)) && (Convert.ToDateTime("2026-05-10") >= Convert.ToDateTime(strCurDate)))                        
                         {
                             sQBuff = "SELECT SUM(tAmt) As AmtSum FROM tb_soldItem WHERE tInvNo = '" + GstrPrtInvno +
                                     "' AND tProd IN ('031146022908','031146013531','031146065080','031146853809','031146049721','8801043046145','8801043014090')";
