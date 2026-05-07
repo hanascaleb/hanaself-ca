@@ -10542,7 +10542,8 @@ namespace HanaSales_SelfCheckOut
                 {
                     if(GintLocation == 1)                   // 벤쿠버 인 경우
                     {
-                        string strCurDate = DateTime.Now.ToString("yyyy-MM-dd");
+                        // Not apply this coupon event on self-checkout
+                        /*string strCurDate = DateTime.Now.ToString("yyyy-MM-dd");
 
                         // Vancouver area, 2026-05-07 ~ 2026-05-10, the total amount of specific items exceeds $30, a Free Gift coupon
                         if ((Convert.ToDateTime("2026-05-07") <= Convert.ToDateTime(strCurDate)) && (Convert.ToDateTime("2026-05-10") >= Convert.ToDateTime(strCurDate)))                        
@@ -10560,7 +10561,7 @@ namespace HanaSales_SelfCheckOut
                                 }
                             }
                             c_localdb.RsClose();
-                        }
+                        }*/
                     }
                     else if (GintLocation == 2)             // 토론토 인 경우
                     {
