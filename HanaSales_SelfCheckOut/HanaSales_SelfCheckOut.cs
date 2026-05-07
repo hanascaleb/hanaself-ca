@@ -10551,7 +10551,8 @@ namespace HanaSales_SelfCheckOut
                                     "' AND tProd IN ('031146022908','031146013531','031146065080','031146853809','031146049721','8801043046145','8801043014090')";
                             lReturn = c_localdb.RsOpen(sQBuff);
                             if (lReturn == 1) {
-                                double dCouponItemsAmt = Convert.ToDouble(c_localdb.rs.Fields["AmtSum"].Value);
+                                double dCouponItemsAmt = Convert.IsDBNull(c_localdb.rs.Fields["AmtSum"].Value)
+                                    ? 0.0 : Convert.ToDouble(c_localdb.rs.Fields["AmtSum"].Value);
                                 if (dCouponItemsAmt >= 30) {
                                     imgCouponFilesPath = Directory.GetFiles(Application.StartupPath + "\\Coupon\\", "coupon_van_freegift_20260508.jpg", SearchOption.TopDirectoryOnly);
                                     PrtCoupon.PrintController = new System.Drawing.Printing.StandardPrintController();
