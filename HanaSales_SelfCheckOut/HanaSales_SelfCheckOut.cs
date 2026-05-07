@@ -115,7 +115,7 @@ namespace HanaSales_SelfCheckOut
         string GstrStorePassword = "o8gcZZsXcPI=";
 
         // 테스트 모드
-        bool GblTestMode = false;
+        bool GblTestMode = true;
 
         // 프린트 영수증 번호
         string GstrPrtInvno = "";
@@ -10542,8 +10542,24 @@ namespace HanaSales_SelfCheckOut
                 {
                     if(GintLocation == 1)                   // 벤쿠버 인 경우
                     {
-                        
+                        string strCurDate = DateTime.Now.ToString("yyyy-MM-dd");
 
+                        // Vancouver area, 2026-05-08 ~ 2026-05-10, the total amount of specific items exceeds $30, a Free Gift coupon
+                        if ((Convert.ToDateTime("2026-05-08") <= Convert.ToDateTime(strCurDate)) && (Convert.ToDateTime("2026-05-10") >= Convert.ToDateTime(strCurDate)))                        
+                        {
+                            sQBuff = "SELECT SUM(tAmt) As AmtSum FROM tb_soldItem WHERE tInvNo = '" + GstrPrtInvno +
+                                    "' AND tProd IN ('031146022908','031146013531','031146065080','031146853809','031146049721','8801043046145','8801043014090')";
+                            lReturn = c_localdb.RsOpen(sQBuff);
+                            if (lReturn == 1) {
+                                double dCouponItemsAmt = Convert.ToDouble(c_localdb.rs.Fields["AmtSum"].Value);
+                                if (dCouponItemsAmt >= 30) {
+                                    imgCouponFilesPath = Directory.GetFiles(Application.StartupPath + "\\Coupon\\", "coupon_van_freegift_20260508.jpg", SearchOption.TopDirectoryOnly);
+                                    PrtCoupon.PrintController = new System.Drawing.Printing.StandardPrintController();
+                                    PrtCoupon.Print();
+                                }
+                            }
+                            c_localdb.RsClose();
+                        }
                     }
                     else if (GintLocation == 2)             // 토론토 인 경우
                     {
@@ -10711,29 +10727,34 @@ namespace HanaSales_SelfCheckOut
             //c_poscominfo.ci_mkno
 
             // Coupon Path
-            if (GintLocation != 3)             // 미국이 아닌 경우
+            if (GintLocation != 3)
             {
-                if (GintLocation != 1)           // 토론토 인 경우
+                if (GintLocation != 1) // 토론토 인 경우
                 {
                     imgFiles = imgCouponFilesPath;
                     Image igCouponImg = Image.FromFile(imgFiles[0]);
                     e.Graphics.DrawImage(igCouponImg, 2, 0, 275, 300);
                 }
-                else                            // 벤쿠버 인 경우
-                {
+                else // 벤쿠버 인 경우
+                {                                                        
+                    Offset = Offset + (iFontHeightGap * 2);
                     imgFiles = imgCouponFilesPath;
                     Image igCouponImg = Image.FromFile(imgFiles[0]);
-                    e.Graphics.DrawImage(igCouponImg, 2, 0, 275, 300);
+                    e.Graphics.DrawImage(igCouponImg, 2, Offset, 275, 135);
                     
+                    // issued date
+                    e.Graphics.DrawString(strCurDate , new Font("Arial", 8, FontStyle.Regular), new SolidBrush(Color.Black), iStartX, 0);
+                    
+                    /* disable barcode and event period
                     Barcodefont = new Font("3 of 9 Barcode", 25, FontStyle.Regular);
                     Offset = Offset + (iFontHeightGap * 9);
                     e.Graphics.DrawString("*62.10005*", Barcodefont, new SolidBrush(Color.Black), iStartX + 30, iStartY + Offset);
                     Offset = Offset + (iFontHeightGap * 3);
                     e.Graphics.DrawString("03/27/2025 ~ 04/30/2025" , new Font("Arial", 8, FontStyle.Regular), new SolidBrush(Color.Black), iStartX + 135, iStartY + Offset);
-                    Offset = Offset + iFontHeightGap;
+                    Offset = Offset + iFontHeightGap; */
                 }
             }
-            else                                // 미국인 경우
+            else // 미국인 경우
             {
                 try
                 {
@@ -16662,17 +16683,53 @@ namespace HanaSales_SelfCheckOut
 
         private void btnscalescanTest2_Click(object sender, EventArgs e)
         {
-            if(GintLocation == 1)
-                ShowScannerData("822222342481");
+            // pds-test
+            //ShowScannerData("761898665879");
+            //ShowScannerData("807176500293"); // CJ Chunhailmee Rice
+            ShowScannerData("031146013531");   // NS SHIN RAMYUN BLACK 130G*4
+
+            /*if (GintLocation == 1) 
+                ShowScannerData("822222342481"); // scan membership                
             else if (GintLocation == 3)
-                ShowScannerData("822282315302");            
+                ShowScannerData("822282315302");*/
+
+
         }
         private void btnscalescanTest3_Click(object sender, EventArgs e)
         {
-            if(GintLocation == 1)
+            // pds-test
+            // test print
+            testCompleteAndPrint();
+
+            //ShowScannerData("822222342481"); // scan membership
+
+            /*if (GintLocation == 1)
                 ShowScannerData("011152036458");
             else if (GintLocation == 3)
-                ShowScannerData("FF83800030");
+                ShowScannerData("FF83800030");*/
+        }
+
+        // [Test] Complete the current transaction and print a receipt
+        private void testCompleteAndPrint()
+        {
+            double dblBalance = 0;
+
+            if (lblPayBalance.Text == "0.00")
+            {
+                MessageBox.Show("There Is No Remaining Balance.");
+                KeyInReady();
+                return;
+            }
+
+            ProcessTotalDC();    // recalculate with DC Rate (?)
+            CntTotSalePayment(); // OrderItem 금액과 Item Count 재계산
+                        
+            GPayFinish = true;
+            lblPayCash.Text = lblPayBalance.Text;
+            lblPayBalance.Text = c_poscomlibs.getDoubleFormat(dblBalance);
+                            
+            // 결제 내역 모두 합산한 뒤 완료되었으면 Transaction 종료 처리
+            calcPaymentTotal();
         }
 
         private void ShowScaleData(string vMessage)
