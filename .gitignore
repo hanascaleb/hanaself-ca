@@ -23,6 +23,14 @@ obj/
 *.pdb
 *.exe
 
+# add custom and third-party DLLs
+!/hanas.exes/CuCustomWndAPI.dll
+!/hanas.exes/CuCustomWndAPIWrp.dll
+!/hanas.exes/DevComponents.DotNetBar.Layout.dll
+!/hanas.exes/DevComponents.DotNetBar2.dll
+!/hanas.exes/ThoughtWorks.QRCode.dll
+!/hanas.exes/Transitions.dll
+
 # --------------------------
 # Debug / Release
 # --------------------------
