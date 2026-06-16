@@ -31,9 +31,18 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(HanaSales_SelfCheckOut));
             this.pn_ItemScan = new System.Windows.Forms.Panel();
+            this.btnBack = new CustomControls.RJControls.RJButton();
+            this.btnNext = new CustomControls.RJControls.RJButton();
+            this.btnSuspend = new CustomControls.RJControls.RJButton();
+            this.btnReprint = new CustomControls.RJControls.RJButton();
+            this.btnHelp = new CustomControls.RJControls.RJButton();
+            this.btnVoid = new CustomControls.RJControls.RJButton();
+            this.btnItemCorrect = new CustomControls.RJControls.RJButton();
             this.ItemCSView = new System.Windows.Forms.ListView();
             this.pnItemScanSearchBtn = new System.Windows.Forms.Panel();
+            this.btnSearch = new CustomControls.RJControls.RJButton();
             this.lbSearchOption = new System.Windows.Forms.Label();
+            this.btnSearch_Category = new CustomControls.RJControls.RJButton();
             this.pnMembershipInfo = new System.Windows.Forms.Panel();
             this.lbAvailableAmount = new System.Windows.Forms.Label();
             this.lbAvailableAmountNum = new System.Windows.Forms.Label();
@@ -66,6 +75,7 @@
             this.lbItemCountCS = new System.Windows.Forms.Label();
             this.lbItemCountValCS = new System.Windows.Forms.Label();
             this.txtNumCS = new System.Windows.Forms.TextBox();
+            this.btnItemDiscount = new CustomControls.RJControls.RJButton();
             this.btnManualETCKey = new DevComponents.DotNetBar.ButtonX();
             this.gbSearchBox = new System.Windows.Forms.GroupBox();
             this.pn_Keyboard = new System.Windows.Forms.Panel();
@@ -112,6 +122,8 @@
             this.txtSearchCode = new System.Windows.Forms.TextBox();
             this.lvSearchImage_Additional = new System.Windows.Forms.ListView();
             this.btnAdditionalSearch = new DevComponents.DotNetBar.ButtonX();
+            this.btnSearchPageLeft = new CustomControls.RJControls.RJButton();
+            this.btnSearchPageRight = new CustomControls.RJControls.RJButton();
             this.lvSearchImage_Category = new System.Windows.Forms.ListView();
             this.btnBackToCategory = new DevComponents.DotNetBar.ButtonX();
             this.btnSearchOrKeyinItem = new DevComponents.DotNetBar.ButtonX();
@@ -138,10 +150,14 @@
             this.pnSelectPayment = new System.Windows.Forms.Panel();
             this.pbSelectpaymentEBTApplied = new System.Windows.Forms.PictureBox();
             this.pbSelectpaymentPointCardApplied = new System.Windows.Forms.PictureBox();
+            this.btnSelectCreditCard = new CustomControls.RJControls.RJButton();
+            this.btnSelectGiftCard = new CustomControls.RJControls.RJButton();
+            this.btnEBT = new CustomControls.RJControls.RJButton();
             this.lbSelectPaymentType = new System.Windows.Forms.Label();
             this.pnSelectPaymentBalance = new System.Windows.Forms.Panel();
             this.lbSelectPaymentBalance = new System.Windows.Forms.Label();
             this.lbSelectPaymentBalanceNum = new System.Windows.Forms.Label();
+            this.btnSelectPointCard = new CustomControls.RJControls.RJButton();
             this.gbProcessCreditCard = new System.Windows.Forms.GroupBox();
             this.pbCreditCard = new System.Windows.Forms.PictureBox();
             this.lbCreditCard = new System.Windows.Forms.Label();
@@ -150,7 +166,10 @@
             this.lbAmountPaid = new System.Windows.Forms.Label();
             this.lbThankyouForUsingSelfCheckOut = new System.Windows.Forms.Label();
             this.lblPayTotal = new System.Windows.Forms.Label();
+            this.btnReviewToStart = new CustomControls.RJControls.RJButton();
             this.gbScanPointCard = new System.Windows.Forms.GroupBox();
+            this.btnBackToStart = new CustomControls.RJControls.RJButton();
+            this.btnSkipPointCard = new CustomControls.RJControls.RJButton();
             this.pnPointPhoneNumber = new System.Windows.Forms.Panel();
             this.btnPointPhoneNumberEnter = new DevComponents.DotNetBar.ButtonX();
             this.btnPointPhoneNumber0 = new DevComponents.DotNetBar.ButtonX();
@@ -217,6 +236,8 @@
             this.lbErrorBoxContent = new System.Windows.Forms.Label();
             this.lbErrorBoxMsgTitle = new System.Windows.Forms.Label();
             this.label16 = new System.Windows.Forms.Label();
+            this.btnErrorBoxBtn1 = new CustomControls.RJControls.RJButton();
+            this.btnErrorBoxBtn2 = new CustomControls.RJControls.RJButton();
             this.gbProcessPointCard = new System.Windows.Forms.GroupBox();
             this.label14 = new System.Windows.Forms.Label();
             this.lbtxtDollar = new System.Windows.Forms.Label();
@@ -256,6 +277,7 @@
             this.txtReceiptReprintBarcode = new System.Windows.Forms.TextBox();
             this.lbReceiptReprintContent = new System.Windows.Forms.Label();
             this.gbAgeCheck = new System.Windows.Forms.GroupBox();
+            this.btnAgeCheckExit = new CustomControls.RJControls.RJButton();
             this.lbAgeCheckExample = new System.Windows.Forms.Label();
             this.lbAgeCheckTitle = new System.Windows.Forms.Label();
             this.pnAgeCheckNum = new System.Windows.Forms.Panel();
@@ -282,6 +304,7 @@
             this.bgw_ProcessUpdate = new System.ComponentModel.BackgroundWorker();
             this.pn_Start = new System.Windows.Forms.Panel();
             this.lbCredit_DebitCardOnly = new System.Windows.Forms.Label();
+            this.btnStart = new CustomControls.RJControls.RJButton();
             this.lbHelpMode2 = new System.Windows.Forms.Label();
             this.gbAgeCheckConfirmation = new System.Windows.Forms.GroupBox();
             this.btnAdultCheckNo = new DevComponents.DotNetBar.ButtonX();
@@ -310,6 +333,10 @@
             this.lbHowmanyPlasticBag = new System.Windows.Forms.Label();
             this.pnAddBag = new System.Windows.Forms.Panel();
             this.lbAddBagTitle = new System.Windows.Forms.Label();
+            this.btnMinus = new CustomControls.RJControls.RJButton();
+            this.btnBagPlus = new CustomControls.RJControls.RJButton();
+            this.btnAddBagToCart = new CustomControls.RJControls.RJButton();
+            this.btnNoBag = new CustomControls.RJControls.RJButton();
             this.btnBacktoStartTimeExtension = new DevComponents.DotNetBar.ButtonX();
             this.label23 = new System.Windows.Forms.Label();
             this.label22 = new System.Windows.Forms.Label();
@@ -330,23 +357,17 @@
             this.label26 = new System.Windows.Forms.Label();
             this.btnStationOpenYes = new DevComponents.DotNetBar.ButtonX();
             this.pn_TempClosed = new System.Windows.Forms.Panel();
+            this.btnscalescanTest = new CustomControls.RJControls.RJButton();
             this.pn_ManualETCKey = new System.Windows.Forms.Panel();
             this.swManulETCKey_TAX = new DevComponents.DotNetBar.Controls.SwitchButton();
             this.label30 = new System.Windows.Forms.Label();
             this.label29 = new System.Windows.Forms.Label();
             this.label27 = new System.Windows.Forms.Label();
             this.label25 = new System.Windows.Forms.Label();
-            this.btnManualETCKey_Exit = new DevComponents.DotNetBar.ButtonX();
-            this.txtManualETCKey_Amount = new System.Windows.Forms.TextBox();
-            this.lbManualETCKey = new System.Windows.Forms.Label();
-            this.lbManualETCKey_SelectedDP = new System.Windows.Forms.Label();
-            this.lbHelpMode3 = new System.Windows.Forms.Label();
-            this.lbHelpMode5 = new System.Windows.Forms.Label();
-            this.lbHelpMode4 = new System.Windows.Forms.Label();
-            this.btnscalescanTest3 = new CustomControls.RJControls.RJButton();
-            this.btnscalescanTest2 = new CustomControls.RJControls.RJButton();
             this.btnManualETCKey_Clear = new CustomControls.RJControls.RJButton();
             this.btnManualETCKey_BackSpace = new CustomControls.RJControls.RJButton();
+            this.btnManualETCKey_Exit = new DevComponents.DotNetBar.ButtonX();
+            this.txtManualETCKey_Amount = new System.Windows.Forms.TextBox();
             this.btnManualETCKey_00 = new CustomControls.RJControls.RJButton();
             this.btnManualETCKey_0 = new CustomControls.RJControls.RJButton();
             this.btnManualETCKey_3 = new CustomControls.RJControls.RJButton();
@@ -358,6 +379,8 @@
             this.btnManualETCKey_4 = new CustomControls.RJControls.RJButton();
             this.btnManualETCKey_8 = new CustomControls.RJControls.RJButton();
             this.btnManualETCKey_7 = new CustomControls.RJControls.RJButton();
+            this.lbManualETCKey = new System.Windows.Forms.Label();
+            this.lbManualETCKey_SelectedDP = new System.Windows.Forms.Label();
             this.btnManualETCKey_HW = new CustomControls.RJControls.RJButton();
             this.btnManualETCKey_Meat = new CustomControls.RJControls.RJButton();
             this.btnManualETCKey_Deli = new CustomControls.RJControls.RJButton();
@@ -365,34 +388,11 @@
             this.btnManualETCKey_Fish = new CustomControls.RJControls.RJButton();
             this.btnManualETCKey_Grocery = new CustomControls.RJControls.RJButton();
             this.btnManualETCKey_Insert = new CustomControls.RJControls.RJButton();
-            this.btnscalescanTest = new CustomControls.RJControls.RJButton();
-            this.btnMinus = new CustomControls.RJControls.RJButton();
-            this.btnBagPlus = new CustomControls.RJControls.RJButton();
-            this.btnAddBagToCart = new CustomControls.RJControls.RJButton();
-            this.btnNoBag = new CustomControls.RJControls.RJButton();
-            this.btnBack = new CustomControls.RJControls.RJButton();
-            this.btnNext = new CustomControls.RJControls.RJButton();
-            this.btnSuspend = new CustomControls.RJControls.RJButton();
-            this.btnReprint = new CustomControls.RJControls.RJButton();
-            this.btnHelp = new CustomControls.RJControls.RJButton();
-            this.btnVoid = new CustomControls.RJControls.RJButton();
-            this.btnItemCorrect = new CustomControls.RJControls.RJButton();
-            this.btnSearch = new CustomControls.RJControls.RJButton();
-            this.btnSearch_Category = new CustomControls.RJControls.RJButton();
-            this.btnItemDiscount = new CustomControls.RJControls.RJButton();
-            this.btnSearchPageLeft = new CustomControls.RJControls.RJButton();
-            this.btnSearchPageRight = new CustomControls.RJControls.RJButton();
-            this.btnBackToStart = new CustomControls.RJControls.RJButton();
-            this.btnSkipPointCard = new CustomControls.RJControls.RJButton();
-            this.btnAgeCheckExit = new CustomControls.RJControls.RJButton();
-            this.btnSelectCreditCard = new CustomControls.RJControls.RJButton();
-            this.btnSelectGiftCard = new CustomControls.RJControls.RJButton();
-            this.btnEBT = new CustomControls.RJControls.RJButton();
-            this.btnSelectPointCard = new CustomControls.RJControls.RJButton();
-            this.btnErrorBoxBtn1 = new CustomControls.RJControls.RJButton();
-            this.btnErrorBoxBtn2 = new CustomControls.RJControls.RJButton();
-            this.btnReviewToStart = new CustomControls.RJControls.RJButton();
-            this.btnStart = new CustomControls.RJControls.RJButton();
+            this.lbHelpMode3 = new System.Windows.Forms.Label();
+            this.lbHelpMode5 = new System.Windows.Forms.Label();
+            this.lbHelpMode4 = new System.Windows.Forms.Label();
+            this.btnscalescanTest3 = new CustomControls.RJControls.RJButton();
+            this.btnscalescanTest2 = new CustomControls.RJControls.RJButton();
             this.pn_ItemScan.SuspendLayout();
             this.pnItemScanSearchBtn.SuspendLayout();
             this.pnMembershipInfo.SuspendLayout();
@@ -460,6 +460,180 @@
             this.pn_ItemScan.Size = new System.Drawing.Size(1024, 576);
             this.pn_ItemScan.TabIndex = 5;
             // 
+            // btnBack
+            // 
+            this.btnBack.BackColor = System.Drawing.Color.Transparent;
+            this.btnBack.BackgroundColor = System.Drawing.Color.Transparent;
+            this.btnBack.BorderColor = System.Drawing.Color.Transparent;
+            this.btnBack.BorderRadius = 26;
+            this.btnBack.BorderSize = 0;
+            this.btnBack.FlatAppearance.BorderSize = 0;
+            this.btnBack.FlatAppearance.MouseDownBackColor = System.Drawing.Color.DarkGray;
+            this.btnBack.FlatAppearance.MouseOverBackColor = System.Drawing.Color.DarkGray;
+            this.btnBack.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnBack.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnBack.ForeColor = System.Drawing.Color.Transparent;
+            this.btnBack.Image = ((System.Drawing.Image)(resources.GetObject("btnBack.Image")));
+            this.btnBack.Location = new System.Drawing.Point(1, 504);
+            this.btnBack.Margin = new System.Windows.Forms.Padding(0);
+            this.btnBack.Name = "btnBack";
+            this.btnBack.Size = new System.Drawing.Size(210, 59);
+            this.btnBack.TabIndex = 0;
+            this.btnBack.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.btnBack.TextColor = System.Drawing.Color.Transparent;
+            this.btnBack.UseVisualStyleBackColor = false;
+            this.btnBack.Visible = false;
+            this.btnBack.Click += new System.EventHandler(this.btnBack_Click);
+            // 
+            // btnNext
+            // 
+            this.btnNext.BackColor = System.Drawing.Color.Transparent;
+            this.btnNext.BackgroundColor = System.Drawing.Color.Transparent;
+            this.btnNext.BorderColor = System.Drawing.Color.Transparent;
+            this.btnNext.BorderRadius = 26;
+            this.btnNext.BorderSize = 0;
+            this.btnNext.FlatAppearance.BorderSize = 0;
+            this.btnNext.FlatAppearance.MouseDownBackColor = System.Drawing.Color.DarkGray;
+            this.btnNext.FlatAppearance.MouseOverBackColor = System.Drawing.Color.DarkGray;
+            this.btnNext.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnNext.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnNext.ForeColor = System.Drawing.Color.Transparent;
+            this.btnNext.Image = ((System.Drawing.Image)(resources.GetObject("btnNext.Image")));
+            this.btnNext.Location = new System.Drawing.Point(814, 504);
+            this.btnNext.Margin = new System.Windows.Forms.Padding(0);
+            this.btnNext.Name = "btnNext";
+            this.btnNext.Size = new System.Drawing.Size(210, 59);
+            this.btnNext.TabIndex = 20;
+            this.btnNext.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnNext.TextColor = System.Drawing.Color.Transparent;
+            this.btnNext.UseVisualStyleBackColor = false;
+            this.btnNext.Visible = false;
+            this.btnNext.Click += new System.EventHandler(this.btnNext_Click);
+            // 
+            // btnSuspend
+            // 
+            this.btnSuspend.BackColor = System.Drawing.Color.Transparent;
+            this.btnSuspend.BackgroundColor = System.Drawing.Color.Transparent;
+            this.btnSuspend.BorderColor = System.Drawing.Color.Transparent;
+            this.btnSuspend.BorderRadius = 25;
+            this.btnSuspend.BorderSize = 0;
+            this.btnSuspend.FlatAppearance.BorderSize = 0;
+            this.btnSuspend.FlatAppearance.MouseDownBackColor = System.Drawing.Color.CornflowerBlue;
+            this.btnSuspend.FlatAppearance.MouseOverBackColor = System.Drawing.Color.CornflowerBlue;
+            this.btnSuspend.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnSuspend.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnSuspend.ForeColor = System.Drawing.Color.White;
+            this.btnSuspend.Image = ((System.Drawing.Image)(resources.GetObject("btnSuspend.Image")));
+            this.btnSuspend.Location = new System.Drawing.Point(718, 504);
+            this.btnSuspend.Margin = new System.Windows.Forms.Padding(0);
+            this.btnSuspend.Name = "btnSuspend";
+            this.btnSuspend.Size = new System.Drawing.Size(90, 59);
+            this.btnSuspend.TabIndex = 19;
+            this.btnSuspend.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.btnSuspend.TextColor = System.Drawing.Color.White;
+            this.btnSuspend.UseVisualStyleBackColor = false;
+            this.btnSuspend.Visible = false;
+            this.btnSuspend.Click += new System.EventHandler(this.btnSuspend_Click);
+            // 
+            // btnReprint
+            // 
+            this.btnReprint.BackColor = System.Drawing.Color.Transparent;
+            this.btnReprint.BackgroundColor = System.Drawing.Color.Transparent;
+            this.btnReprint.BorderColor = System.Drawing.Color.Transparent;
+            this.btnReprint.BorderRadius = 25;
+            this.btnReprint.BorderSize = 0;
+            this.btnReprint.FlatAppearance.BorderSize = 0;
+            this.btnReprint.FlatAppearance.MouseDownBackColor = System.Drawing.Color.CornflowerBlue;
+            this.btnReprint.FlatAppearance.MouseOverBackColor = System.Drawing.Color.CornflowerBlue;
+            this.btnReprint.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnReprint.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnReprint.ForeColor = System.Drawing.Color.White;
+            this.btnReprint.Image = ((System.Drawing.Image)(resources.GetObject("btnReprint.Image")));
+            this.btnReprint.Location = new System.Drawing.Point(621, 504);
+            this.btnReprint.Margin = new System.Windows.Forms.Padding(0);
+            this.btnReprint.Name = "btnReprint";
+            this.btnReprint.Size = new System.Drawing.Size(90, 59);
+            this.btnReprint.TabIndex = 18;
+            this.btnReprint.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.btnReprint.TextColor = System.Drawing.Color.White;
+            this.btnReprint.UseVisualStyleBackColor = false;
+            this.btnReprint.Visible = false;
+            this.btnReprint.Click += new System.EventHandler(this.btnReprint_Click);
+            // 
+            // btnHelp
+            // 
+            this.btnHelp.BackColor = System.Drawing.Color.Transparent;
+            this.btnHelp.BackgroundColor = System.Drawing.Color.Transparent;
+            this.btnHelp.BorderColor = System.Drawing.Color.Transparent;
+            this.btnHelp.BorderRadius = 26;
+            this.btnHelp.BorderSize = 0;
+            this.btnHelp.FlatAppearance.BorderSize = 0;
+            this.btnHelp.FlatAppearance.MouseDownBackColor = System.Drawing.Color.DarkGray;
+            this.btnHelp.FlatAppearance.MouseOverBackColor = System.Drawing.Color.DarkGray;
+            this.btnHelp.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnHelp.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnHelp.ForeColor = System.Drawing.Color.Transparent;
+            this.btnHelp.Image = ((System.Drawing.Image)(resources.GetObject("btnHelp.Image")));
+            this.btnHelp.Location = new System.Drawing.Point(407, 504);
+            this.btnHelp.Margin = new System.Windows.Forms.Padding(0);
+            this.btnHelp.Name = "btnHelp";
+            this.btnHelp.Size = new System.Drawing.Size(210, 59);
+            this.btnHelp.TabIndex = 17;
+            this.btnHelp.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.btnHelp.TextColor = System.Drawing.Color.Transparent;
+            this.btnHelp.UseVisualStyleBackColor = false;
+            this.btnHelp.Click += new System.EventHandler(this.btnHelp_Click);
+            // 
+            // btnVoid
+            // 
+            this.btnVoid.BackColor = System.Drawing.Color.Transparent;
+            this.btnVoid.BackgroundColor = System.Drawing.Color.Transparent;
+            this.btnVoid.BorderColor = System.Drawing.Color.Transparent;
+            this.btnVoid.BorderRadius = 25;
+            this.btnVoid.BorderSize = 0;
+            this.btnVoid.FlatAppearance.BorderSize = 0;
+            this.btnVoid.FlatAppearance.MouseDownBackColor = System.Drawing.Color.CornflowerBlue;
+            this.btnVoid.FlatAppearance.MouseOverBackColor = System.Drawing.Color.CornflowerBlue;
+            this.btnVoid.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnVoid.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnVoid.ForeColor = System.Drawing.Color.White;
+            this.btnVoid.Image = ((System.Drawing.Image)(resources.GetObject("btnVoid.Image")));
+            this.btnVoid.Location = new System.Drawing.Point(313, 504);
+            this.btnVoid.Margin = new System.Windows.Forms.Padding(0);
+            this.btnVoid.Name = "btnVoid";
+            this.btnVoid.Size = new System.Drawing.Size(90, 59);
+            this.btnVoid.TabIndex = 16;
+            this.btnVoid.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.btnVoid.TextColor = System.Drawing.Color.White;
+            this.btnVoid.UseVisualStyleBackColor = false;
+            this.btnVoid.Visible = false;
+            this.btnVoid.Click += new System.EventHandler(this.btnVoid_Click);
+            // 
+            // btnItemCorrect
+            // 
+            this.btnItemCorrect.BackColor = System.Drawing.Color.Transparent;
+            this.btnItemCorrect.BackgroundColor = System.Drawing.Color.Transparent;
+            this.btnItemCorrect.BorderColor = System.Drawing.Color.Transparent;
+            this.btnItemCorrect.BorderRadius = 25;
+            this.btnItemCorrect.BorderSize = 0;
+            this.btnItemCorrect.FlatAppearance.BorderSize = 0;
+            this.btnItemCorrect.FlatAppearance.MouseDownBackColor = System.Drawing.Color.CornflowerBlue;
+            this.btnItemCorrect.FlatAppearance.MouseOverBackColor = System.Drawing.Color.CornflowerBlue;
+            this.btnItemCorrect.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnItemCorrect.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnItemCorrect.ForeColor = System.Drawing.Color.White;
+            this.btnItemCorrect.Image = ((System.Drawing.Image)(resources.GetObject("btnItemCorrect.Image")));
+            this.btnItemCorrect.Location = new System.Drawing.Point(218, 504);
+            this.btnItemCorrect.Margin = new System.Windows.Forms.Padding(0);
+            this.btnItemCorrect.Name = "btnItemCorrect";
+            this.btnItemCorrect.Size = new System.Drawing.Size(90, 59);
+            this.btnItemCorrect.TabIndex = 15;
+            this.btnItemCorrect.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.btnItemCorrect.TextColor = System.Drawing.Color.White;
+            this.btnItemCorrect.UseVisualStyleBackColor = false;
+            this.btnItemCorrect.Visible = false;
+            this.btnItemCorrect.Click += new System.EventHandler(this.btnItemCorrect_Click);
+            // 
             // ItemCSView
             // 
             this.ItemCSView.Activation = System.Windows.Forms.ItemActivation.OneClick;
@@ -469,6 +643,7 @@
             this.ItemCSView.FullRowSelect = true;
             this.ItemCSView.GridLines = true;
             this.ItemCSView.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
+            this.ItemCSView.HideSelection = false;
             this.ItemCSView.Location = new System.Drawing.Point(21, 13);
             this.ItemCSView.Margin = new System.Windows.Forms.Padding(0);
             this.ItemCSView.Name = "ItemCSView";
@@ -489,6 +664,31 @@
             this.pnItemScanSearchBtn.Size = new System.Drawing.Size(435, 464);
             this.pnItemScanSearchBtn.TabIndex = 10;
             // 
+            // btnSearch
+            // 
+            this.btnSearch.BackColor = System.Drawing.Color.Transparent;
+            this.btnSearch.BackgroundColor = System.Drawing.Color.Transparent;
+            this.btnSearch.BorderColor = System.Drawing.Color.PaleVioletRed;
+            this.btnSearch.BorderRadius = 25;
+            this.btnSearch.BorderSize = 0;
+            this.btnSearch.FlatAppearance.BorderSize = 0;
+            this.btnSearch.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent;
+            this.btnSearch.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
+            this.btnSearch.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnSearch.Font = new System.Drawing.Font("Helvetica85-Heavy", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnSearch.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(46)))), ((int)(((byte)(95)))));
+            this.btnSearch.Image = ((System.Drawing.Image)(resources.GetObject("btnSearch.Image")));
+            this.btnSearch.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.btnSearch.Location = new System.Drawing.Point(228, 195);
+            this.btnSearch.Name = "btnSearch";
+            this.btnSearch.Size = new System.Drawing.Size(159, 127);
+            this.btnSearch.TabIndex = 16;
+            this.btnSearch.Text = "PLU && NAME";
+            this.btnSearch.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.btnSearch.TextColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(46)))), ((int)(((byte)(95)))));
+            this.btnSearch.UseVisualStyleBackColor = false;
+            this.btnSearch.Click += new System.EventHandler(this.btnSearch_Click);
+            // 
             // lbSearchOption
             // 
             this.lbSearchOption.BackColor = System.Drawing.Color.Transparent;
@@ -500,6 +700,31 @@
             this.lbSearchOption.TabIndex = 76;
             this.lbSearchOption.Text = "SEARCH OPTION";
             this.lbSearchOption.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // btnSearch_Category
+            // 
+            this.btnSearch_Category.BackColor = System.Drawing.Color.Transparent;
+            this.btnSearch_Category.BackgroundColor = System.Drawing.Color.Transparent;
+            this.btnSearch_Category.BorderColor = System.Drawing.Color.Transparent;
+            this.btnSearch_Category.BorderRadius = 25;
+            this.btnSearch_Category.BorderSize = 0;
+            this.btnSearch_Category.FlatAppearance.BorderSize = 0;
+            this.btnSearch_Category.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent;
+            this.btnSearch_Category.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
+            this.btnSearch_Category.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnSearch_Category.Font = new System.Drawing.Font("Helvetica85-Heavy", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnSearch_Category.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(46)))), ((int)(((byte)(95)))));
+            this.btnSearch_Category.Image = ((System.Drawing.Image)(resources.GetObject("btnSearch_Category.Image")));
+            this.btnSearch_Category.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.btnSearch_Category.Location = new System.Drawing.Point(48, 195);
+            this.btnSearch_Category.Name = "btnSearch_Category";
+            this.btnSearch_Category.Size = new System.Drawing.Size(159, 127);
+            this.btnSearch_Category.TabIndex = 17;
+            this.btnSearch_Category.Text = "CATEGORY";
+            this.btnSearch_Category.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.btnSearch_Category.TextColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(46)))), ((int)(((byte)(95)))));
+            this.btnSearch_Category.UseVisualStyleBackColor = false;
+            this.btnSearch_Category.Click += new System.EventHandler(this.btnSearch_Category_Click);
             // 
             // pnMembershipInfo
             // 
@@ -724,7 +949,7 @@
             this.lbHSTCS.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
             this.lbHSTCS.Location = new System.Drawing.Point(2, 17);
             this.lbHSTCS.Name = "lbHSTCS";
-            this.lbHSTCS.Size = new System.Drawing.Size(28, 16);
+            this.lbHSTCS.Size = new System.Drawing.Size(27, 16);
             this.lbHSTCS.TabIndex = 12;
             this.lbHSTCS.Text = "HST";
             // 
@@ -887,6 +1112,31 @@
             this.txtNumCS.Size = new System.Drawing.Size(238, 38);
             this.txtNumCS.TabIndex = 11;
             this.txtNumCS.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtNumCS_KeyDown);
+            // 
+            // btnItemDiscount
+            // 
+            this.btnItemDiscount.BackColor = System.Drawing.Color.Transparent;
+            this.btnItemDiscount.BackgroundColor = System.Drawing.Color.Transparent;
+            this.btnItemDiscount.BorderColor = System.Drawing.Color.Transparent;
+            this.btnItemDiscount.BorderRadius = 25;
+            this.btnItemDiscount.BorderSize = 0;
+            this.btnItemDiscount.FlatAppearance.BorderSize = 0;
+            this.btnItemDiscount.FlatAppearance.MouseDownBackColor = System.Drawing.Color.CornflowerBlue;
+            this.btnItemDiscount.FlatAppearance.MouseOverBackColor = System.Drawing.Color.CornflowerBlue;
+            this.btnItemDiscount.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnItemDiscount.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnItemDiscount.ForeColor = System.Drawing.Color.White;
+            this.btnItemDiscount.Image = ((System.Drawing.Image)(resources.GetObject("btnItemDiscount.Image")));
+            this.btnItemDiscount.Location = new System.Drawing.Point(313, 504);
+            this.btnItemDiscount.Margin = new System.Windows.Forms.Padding(0);
+            this.btnItemDiscount.Name = "btnItemDiscount";
+            this.btnItemDiscount.Size = new System.Drawing.Size(90, 59);
+            this.btnItemDiscount.TabIndex = 21;
+            this.btnItemDiscount.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.btnItemDiscount.TextColor = System.Drawing.Color.White;
+            this.btnItemDiscount.UseVisualStyleBackColor = false;
+            this.btnItemDiscount.Visible = false;
+            this.btnItemDiscount.Click += new System.EventHandler(this.btnItemDiscount_Click);
             // 
             // btnManualETCKey
             // 
@@ -1607,6 +1857,7 @@
             this.lvSearchImage_Additional.FullRowSelect = true;
             this.lvSearchImage_Additional.GridLines = true;
             this.lvSearchImage_Additional.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
+            this.lvSearchImage_Additional.HideSelection = false;
             this.lvSearchImage_Additional.Location = new System.Drawing.Point(66, 58);
             this.lvSearchImage_Additional.Margin = new System.Windows.Forms.Padding(10, 10, 10, 0);
             this.lvSearchImage_Additional.MultiSelect = false;
@@ -1638,12 +1889,55 @@
             this.btnAdditionalSearch.Visible = false;
             this.btnAdditionalSearch.Click += new System.EventHandler(this.btnAdditionalSearch_Click);
             // 
+            // btnSearchPageLeft
+            // 
+            this.btnSearchPageLeft.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(46)))), ((int)(((byte)(95)))));
+            this.btnSearchPageLeft.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(46)))), ((int)(((byte)(95)))));
+            this.btnSearchPageLeft.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(46)))), ((int)(((byte)(95)))));
+            this.btnSearchPageLeft.BorderRadius = 30;
+            this.btnSearchPageLeft.BorderSize = 0;
+            this.btnSearchPageLeft.Enabled = false;
+            this.btnSearchPageLeft.FlatAppearance.BorderSize = 0;
+            this.btnSearchPageLeft.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnSearchPageLeft.Font = new System.Drawing.Font("Arial Rounded MT Bold", 36F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnSearchPageLeft.ForeColor = System.Drawing.Color.White;
+            this.btnSearchPageLeft.Location = new System.Drawing.Point(6, 59);
+            this.btnSearchPageLeft.Name = "btnSearchPageLeft";
+            this.btnSearchPageLeft.Size = new System.Drawing.Size(56, 253);
+            this.btnSearchPageLeft.TabIndex = 58;
+            this.btnSearchPageLeft.Text = "<";
+            this.btnSearchPageLeft.TextColor = System.Drawing.Color.White;
+            this.btnSearchPageLeft.UseVisualStyleBackColor = false;
+            this.btnSearchPageLeft.Click += new System.EventHandler(this.btnSearchPageLeft_Click);
+            // 
+            // btnSearchPageRight
+            // 
+            this.btnSearchPageRight.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(46)))), ((int)(((byte)(95)))));
+            this.btnSearchPageRight.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(46)))), ((int)(((byte)(95)))));
+            this.btnSearchPageRight.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(46)))), ((int)(((byte)(95)))));
+            this.btnSearchPageRight.BorderRadius = 30;
+            this.btnSearchPageRight.BorderSize = 0;
+            this.btnSearchPageRight.Enabled = false;
+            this.btnSearchPageRight.FlatAppearance.BorderSize = 0;
+            this.btnSearchPageRight.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnSearchPageRight.Font = new System.Drawing.Font("Arial Rounded MT Bold", 36F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnSearchPageRight.ForeColor = System.Drawing.Color.White;
+            this.btnSearchPageRight.Location = new System.Drawing.Point(946, 59);
+            this.btnSearchPageRight.Name = "btnSearchPageRight";
+            this.btnSearchPageRight.Size = new System.Drawing.Size(56, 253);
+            this.btnSearchPageRight.TabIndex = 57;
+            this.btnSearchPageRight.Text = ">";
+            this.btnSearchPageRight.TextColor = System.Drawing.Color.White;
+            this.btnSearchPageRight.UseVisualStyleBackColor = false;
+            this.btnSearchPageRight.Click += new System.EventHandler(this.btnSearchPageRight_Click);
+            // 
             // lvSearchImage_Category
             // 
             this.lvSearchImage_Category.AutoArrange = false;
             this.lvSearchImage_Category.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.lvSearchImage_Category.Font = new System.Drawing.Font("Franklin Gothic Demi Cond", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lvSearchImage_Category.ForeColor = System.Drawing.Color.DarkSlateGray;
+            this.lvSearchImage_Category.HideSelection = false;
             this.lvSearchImage_Category.Location = new System.Drawing.Point(66, 58);
             this.lvSearchImage_Category.Margin = new System.Windows.Forms.Padding(10);
             this.lvSearchImage_Category.MultiSelect = false;
@@ -1850,6 +2144,7 @@
             this.lvSearchImage_Item.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.lvSearchImage_Item.Font = new System.Drawing.Font("Franklin Gothic Demi Cond", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lvSearchImage_Item.ForeColor = System.Drawing.Color.DarkSlateGray;
+            this.lvSearchImage_Item.HideSelection = false;
             this.lvSearchImage_Item.Location = new System.Drawing.Point(66, 58);
             this.lvSearchImage_Item.Margin = new System.Windows.Forms.Padding(10);
             this.lvSearchImage_Item.MultiSelect = false;
@@ -2015,6 +2310,87 @@
             this.pbSelectpaymentPointCardApplied.TabStop = false;
             this.pbSelectpaymentPointCardApplied.Visible = false;
             // 
+            // btnSelectCreditCard
+            // 
+            this.btnSelectCreditCard.BackColor = System.Drawing.Color.White;
+            this.btnSelectCreditCard.BackgroundColor = System.Drawing.Color.White;
+            this.btnSelectCreditCard.BorderColor = System.Drawing.Color.PaleVioletRed;
+            this.btnSelectCreditCard.BorderRadius = 25;
+            this.btnSelectCreditCard.BorderSize = 0;
+            this.btnSelectCreditCard.FlatAppearance.BorderSize = 0;
+            this.btnSelectCreditCard.FlatAppearance.MouseDownBackColor = System.Drawing.Color.CornflowerBlue;
+            this.btnSelectCreditCard.FlatAppearance.MouseOverBackColor = System.Drawing.Color.CornflowerBlue;
+            this.btnSelectCreditCard.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnSelectCreditCard.Font = new System.Drawing.Font("Helvetica85-Heavy", 15F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnSelectCreditCard.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(46)))), ((int)(((byte)(95)))));
+            this.btnSelectCreditCard.Image = ((System.Drawing.Image)(resources.GetObject("btnSelectCreditCard.Image")));
+            this.btnSelectCreditCard.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnSelectCreditCard.Location = new System.Drawing.Point(57, 110);
+            this.btnSelectCreditCard.Margin = new System.Windows.Forms.Padding(0);
+            this.btnSelectCreditCard.Name = "btnSelectCreditCard";
+            this.btnSelectCreditCard.Size = new System.Drawing.Size(318, 92);
+            this.btnSelectCreditCard.TabIndex = 56;
+            this.btnSelectCreditCard.Text = "CREDIT/DEBIT CARD";
+            this.btnSelectCreditCard.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.btnSelectCreditCard.TextColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(46)))), ((int)(((byte)(95)))));
+            this.btnSelectCreditCard.UseVisualStyleBackColor = false;
+            this.btnSelectCreditCard.Click += new System.EventHandler(this.btnSelectCreditCard_Click);
+            // 
+            // btnSelectGiftCard
+            // 
+            this.btnSelectGiftCard.BackColor = System.Drawing.Color.White;
+            this.btnSelectGiftCard.BackgroundColor = System.Drawing.Color.White;
+            this.btnSelectGiftCard.BorderColor = System.Drawing.Color.PaleVioletRed;
+            this.btnSelectGiftCard.BorderRadius = 25;
+            this.btnSelectGiftCard.BorderSize = 0;
+            this.btnSelectGiftCard.FlatAppearance.BorderSize = 0;
+            this.btnSelectGiftCard.FlatAppearance.MouseDownBackColor = System.Drawing.Color.CornflowerBlue;
+            this.btnSelectGiftCard.FlatAppearance.MouseOverBackColor = System.Drawing.Color.CornflowerBlue;
+            this.btnSelectGiftCard.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnSelectGiftCard.Font = new System.Drawing.Font("Helvetica85-Heavy", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnSelectGiftCard.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(46)))), ((int)(((byte)(95)))));
+            this.btnSelectGiftCard.Image = ((System.Drawing.Image)(resources.GetObject("btnSelectGiftCard.Image")));
+            this.btnSelectGiftCard.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnSelectGiftCard.Location = new System.Drawing.Point(82, 213);
+            this.btnSelectGiftCard.Margin = new System.Windows.Forms.Padding(0);
+            this.btnSelectGiftCard.Name = "btnSelectGiftCard";
+            this.btnSelectGiftCard.Size = new System.Drawing.Size(241, 92);
+            this.btnSelectGiftCard.TabIndex = 59;
+            this.btnSelectGiftCard.Text = "GIFT CARD";
+            this.btnSelectGiftCard.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.btnSelectGiftCard.TextColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(46)))), ((int)(((byte)(95)))));
+            this.btnSelectGiftCard.UseVisualStyleBackColor = false;
+            this.btnSelectGiftCard.Visible = false;
+            this.btnSelectGiftCard.Click += new System.EventHandler(this.btnSelectGiftCard_Click);
+            // 
+            // btnEBT
+            // 
+            this.btnEBT.BackColor = System.Drawing.Color.White;
+            this.btnEBT.BackgroundColor = System.Drawing.Color.White;
+            this.btnEBT.BorderColor = System.Drawing.Color.RoyalBlue;
+            this.btnEBT.BorderRadius = 25;
+            this.btnEBT.BorderSize = 1;
+            this.btnEBT.Enabled = false;
+            this.btnEBT.FlatAppearance.BorderSize = 0;
+            this.btnEBT.FlatAppearance.MouseDownBackColor = System.Drawing.Color.CornflowerBlue;
+            this.btnEBT.FlatAppearance.MouseOverBackColor = System.Drawing.Color.CornflowerBlue;
+            this.btnEBT.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnEBT.Font = new System.Drawing.Font("Helvetica85-Heavy", 15F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnEBT.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(46)))), ((int)(((byte)(95)))));
+            this.btnEBT.Image = ((System.Drawing.Image)(resources.GetObject("btnEBT.Image")));
+            this.btnEBT.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnEBT.Location = new System.Drawing.Point(57, 213);
+            this.btnEBT.Margin = new System.Windows.Forms.Padding(0);
+            this.btnEBT.Name = "btnEBT";
+            this.btnEBT.Size = new System.Drawing.Size(318, 92);
+            this.btnEBT.TabIndex = 58;
+            this.btnEBT.Text = "FOOD STAMP CARD";
+            this.btnEBT.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.btnEBT.TextColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(46)))), ((int)(((byte)(95)))));
+            this.btnEBT.UseVisualStyleBackColor = false;
+            this.btnEBT.Visible = false;
+            this.btnEBT.Click += new System.EventHandler(this.btnEBT_Click);
+            // 
             // lbSelectPaymentType
             // 
             this.lbSelectPaymentType.Font = new System.Drawing.Font("Helvetica85-Heavy", 27.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -2060,6 +2436,33 @@
             this.lbSelectPaymentBalanceNum.TabIndex = 9;
             this.lbSelectPaymentBalanceNum.Text = "0.00";
             this.lbSelectPaymentBalanceNum.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // btnSelectPointCard
+            // 
+            this.btnSelectPointCard.BackColor = System.Drawing.Color.White;
+            this.btnSelectPointCard.BackgroundColor = System.Drawing.Color.White;
+            this.btnSelectPointCard.BorderColor = System.Drawing.Color.PaleVioletRed;
+            this.btnSelectPointCard.BorderRadius = 25;
+            this.btnSelectPointCard.BorderSize = 0;
+            this.btnSelectPointCard.FlatAppearance.BorderSize = 0;
+            this.btnSelectPointCard.FlatAppearance.MouseDownBackColor = System.Drawing.Color.CornflowerBlue;
+            this.btnSelectPointCard.FlatAppearance.MouseOverBackColor = System.Drawing.Color.CornflowerBlue;
+            this.btnSelectPointCard.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnSelectPointCard.Font = new System.Drawing.Font("Helvetica85-Heavy", 15F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnSelectPointCard.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(46)))), ((int)(((byte)(95)))));
+            this.btnSelectPointCard.Image = ((System.Drawing.Image)(resources.GetObject("btnSelectPointCard.Image")));
+            this.btnSelectPointCard.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnSelectPointCard.Location = new System.Drawing.Point(57, 317);
+            this.btnSelectPointCard.Margin = new System.Windows.Forms.Padding(0);
+            this.btnSelectPointCard.Name = "btnSelectPointCard";
+            this.btnSelectPointCard.Size = new System.Drawing.Size(318, 92);
+            this.btnSelectPointCard.TabIndex = 57;
+            this.btnSelectPointCard.Text = "H-POINT CARD";
+            this.btnSelectPointCard.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.btnSelectPointCard.TextColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(46)))), ((int)(((byte)(95)))));
+            this.btnSelectPointCard.UseVisualStyleBackColor = false;
+            this.btnSelectPointCard.Visible = false;
+            this.btnSelectPointCard.Click += new System.EventHandler(this.btnSelectPointCard_Click);
             // 
             // gbProcessCreditCard
             // 
@@ -2151,6 +2554,28 @@
             this.lblPayTotal.Text = "9.99";
             this.lblPayTotal.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
+            // btnReviewToStart
+            // 
+            this.btnReviewToStart.BackColor = System.Drawing.Color.Transparent;
+            this.btnReviewToStart.BackgroundColor = System.Drawing.Color.Transparent;
+            this.btnReviewToStart.BorderColor = System.Drawing.Color.Transparent;
+            this.btnReviewToStart.BorderRadius = 25;
+            this.btnReviewToStart.BorderSize = 0;
+            this.btnReviewToStart.FlatAppearance.BorderSize = 0;
+            this.btnReviewToStart.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnReviewToStart.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnReviewToStart.ForeColor = System.Drawing.Color.Transparent;
+            this.btnReviewToStart.Image = ((System.Drawing.Image)(resources.GetObject("btnReviewToStart.Image")));
+            this.btnReviewToStart.Location = new System.Drawing.Point(800, 515);
+            this.btnReviewToStart.Margin = new System.Windows.Forms.Padding(0);
+            this.btnReviewToStart.Name = "btnReviewToStart";
+            this.btnReviewToStart.Size = new System.Drawing.Size(210, 59);
+            this.btnReviewToStart.TabIndex = 42;
+            this.btnReviewToStart.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnReviewToStart.TextColor = System.Drawing.Color.Transparent;
+            this.btnReviewToStart.UseVisualStyleBackColor = false;
+            this.btnReviewToStart.Click += new System.EventHandler(this.btnReviewToStart_Click);
+            // 
             // gbScanPointCard
             // 
             this.gbScanPointCard.BackColor = System.Drawing.Color.Transparent;
@@ -2169,6 +2594,52 @@
             this.gbScanPointCard.Size = new System.Drawing.Size(1024, 660);
             this.gbScanPointCard.TabIndex = 5;
             this.gbScanPointCard.TabStop = false;
+            // 
+            // btnBackToStart
+            // 
+            this.btnBackToStart.BackColor = System.Drawing.Color.Transparent;
+            this.btnBackToStart.BackgroundColor = System.Drawing.Color.Transparent;
+            this.btnBackToStart.BorderColor = System.Drawing.Color.Transparent;
+            this.btnBackToStart.BorderRadius = 30;
+            this.btnBackToStart.BorderSize = 0;
+            this.btnBackToStart.FlatAppearance.BorderSize = 0;
+            this.btnBackToStart.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent;
+            this.btnBackToStart.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
+            this.btnBackToStart.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnBackToStart.Font = new System.Drawing.Font("Microsoft Sans Serif", 27.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnBackToStart.ForeColor = System.Drawing.Color.White;
+            this.btnBackToStart.Image = ((System.Drawing.Image)(resources.GetObject("btnBackToStart.Image")));
+            this.btnBackToStart.Location = new System.Drawing.Point(3, 588);
+            this.btnBackToStart.Name = "btnBackToStart";
+            this.btnBackToStart.Size = new System.Drawing.Size(210, 65);
+            this.btnBackToStart.TabIndex = 49;
+            this.btnBackToStart.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.btnBackToStart.TextColor = System.Drawing.Color.White;
+            this.btnBackToStart.UseVisualStyleBackColor = false;
+            this.btnBackToStart.Click += new System.EventHandler(this.btnBackToStart_Click);
+            // 
+            // btnSkipPointCard
+            // 
+            this.btnSkipPointCard.BackColor = System.Drawing.Color.Transparent;
+            this.btnSkipPointCard.BackgroundColor = System.Drawing.Color.Transparent;
+            this.btnSkipPointCard.BorderColor = System.Drawing.Color.Transparent;
+            this.btnSkipPointCard.BorderRadius = 30;
+            this.btnSkipPointCard.BorderSize = 0;
+            this.btnSkipPointCard.FlatAppearance.BorderSize = 0;
+            this.btnSkipPointCard.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent;
+            this.btnSkipPointCard.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
+            this.btnSkipPointCard.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnSkipPointCard.Font = new System.Drawing.Font("Microsoft Sans Serif", 27.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnSkipPointCard.ForeColor = System.Drawing.Color.White;
+            this.btnSkipPointCard.Image = ((System.Drawing.Image)(resources.GetObject("btnSkipPointCard.Image")));
+            this.btnSkipPointCard.Location = new System.Drawing.Point(811, 588);
+            this.btnSkipPointCard.Name = "btnSkipPointCard";
+            this.btnSkipPointCard.Size = new System.Drawing.Size(210, 65);
+            this.btnSkipPointCard.TabIndex = 50;
+            this.btnSkipPointCard.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.btnSkipPointCard.TextColor = System.Drawing.Color.White;
+            this.btnSkipPointCard.UseVisualStyleBackColor = false;
+            this.btnSkipPointCard.Click += new System.EventHandler(this.btnSkipPointCard_Click);
             // 
             // pnPointPhoneNumber
             // 
@@ -3031,6 +3502,54 @@
             this.label16.Size = new System.Drawing.Size(0, 44);
             this.label16.TabIndex = 46;
             // 
+            // btnErrorBoxBtn1
+            // 
+            this.btnErrorBoxBtn1.BackColor = System.Drawing.Color.White;
+            this.btnErrorBoxBtn1.BackgroundColor = System.Drawing.Color.White;
+            this.btnErrorBoxBtn1.BorderColor = System.Drawing.Color.Transparent;
+            this.btnErrorBoxBtn1.BorderRadius = 25;
+            this.btnErrorBoxBtn1.BorderSize = 0;
+            this.btnErrorBoxBtn1.FlatAppearance.BorderSize = 0;
+            this.btnErrorBoxBtn1.FlatAppearance.MouseDownBackColor = System.Drawing.Color.CornflowerBlue;
+            this.btnErrorBoxBtn1.FlatAppearance.MouseOverBackColor = System.Drawing.Color.CornflowerBlue;
+            this.btnErrorBoxBtn1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnErrorBoxBtn1.Font = new System.Drawing.Font("Helvetica85-Heavy", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnErrorBoxBtn1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(46)))), ((int)(((byte)(95)))));
+            this.btnErrorBoxBtn1.Image = ((System.Drawing.Image)(resources.GetObject("btnErrorBoxBtn1.Image")));
+            this.btnErrorBoxBtn1.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnErrorBoxBtn1.Location = new System.Drawing.Point(5, 222);
+            this.btnErrorBoxBtn1.Name = "btnErrorBoxBtn1";
+            this.btnErrorBoxBtn1.Size = new System.Drawing.Size(178, 50);
+            this.btnErrorBoxBtn1.TabIndex = 51;
+            this.btnErrorBoxBtn1.Text = "BACK";
+            this.btnErrorBoxBtn1.TextColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(46)))), ((int)(((byte)(95)))));
+            this.btnErrorBoxBtn1.UseVisualStyleBackColor = false;
+            this.btnErrorBoxBtn1.Click += new System.EventHandler(this.btnErrorBoxBtn1_Click);
+            // 
+            // btnErrorBoxBtn2
+            // 
+            this.btnErrorBoxBtn2.BackColor = System.Drawing.Color.White;
+            this.btnErrorBoxBtn2.BackgroundColor = System.Drawing.Color.White;
+            this.btnErrorBoxBtn2.BorderColor = System.Drawing.Color.Transparent;
+            this.btnErrorBoxBtn2.BorderRadius = 25;
+            this.btnErrorBoxBtn2.BorderSize = 0;
+            this.btnErrorBoxBtn2.FlatAppearance.BorderSize = 0;
+            this.btnErrorBoxBtn2.FlatAppearance.MouseDownBackColor = System.Drawing.Color.CornflowerBlue;
+            this.btnErrorBoxBtn2.FlatAppearance.MouseOverBackColor = System.Drawing.Color.CornflowerBlue;
+            this.btnErrorBoxBtn2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnErrorBoxBtn2.Font = new System.Drawing.Font("Helvetica85-Heavy", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnErrorBoxBtn2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(216)))), ((int)(((byte)(23)))), ((int)(((byte)(23)))));
+            this.btnErrorBoxBtn2.Image = ((System.Drawing.Image)(resources.GetObject("btnErrorBoxBtn2.Image")));
+            this.btnErrorBoxBtn2.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.btnErrorBoxBtn2.Location = new System.Drawing.Point(266, 222);
+            this.btnErrorBoxBtn2.Name = "btnErrorBoxBtn2";
+            this.btnErrorBoxBtn2.Size = new System.Drawing.Size(178, 50);
+            this.btnErrorBoxBtn2.TabIndex = 52;
+            this.btnErrorBoxBtn2.Text = "YES";
+            this.btnErrorBoxBtn2.TextColor = System.Drawing.Color.FromArgb(((int)(((byte)(216)))), ((int)(((byte)(23)))), ((int)(((byte)(23)))));
+            this.btnErrorBoxBtn2.UseVisualStyleBackColor = false;
+            this.btnErrorBoxBtn2.Click += new System.EventHandler(this.btnErrorBoxBtn2_Click);
+            // 
             // gbProcessPointCard
             // 
             this.gbProcessPointCard.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(46)))), ((int)(((byte)(95)))));
@@ -3588,6 +4107,27 @@
             this.gbAgeCheck.TabIndex = 21;
             this.gbAgeCheck.TabStop = false;
             // 
+            // btnAgeCheckExit
+            // 
+            this.btnAgeCheckExit.BackColor = System.Drawing.Color.Crimson;
+            this.btnAgeCheckExit.BackgroundColor = System.Drawing.Color.Crimson;
+            this.btnAgeCheckExit.BorderColor = System.Drawing.Color.White;
+            this.btnAgeCheckExit.BorderRadius = 10;
+            this.btnAgeCheckExit.BorderSize = 0;
+            this.btnAgeCheckExit.FlatAppearance.BorderSize = 0;
+            this.btnAgeCheckExit.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnAgeCheckExit.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnAgeCheckExit.ForeColor = System.Drawing.Color.White;
+            this.btnAgeCheckExit.Location = new System.Drawing.Point(241, -1);
+            this.btnAgeCheckExit.Name = "btnAgeCheckExit";
+            this.btnAgeCheckExit.Size = new System.Drawing.Size(40, 40);
+            this.btnAgeCheckExit.TabIndex = 57;
+            this.btnAgeCheckExit.Text = "X";
+            this.btnAgeCheckExit.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnAgeCheckExit.TextColor = System.Drawing.Color.White;
+            this.btnAgeCheckExit.UseVisualStyleBackColor = false;
+            this.btnAgeCheckExit.Click += new System.EventHandler(this.btnAgeCheckExit_Click);
+            // 
             // lbAgeCheckExample
             // 
             this.lbAgeCheckExample.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
@@ -3922,6 +4462,29 @@
             this.lbCredit_DebitCardOnly.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.lbCredit_DebitCardOnly.Visible = false;
             // 
+            // btnStart
+            // 
+            this.btnStart.BackColor = System.Drawing.Color.Transparent;
+            this.btnStart.BackgroundColor = System.Drawing.Color.Transparent;
+            this.btnStart.BorderColor = System.Drawing.Color.Transparent;
+            this.btnStart.BorderRadius = 60;
+            this.btnStart.BorderSize = 0;
+            this.btnStart.FlatAppearance.BorderSize = 0;
+            this.btnStart.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent;
+            this.btnStart.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
+            this.btnStart.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnStart.Font = new System.Drawing.Font("Microsoft Sans Serif", 27.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnStart.ForeColor = System.Drawing.Color.White;
+            this.btnStart.Image = ((System.Drawing.Image)(resources.GetObject("btnStart.Image")));
+            this.btnStart.Location = new System.Drawing.Point(549, 501);
+            this.btnStart.Name = "btnStart";
+            this.btnStart.Size = new System.Drawing.Size(405, 118);
+            this.btnStart.TabIndex = 3;
+            this.btnStart.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.btnStart.TextColor = System.Drawing.Color.White;
+            this.btnStart.UseVisualStyleBackColor = false;
+            this.btnStart.Click += new System.EventHandler(this.btnStart_Click);
+            // 
             // lbHelpMode2
             // 
             this.lbHelpMode2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(216)))), ((int)(((byte)(23)))), ((int)(((byte)(24)))));
@@ -4254,6 +4817,94 @@
             this.lbAddBagTitle.Text = "Paper Bag Charge";
             this.lbAddBagTitle.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
+            // btnMinus
+            // 
+            this.btnMinus.BackColor = System.Drawing.Color.Transparent;
+            this.btnMinus.BackgroundColor = System.Drawing.Color.Transparent;
+            this.btnMinus.BorderColor = System.Drawing.Color.Transparent;
+            this.btnMinus.BorderRadius = 40;
+            this.btnMinus.BorderSize = 0;
+            this.btnMinus.FlatAppearance.BorderSize = 0;
+            this.btnMinus.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent;
+            this.btnMinus.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
+            this.btnMinus.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnMinus.ForeColor = System.Drawing.Color.White;
+            this.btnMinus.Image = ((System.Drawing.Image)(resources.GetObject("btnMinus.Image")));
+            this.btnMinus.Location = new System.Drawing.Point(32, 144);
+            this.btnMinus.Margin = new System.Windows.Forms.Padding(0);
+            this.btnMinus.Name = "btnMinus";
+            this.btnMinus.Size = new System.Drawing.Size(95, 96);
+            this.btnMinus.TabIndex = 14;
+            this.btnMinus.TextColor = System.Drawing.Color.White;
+            this.btnMinus.UseVisualStyleBackColor = false;
+            this.btnMinus.Click += new System.EventHandler(this.btnMinus_Click);
+            // 
+            // btnBagPlus
+            // 
+            this.btnBagPlus.BackColor = System.Drawing.Color.Transparent;
+            this.btnBagPlus.BackgroundColor = System.Drawing.Color.Transparent;
+            this.btnBagPlus.BorderColor = System.Drawing.Color.Transparent;
+            this.btnBagPlus.BorderRadius = 40;
+            this.btnBagPlus.BorderSize = 0;
+            this.btnBagPlus.FlatAppearance.BorderSize = 0;
+            this.btnBagPlus.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent;
+            this.btnBagPlus.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
+            this.btnBagPlus.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnBagPlus.ForeColor = System.Drawing.Color.White;
+            this.btnBagPlus.Image = ((System.Drawing.Image)(resources.GetObject("btnBagPlus.Image")));
+            this.btnBagPlus.Location = new System.Drawing.Point(306, 144);
+            this.btnBagPlus.Margin = new System.Windows.Forms.Padding(0);
+            this.btnBagPlus.Name = "btnBagPlus";
+            this.btnBagPlus.Size = new System.Drawing.Size(95, 96);
+            this.btnBagPlus.TabIndex = 15;
+            this.btnBagPlus.TextColor = System.Drawing.Color.White;
+            this.btnBagPlus.UseVisualStyleBackColor = false;
+            this.btnBagPlus.Click += new System.EventHandler(this.btnBagPlus_Click);
+            // 
+            // btnAddBagToCart
+            // 
+            this.btnAddBagToCart.BackColor = System.Drawing.Color.White;
+            this.btnAddBagToCart.BackgroundColor = System.Drawing.Color.White;
+            this.btnAddBagToCart.BorderColor = System.Drawing.Color.PaleVioletRed;
+            this.btnAddBagToCart.BorderRadius = 25;
+            this.btnAddBagToCart.BorderSize = 0;
+            this.btnAddBagToCart.FlatAppearance.BorderSize = 0;
+            this.btnAddBagToCart.FlatAppearance.MouseDownBackColor = System.Drawing.Color.CornflowerBlue;
+            this.btnAddBagToCart.FlatAppearance.MouseOverBackColor = System.Drawing.Color.CornflowerBlue;
+            this.btnAddBagToCart.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnAddBagToCart.Font = new System.Drawing.Font("Helvetica85-Heavy", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnAddBagToCart.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(46)))), ((int)(((byte)(95)))));
+            this.btnAddBagToCart.Location = new System.Drawing.Point(83, 271);
+            this.btnAddBagToCart.Name = "btnAddBagToCart";
+            this.btnAddBagToCart.Size = new System.Drawing.Size(270, 80);
+            this.btnAddBagToCart.TabIndex = 16;
+            this.btnAddBagToCart.Text = "+ Add to Cart";
+            this.btnAddBagToCart.TextColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(46)))), ((int)(((byte)(95)))));
+            this.btnAddBagToCart.UseVisualStyleBackColor = false;
+            this.btnAddBagToCart.Click += new System.EventHandler(this.btnAddBagToCart_Click);
+            // 
+            // btnNoBag
+            // 
+            this.btnNoBag.BackColor = System.Drawing.Color.White;
+            this.btnNoBag.BackgroundColor = System.Drawing.Color.White;
+            this.btnNoBag.BorderColor = System.Drawing.Color.PaleVioletRed;
+            this.btnNoBag.BorderRadius = 25;
+            this.btnNoBag.BorderSize = 0;
+            this.btnNoBag.FlatAppearance.BorderSize = 0;
+            this.btnNoBag.FlatAppearance.MouseDownBackColor = System.Drawing.Color.CornflowerBlue;
+            this.btnNoBag.FlatAppearance.MouseOverBackColor = System.Drawing.Color.CornflowerBlue;
+            this.btnNoBag.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnNoBag.Font = new System.Drawing.Font("Helvetica85-Heavy", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnNoBag.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(46)))), ((int)(((byte)(95)))));
+            this.btnNoBag.Location = new System.Drawing.Point(83, 358);
+            this.btnNoBag.Name = "btnNoBag";
+            this.btnNoBag.Size = new System.Drawing.Size(270, 80);
+            this.btnNoBag.TabIndex = 17;
+            this.btnNoBag.Text = "NO BAG";
+            this.btnNoBag.TextColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(46)))), ((int)(((byte)(95)))));
+            this.btnNoBag.UseVisualStyleBackColor = false;
+            this.btnNoBag.Click += new System.EventHandler(this.btnNoBag_Click);
+            // 
             // btnBacktoStartTimeExtension
             // 
             this.btnBacktoStartTimeExtension.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
@@ -4582,6 +5233,25 @@
             this.pn_TempClosed.Size = new System.Drawing.Size(1024, 660);
             this.pn_TempClosed.TabIndex = 84;
             // 
+            // btnscalescanTest
+            // 
+            this.btnscalescanTest.BackColor = System.Drawing.Color.Transparent;
+            this.btnscalescanTest.BackgroundColor = System.Drawing.Color.Transparent;
+            this.btnscalescanTest.BorderColor = System.Drawing.Color.White;
+            this.btnscalescanTest.BorderRadius = 0;
+            this.btnscalescanTest.BorderSize = 0;
+            this.btnscalescanTest.FlatAppearance.BorderSize = 0;
+            this.btnscalescanTest.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnscalescanTest.ForeColor = System.Drawing.Color.White;
+            this.btnscalescanTest.Location = new System.Drawing.Point(11, 616);
+            this.btnscalescanTest.Name = "btnscalescanTest";
+            this.btnscalescanTest.Size = new System.Drawing.Size(19, 28);
+            this.btnscalescanTest.TabIndex = 90;
+            this.btnscalescanTest.Text = "scaleScantest";
+            this.btnscalescanTest.TextColor = System.Drawing.Color.White;
+            this.btnscalescanTest.UseVisualStyleBackColor = false;
+            this.btnscalescanTest.Click += new System.EventHandler(this.btnscalescanTest_Click);
+            // 
             // pn_ManualETCKey
             // 
             this.pn_ManualETCKey.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(46)))), ((int)(((byte)(95)))));
@@ -4694,141 +5364,6 @@
             this.label25.Text = "1. DEPARTMENT";
             this.label25.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // btnManualETCKey_Exit
-            // 
-            this.btnManualETCKey_Exit.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
-            this.btnManualETCKey_Exit.BackColor = System.Drawing.Color.Transparent;
-            this.btnManualETCKey_Exit.ColorTable = DevComponents.DotNetBar.eButtonColor.Flat;
-            this.btnManualETCKey_Exit.FadeEffect = false;
-            this.btnManualETCKey_Exit.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnManualETCKey_Exit.HotTrackingStyle = DevComponents.DotNetBar.eHotTrackingStyle.None;
-            this.btnManualETCKey_Exit.ImagePosition = DevComponents.DotNetBar.eImagePosition.Top;
-            this.btnManualETCKey_Exit.ImageTextSpacing = 10;
-            this.btnManualETCKey_Exit.Location = new System.Drawing.Point(818, 0);
-            this.btnManualETCKey_Exit.Margin = new System.Windows.Forms.Padding(0);
-            this.btnManualETCKey_Exit.Name = "btnManualETCKey_Exit";
-            this.btnManualETCKey_Exit.Shape = new DevComponents.DotNetBar.EllipticalShapeDescriptor();
-            this.btnManualETCKey_Exit.Size = new System.Drawing.Size(40, 40);
-            this.btnManualETCKey_Exit.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
-            this.btnManualETCKey_Exit.Symbol = "";
-            this.btnManualETCKey_Exit.SymbolColor = System.Drawing.Color.White;
-            this.btnManualETCKey_Exit.SymbolSize = 35F;
-            this.btnManualETCKey_Exit.TabIndex = 49;
-            this.btnManualETCKey_Exit.Click += new System.EventHandler(this.btnManualETCKey_Exit_Click);
-            // 
-            // txtManualETCKey_Amount
-            // 
-            this.txtManualETCKey_Amount.Font = new System.Drawing.Font("Helvetica85-Heavy", 27.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtManualETCKey_Amount.Location = new System.Drawing.Point(627, 254);
-            this.txtManualETCKey_Amount.Name = "txtManualETCKey_Amount";
-            this.txtManualETCKey_Amount.Size = new System.Drawing.Size(226, 51);
-            this.txtManualETCKey_Amount.TabIndex = 19;
-            this.txtManualETCKey_Amount.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            // 
-            // lbManualETCKey
-            // 
-            this.lbManualETCKey.Font = new System.Drawing.Font("Microsoft Sans Serif", 27.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbManualETCKey.ForeColor = System.Drawing.Color.White;
-            this.lbManualETCKey.Location = new System.Drawing.Point(1, 4);
-            this.lbManualETCKey.Name = "lbManualETCKey";
-            this.lbManualETCKey.Size = new System.Drawing.Size(857, 46);
-            this.lbManualETCKey.TabIndex = 12;
-            this.lbManualETCKey.Text = "Manual ETC Key IN";
-            this.lbManualETCKey.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // lbManualETCKey_SelectedDP
-            // 
-            this.lbManualETCKey_SelectedDP.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.lbManualETCKey_SelectedDP.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.lbManualETCKey_SelectedDP.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.lbManualETCKey_SelectedDP.Font = new System.Drawing.Font("Helvetica85-Heavy", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbManualETCKey_SelectedDP.ForeColor = System.Drawing.Color.White;
-            this.lbManualETCKey_SelectedDP.Location = new System.Drawing.Point(627, 196);
-            this.lbManualETCKey_SelectedDP.Name = "lbManualETCKey_SelectedDP";
-            this.lbManualETCKey_SelectedDP.Size = new System.Drawing.Size(226, 55);
-            this.lbManualETCKey_SelectedDP.TabIndex = 8;
-            this.lbManualETCKey_SelectedDP.Text = "GROCERY";
-            this.lbManualETCKey_SelectedDP.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // lbHelpMode3
-            // 
-            this.lbHelpMode3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(216)))), ((int)(((byte)(23)))), ((int)(((byte)(24)))));
-            this.lbHelpMode3.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.lbHelpMode3.Font = new System.Drawing.Font("Microsoft Sans Serif", 39.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbHelpMode3.ForeColor = System.Drawing.Color.White;
-            this.lbHelpMode3.Location = new System.Drawing.Point(0, 760);
-            this.lbHelpMode3.Name = "lbHelpMode3";
-            this.lbHelpMode3.Size = new System.Drawing.Size(1024, 19);
-            this.lbHelpMode3.TabIndex = 87;
-            this.lbHelpMode3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.lbHelpMode3.Visible = false;
-            // 
-            // lbHelpMode5
-            // 
-            this.lbHelpMode5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(216)))), ((int)(((byte)(23)))), ((int)(((byte)(24)))));
-            this.lbHelpMode5.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.lbHelpMode5.Font = new System.Drawing.Font("Microsoft Sans Serif", 39.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbHelpMode5.ForeColor = System.Drawing.Color.White;
-            this.lbHelpMode5.Location = new System.Drawing.Point(1018, 107);
-            this.lbHelpMode5.Name = "lbHelpMode5";
-            this.lbHelpMode5.Size = new System.Drawing.Size(10, 653);
-            this.lbHelpMode5.TabIndex = 88;
-            this.lbHelpMode5.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.lbHelpMode5.Visible = false;
-            // 
-            // lbHelpMode4
-            // 
-            this.lbHelpMode4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(216)))), ((int)(((byte)(23)))), ((int)(((byte)(24)))));
-            this.lbHelpMode4.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.lbHelpMode4.Font = new System.Drawing.Font("Microsoft Sans Serif", 39.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbHelpMode4.ForeColor = System.Drawing.Color.White;
-            this.lbHelpMode4.Location = new System.Drawing.Point(-4, 107);
-            this.lbHelpMode4.Name = "lbHelpMode4";
-            this.lbHelpMode4.Size = new System.Drawing.Size(10, 653);
-            this.lbHelpMode4.TabIndex = 89;
-            this.lbHelpMode4.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.lbHelpMode4.Visible = false;
-            // 
-            // btnscalescanTest3
-            // 
-            this.btnscalescanTest3.BackColor = System.Drawing.Color.MediumSlateBlue;
-            this.btnscalescanTest3.BackgroundColor = System.Drawing.Color.MediumSlateBlue;
-            this.btnscalescanTest3.BorderColor = System.Drawing.Color.PaleVioletRed;
-            this.btnscalescanTest3.BorderRadius = 0;
-            this.btnscalescanTest3.BorderSize = 0;
-            this.btnscalescanTest3.FlatAppearance.BorderSize = 0;
-            this.btnscalescanTest3.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnscalescanTest3.ForeColor = System.Drawing.Color.White;
-            this.btnscalescanTest3.Location = new System.Drawing.Point(886, 73);
-            this.btnscalescanTest3.Name = "btnscalescanTest3";
-            this.btnscalescanTest3.Size = new System.Drawing.Size(129, 27);
-            this.btnscalescanTest3.TabIndex = 92;
-            this.btnscalescanTest3.Text = "scaleScantest3";
-            this.btnscalescanTest3.TextColor = System.Drawing.Color.White;
-            this.btnscalescanTest3.UseVisualStyleBackColor = false;
-            this.btnscalescanTest3.Visible = false;
-            this.btnscalescanTest3.Click += new System.EventHandler(this.btnscalescanTest3_Click);
-            // 
-            // btnscalescanTest2
-            // 
-            this.btnscalescanTest2.BackColor = System.Drawing.Color.MediumSlateBlue;
-            this.btnscalescanTest2.BackgroundColor = System.Drawing.Color.MediumSlateBlue;
-            this.btnscalescanTest2.BorderColor = System.Drawing.Color.PaleVioletRed;
-            this.btnscalescanTest2.BorderRadius = 0;
-            this.btnscalescanTest2.BorderSize = 0;
-            this.btnscalescanTest2.FlatAppearance.BorderSize = 0;
-            this.btnscalescanTest2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnscalescanTest2.ForeColor = System.Drawing.Color.White;
-            this.btnscalescanTest2.Location = new System.Drawing.Point(770, 76);
-            this.btnscalescanTest2.Name = "btnscalescanTest2";
-            this.btnscalescanTest2.Size = new System.Drawing.Size(95, 25);
-            this.btnscalescanTest2.TabIndex = 91;
-            this.btnscalescanTest2.Text = "scaleScantest2";
-            this.btnscalescanTest2.TextColor = System.Drawing.Color.White;
-            this.btnscalescanTest2.UseVisualStyleBackColor = false;
-            this.btnscalescanTest2.Visible = false;
-            this.btnscalescanTest2.Click += new System.EventHandler(this.btnscalescanTest2_Click);
-            // 
             // btnManualETCKey_Clear
             // 
             this.btnManualETCKey_Clear.BackColor = System.Drawing.Color.White;
@@ -4874,6 +5409,37 @@
             this.btnManualETCKey_BackSpace.TextColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(46)))), ((int)(((byte)(95)))));
             this.btnManualETCKey_BackSpace.UseVisualStyleBackColor = false;
             this.btnManualETCKey_BackSpace.Click += new System.EventHandler(this.btnManualETCKey_BackSpace_Click);
+            // 
+            // btnManualETCKey_Exit
+            // 
+            this.btnManualETCKey_Exit.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
+            this.btnManualETCKey_Exit.BackColor = System.Drawing.Color.Transparent;
+            this.btnManualETCKey_Exit.ColorTable = DevComponents.DotNetBar.eButtonColor.Flat;
+            this.btnManualETCKey_Exit.FadeEffect = false;
+            this.btnManualETCKey_Exit.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnManualETCKey_Exit.HotTrackingStyle = DevComponents.DotNetBar.eHotTrackingStyle.None;
+            this.btnManualETCKey_Exit.ImagePosition = DevComponents.DotNetBar.eImagePosition.Top;
+            this.btnManualETCKey_Exit.ImageTextSpacing = 10;
+            this.btnManualETCKey_Exit.Location = new System.Drawing.Point(818, 0);
+            this.btnManualETCKey_Exit.Margin = new System.Windows.Forms.Padding(0);
+            this.btnManualETCKey_Exit.Name = "btnManualETCKey_Exit";
+            this.btnManualETCKey_Exit.Shape = new DevComponents.DotNetBar.EllipticalShapeDescriptor();
+            this.btnManualETCKey_Exit.Size = new System.Drawing.Size(40, 40);
+            this.btnManualETCKey_Exit.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
+            this.btnManualETCKey_Exit.Symbol = "";
+            this.btnManualETCKey_Exit.SymbolColor = System.Drawing.Color.White;
+            this.btnManualETCKey_Exit.SymbolSize = 35F;
+            this.btnManualETCKey_Exit.TabIndex = 49;
+            this.btnManualETCKey_Exit.Click += new System.EventHandler(this.btnManualETCKey_Exit_Click);
+            // 
+            // txtManualETCKey_Amount
+            // 
+            this.txtManualETCKey_Amount.Font = new System.Drawing.Font("Helvetica85-Heavy", 27.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtManualETCKey_Amount.Location = new System.Drawing.Point(627, 254);
+            this.txtManualETCKey_Amount.Name = "txtManualETCKey_Amount";
+            this.txtManualETCKey_Amount.Size = new System.Drawing.Size(226, 51);
+            this.txtManualETCKey_Amount.TabIndex = 19;
+            this.txtManualETCKey_Amount.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // btnManualETCKey_00
             // 
@@ -5127,6 +5693,31 @@
             this.btnManualETCKey_7.UseVisualStyleBackColor = false;
             this.btnManualETCKey_7.Click += new System.EventHandler(this.btnManualETCKey_7_Click);
             // 
+            // lbManualETCKey
+            // 
+            this.lbManualETCKey.Font = new System.Drawing.Font("Microsoft Sans Serif", 27.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbManualETCKey.ForeColor = System.Drawing.Color.White;
+            this.lbManualETCKey.Location = new System.Drawing.Point(1, 4);
+            this.lbManualETCKey.Name = "lbManualETCKey";
+            this.lbManualETCKey.Size = new System.Drawing.Size(857, 46);
+            this.lbManualETCKey.TabIndex = 12;
+            this.lbManualETCKey.Text = "Manual ETC Key IN";
+            this.lbManualETCKey.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // lbManualETCKey_SelectedDP
+            // 
+            this.lbManualETCKey_SelectedDP.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.lbManualETCKey_SelectedDP.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.lbManualETCKey_SelectedDP.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.lbManualETCKey_SelectedDP.Font = new System.Drawing.Font("Helvetica85-Heavy", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbManualETCKey_SelectedDP.ForeColor = System.Drawing.Color.White;
+            this.lbManualETCKey_SelectedDP.Location = new System.Drawing.Point(627, 196);
+            this.lbManualETCKey_SelectedDP.Name = "lbManualETCKey_SelectedDP";
+            this.lbManualETCKey_SelectedDP.Size = new System.Drawing.Size(226, 55);
+            this.lbManualETCKey_SelectedDP.TabIndex = 8;
+            this.lbManualETCKey_SelectedDP.Text = "GROCERY";
+            this.lbManualETCKey_SelectedDP.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
             // btnManualETCKey_HW
             // 
             this.btnManualETCKey_HW.BackColor = System.Drawing.Color.White;
@@ -5282,671 +5873,84 @@
             this.btnManualETCKey_Insert.UseVisualStyleBackColor = false;
             this.btnManualETCKey_Insert.Click += new System.EventHandler(this.btnManualETCKey_Insert_Click);
             // 
-            // btnscalescanTest
+            // lbHelpMode3
             // 
-            this.btnscalescanTest.BackColor = System.Drawing.Color.Transparent;
-            this.btnscalescanTest.BackgroundColor = System.Drawing.Color.Transparent;
-            this.btnscalescanTest.BorderColor = System.Drawing.Color.White;
-            this.btnscalescanTest.BorderRadius = 0;
-            this.btnscalescanTest.BorderSize = 0;
-            this.btnscalescanTest.FlatAppearance.BorderSize = 0;
-            this.btnscalescanTest.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnscalescanTest.ForeColor = System.Drawing.Color.White;
-            this.btnscalescanTest.Location = new System.Drawing.Point(11, 616);
-            this.btnscalescanTest.Name = "btnscalescanTest";
-            this.btnscalescanTest.Size = new System.Drawing.Size(19, 28);
-            this.btnscalescanTest.TabIndex = 90;
-            this.btnscalescanTest.Text = "scaleScantest";
-            this.btnscalescanTest.TextColor = System.Drawing.Color.White;
-            this.btnscalescanTest.UseVisualStyleBackColor = false;
-            this.btnscalescanTest.Click += new System.EventHandler(this.btnscalescanTest_Click);
+            this.lbHelpMode3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(216)))), ((int)(((byte)(23)))), ((int)(((byte)(24)))));
+            this.lbHelpMode3.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.lbHelpMode3.Font = new System.Drawing.Font("Microsoft Sans Serif", 39.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbHelpMode3.ForeColor = System.Drawing.Color.White;
+            this.lbHelpMode3.Location = new System.Drawing.Point(0, 760);
+            this.lbHelpMode3.Name = "lbHelpMode3";
+            this.lbHelpMode3.Size = new System.Drawing.Size(1024, 19);
+            this.lbHelpMode3.TabIndex = 87;
+            this.lbHelpMode3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.lbHelpMode3.Visible = false;
             // 
-            // btnMinus
+            // lbHelpMode5
             // 
-            this.btnMinus.BackColor = System.Drawing.Color.Transparent;
-            this.btnMinus.BackgroundColor = System.Drawing.Color.Transparent;
-            this.btnMinus.BorderColor = System.Drawing.Color.Transparent;
-            this.btnMinus.BorderRadius = 40;
-            this.btnMinus.BorderSize = 0;
-            this.btnMinus.FlatAppearance.BorderSize = 0;
-            this.btnMinus.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent;
-            this.btnMinus.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
-            this.btnMinus.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnMinus.ForeColor = System.Drawing.Color.White;
-            this.btnMinus.Image = ((System.Drawing.Image)(resources.GetObject("btnMinus.Image")));
-            this.btnMinus.Location = new System.Drawing.Point(32, 144);
-            this.btnMinus.Margin = new System.Windows.Forms.Padding(0);
-            this.btnMinus.Name = "btnMinus";
-            this.btnMinus.Size = new System.Drawing.Size(95, 96);
-            this.btnMinus.TabIndex = 14;
-            this.btnMinus.TextColor = System.Drawing.Color.White;
-            this.btnMinus.UseVisualStyleBackColor = false;
-            this.btnMinus.Click += new System.EventHandler(this.btnMinus_Click);
+            this.lbHelpMode5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(216)))), ((int)(((byte)(23)))), ((int)(((byte)(24)))));
+            this.lbHelpMode5.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.lbHelpMode5.Font = new System.Drawing.Font("Microsoft Sans Serif", 39.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbHelpMode5.ForeColor = System.Drawing.Color.White;
+            this.lbHelpMode5.Location = new System.Drawing.Point(1018, 107);
+            this.lbHelpMode5.Name = "lbHelpMode5";
+            this.lbHelpMode5.Size = new System.Drawing.Size(10, 653);
+            this.lbHelpMode5.TabIndex = 88;
+            this.lbHelpMode5.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.lbHelpMode5.Visible = false;
             // 
-            // btnBagPlus
+            // lbHelpMode4
             // 
-            this.btnBagPlus.BackColor = System.Drawing.Color.Transparent;
-            this.btnBagPlus.BackgroundColor = System.Drawing.Color.Transparent;
-            this.btnBagPlus.BorderColor = System.Drawing.Color.Transparent;
-            this.btnBagPlus.BorderRadius = 40;
-            this.btnBagPlus.BorderSize = 0;
-            this.btnBagPlus.FlatAppearance.BorderSize = 0;
-            this.btnBagPlus.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent;
-            this.btnBagPlus.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
-            this.btnBagPlus.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnBagPlus.ForeColor = System.Drawing.Color.White;
-            this.btnBagPlus.Image = ((System.Drawing.Image)(resources.GetObject("btnBagPlus.Image")));
-            this.btnBagPlus.Location = new System.Drawing.Point(306, 144);
-            this.btnBagPlus.Margin = new System.Windows.Forms.Padding(0);
-            this.btnBagPlus.Name = "btnBagPlus";
-            this.btnBagPlus.Size = new System.Drawing.Size(95, 96);
-            this.btnBagPlus.TabIndex = 15;
-            this.btnBagPlus.TextColor = System.Drawing.Color.White;
-            this.btnBagPlus.UseVisualStyleBackColor = false;
-            this.btnBagPlus.Click += new System.EventHandler(this.btnBagPlus_Click);
+            this.lbHelpMode4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(216)))), ((int)(((byte)(23)))), ((int)(((byte)(24)))));
+            this.lbHelpMode4.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.lbHelpMode4.Font = new System.Drawing.Font("Microsoft Sans Serif", 39.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbHelpMode4.ForeColor = System.Drawing.Color.White;
+            this.lbHelpMode4.Location = new System.Drawing.Point(-4, 107);
+            this.lbHelpMode4.Name = "lbHelpMode4";
+            this.lbHelpMode4.Size = new System.Drawing.Size(10, 653);
+            this.lbHelpMode4.TabIndex = 89;
+            this.lbHelpMode4.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.lbHelpMode4.Visible = false;
             // 
-            // btnAddBagToCart
+            // btnscalescanTest3
             // 
-            this.btnAddBagToCart.BackColor = System.Drawing.Color.White;
-            this.btnAddBagToCart.BackgroundColor = System.Drawing.Color.White;
-            this.btnAddBagToCart.BorderColor = System.Drawing.Color.PaleVioletRed;
-            this.btnAddBagToCart.BorderRadius = 25;
-            this.btnAddBagToCart.BorderSize = 0;
-            this.btnAddBagToCart.FlatAppearance.BorderSize = 0;
-            this.btnAddBagToCart.FlatAppearance.MouseDownBackColor = System.Drawing.Color.CornflowerBlue;
-            this.btnAddBagToCart.FlatAppearance.MouseOverBackColor = System.Drawing.Color.CornflowerBlue;
-            this.btnAddBagToCart.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnAddBagToCart.Font = new System.Drawing.Font("Helvetica85-Heavy", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnAddBagToCart.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(46)))), ((int)(((byte)(95)))));
-            this.btnAddBagToCart.Location = new System.Drawing.Point(83, 271);
-            this.btnAddBagToCart.Name = "btnAddBagToCart";
-            this.btnAddBagToCart.Size = new System.Drawing.Size(270, 80);
-            this.btnAddBagToCart.TabIndex = 16;
-            this.btnAddBagToCart.Text = "+ Add to Cart";
-            this.btnAddBagToCart.TextColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(46)))), ((int)(((byte)(95)))));
-            this.btnAddBagToCart.UseVisualStyleBackColor = false;
-            this.btnAddBagToCart.Click += new System.EventHandler(this.btnAddBagToCart_Click);
+            this.btnscalescanTest3.BackColor = System.Drawing.Color.MediumSlateBlue;
+            this.btnscalescanTest3.BackgroundColor = System.Drawing.Color.MediumSlateBlue;
+            this.btnscalescanTest3.BorderColor = System.Drawing.Color.PaleVioletRed;
+            this.btnscalescanTest3.BorderRadius = 0;
+            this.btnscalescanTest3.BorderSize = 0;
+            this.btnscalescanTest3.FlatAppearance.BorderSize = 0;
+            this.btnscalescanTest3.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnscalescanTest3.ForeColor = System.Drawing.Color.White;
+            this.btnscalescanTest3.Location = new System.Drawing.Point(886, 73);
+            this.btnscalescanTest3.Name = "btnscalescanTest3";
+            this.btnscalescanTest3.Size = new System.Drawing.Size(129, 27);
+            this.btnscalescanTest3.TabIndex = 92;
+            this.btnscalescanTest3.Text = "Complete And Print";
+            this.btnscalescanTest3.TextColor = System.Drawing.Color.White;
+            this.btnscalescanTest3.UseVisualStyleBackColor = false;
+            this.btnscalescanTest3.Visible = false;
+            this.btnscalescanTest3.Click += new System.EventHandler(this.btnscalescanTest3_Click);
             // 
-            // btnNoBag
+            // btnscalescanTest2
             // 
-            this.btnNoBag.BackColor = System.Drawing.Color.White;
-            this.btnNoBag.BackgroundColor = System.Drawing.Color.White;
-            this.btnNoBag.BorderColor = System.Drawing.Color.PaleVioletRed;
-            this.btnNoBag.BorderRadius = 25;
-            this.btnNoBag.BorderSize = 0;
-            this.btnNoBag.FlatAppearance.BorderSize = 0;
-            this.btnNoBag.FlatAppearance.MouseDownBackColor = System.Drawing.Color.CornflowerBlue;
-            this.btnNoBag.FlatAppearance.MouseOverBackColor = System.Drawing.Color.CornflowerBlue;
-            this.btnNoBag.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnNoBag.Font = new System.Drawing.Font("Helvetica85-Heavy", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnNoBag.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(46)))), ((int)(((byte)(95)))));
-            this.btnNoBag.Location = new System.Drawing.Point(83, 358);
-            this.btnNoBag.Name = "btnNoBag";
-            this.btnNoBag.Size = new System.Drawing.Size(270, 80);
-            this.btnNoBag.TabIndex = 17;
-            this.btnNoBag.Text = "NO BAG";
-            this.btnNoBag.TextColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(46)))), ((int)(((byte)(95)))));
-            this.btnNoBag.UseVisualStyleBackColor = false;
-            this.btnNoBag.Click += new System.EventHandler(this.btnNoBag_Click);
-            // 
-            // btnBack
-            // 
-            this.btnBack.BackColor = System.Drawing.Color.Transparent;
-            this.btnBack.BackgroundColor = System.Drawing.Color.Transparent;
-            this.btnBack.BorderColor = System.Drawing.Color.Transparent;
-            this.btnBack.BorderRadius = 26;
-            this.btnBack.BorderSize = 0;
-            this.btnBack.FlatAppearance.BorderSize = 0;
-            this.btnBack.FlatAppearance.MouseDownBackColor = System.Drawing.Color.DarkGray;
-            this.btnBack.FlatAppearance.MouseOverBackColor = System.Drawing.Color.DarkGray;
-            this.btnBack.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnBack.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnBack.ForeColor = System.Drawing.Color.Transparent;
-            this.btnBack.Image = ((System.Drawing.Image)(resources.GetObject("btnBack.Image")));
-            this.btnBack.Location = new System.Drawing.Point(1, 504);
-            this.btnBack.Margin = new System.Windows.Forms.Padding(0);
-            this.btnBack.Name = "btnBack";
-            this.btnBack.Size = new System.Drawing.Size(210, 59);
-            this.btnBack.TabIndex = 0;
-            this.btnBack.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.btnBack.TextColor = System.Drawing.Color.Transparent;
-            this.btnBack.UseVisualStyleBackColor = false;
-            this.btnBack.Visible = false;
-            this.btnBack.Click += new System.EventHandler(this.btnBack_Click);
-            // 
-            // btnNext
-            // 
-            this.btnNext.BackColor = System.Drawing.Color.Transparent;
-            this.btnNext.BackgroundColor = System.Drawing.Color.Transparent;
-            this.btnNext.BorderColor = System.Drawing.Color.Transparent;
-            this.btnNext.BorderRadius = 26;
-            this.btnNext.BorderSize = 0;
-            this.btnNext.FlatAppearance.BorderSize = 0;
-            this.btnNext.FlatAppearance.MouseDownBackColor = System.Drawing.Color.DarkGray;
-            this.btnNext.FlatAppearance.MouseOverBackColor = System.Drawing.Color.DarkGray;
-            this.btnNext.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnNext.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnNext.ForeColor = System.Drawing.Color.Transparent;
-            this.btnNext.Image = ((System.Drawing.Image)(resources.GetObject("btnNext.Image")));
-            this.btnNext.Location = new System.Drawing.Point(814, 504);
-            this.btnNext.Margin = new System.Windows.Forms.Padding(0);
-            this.btnNext.Name = "btnNext";
-            this.btnNext.Size = new System.Drawing.Size(210, 59);
-            this.btnNext.TabIndex = 20;
-            this.btnNext.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnNext.TextColor = System.Drawing.Color.Transparent;
-            this.btnNext.UseVisualStyleBackColor = false;
-            this.btnNext.Visible = false;
-            this.btnNext.Click += new System.EventHandler(this.btnNext_Click);
-            // 
-            // btnSuspend
-            // 
-            this.btnSuspend.BackColor = System.Drawing.Color.Transparent;
-            this.btnSuspend.BackgroundColor = System.Drawing.Color.Transparent;
-            this.btnSuspend.BorderColor = System.Drawing.Color.Transparent;
-            this.btnSuspend.BorderRadius = 25;
-            this.btnSuspend.BorderSize = 0;
-            this.btnSuspend.FlatAppearance.BorderSize = 0;
-            this.btnSuspend.FlatAppearance.MouseDownBackColor = System.Drawing.Color.CornflowerBlue;
-            this.btnSuspend.FlatAppearance.MouseOverBackColor = System.Drawing.Color.CornflowerBlue;
-            this.btnSuspend.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnSuspend.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnSuspend.ForeColor = System.Drawing.Color.White;
-            this.btnSuspend.Image = ((System.Drawing.Image)(resources.GetObject("btnSuspend.Image")));
-            this.btnSuspend.Location = new System.Drawing.Point(718, 504);
-            this.btnSuspend.Margin = new System.Windows.Forms.Padding(0);
-            this.btnSuspend.Name = "btnSuspend";
-            this.btnSuspend.Size = new System.Drawing.Size(90, 59);
-            this.btnSuspend.TabIndex = 19;
-            this.btnSuspend.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.btnSuspend.TextColor = System.Drawing.Color.White;
-            this.btnSuspend.UseVisualStyleBackColor = false;
-            this.btnSuspend.Visible = false;
-            this.btnSuspend.Click += new System.EventHandler(this.btnSuspend_Click);
-            // 
-            // btnReprint
-            // 
-            this.btnReprint.BackColor = System.Drawing.Color.Transparent;
-            this.btnReprint.BackgroundColor = System.Drawing.Color.Transparent;
-            this.btnReprint.BorderColor = System.Drawing.Color.Transparent;
-            this.btnReprint.BorderRadius = 25;
-            this.btnReprint.BorderSize = 0;
-            this.btnReprint.FlatAppearance.BorderSize = 0;
-            this.btnReprint.FlatAppearance.MouseDownBackColor = System.Drawing.Color.CornflowerBlue;
-            this.btnReprint.FlatAppearance.MouseOverBackColor = System.Drawing.Color.CornflowerBlue;
-            this.btnReprint.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnReprint.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnReprint.ForeColor = System.Drawing.Color.White;
-            this.btnReprint.Image = ((System.Drawing.Image)(resources.GetObject("btnReprint.Image")));
-            this.btnReprint.Location = new System.Drawing.Point(621, 504);
-            this.btnReprint.Margin = new System.Windows.Forms.Padding(0);
-            this.btnReprint.Name = "btnReprint";
-            this.btnReprint.Size = new System.Drawing.Size(90, 59);
-            this.btnReprint.TabIndex = 18;
-            this.btnReprint.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.btnReprint.TextColor = System.Drawing.Color.White;
-            this.btnReprint.UseVisualStyleBackColor = false;
-            this.btnReprint.Visible = false;
-            this.btnReprint.Click += new System.EventHandler(this.btnReprint_Click);
-            // 
-            // btnHelp
-            // 
-            this.btnHelp.BackColor = System.Drawing.Color.Transparent;
-            this.btnHelp.BackgroundColor = System.Drawing.Color.Transparent;
-            this.btnHelp.BorderColor = System.Drawing.Color.Transparent;
-            this.btnHelp.BorderRadius = 26;
-            this.btnHelp.BorderSize = 0;
-            this.btnHelp.FlatAppearance.BorderSize = 0;
-            this.btnHelp.FlatAppearance.MouseDownBackColor = System.Drawing.Color.DarkGray;
-            this.btnHelp.FlatAppearance.MouseOverBackColor = System.Drawing.Color.DarkGray;
-            this.btnHelp.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnHelp.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnHelp.ForeColor = System.Drawing.Color.Transparent;
-            this.btnHelp.Image = ((System.Drawing.Image)(resources.GetObject("btnHelp.Image")));
-            this.btnHelp.Location = new System.Drawing.Point(407, 504);
-            this.btnHelp.Margin = new System.Windows.Forms.Padding(0);
-            this.btnHelp.Name = "btnHelp";
-            this.btnHelp.Size = new System.Drawing.Size(210, 59);
-            this.btnHelp.TabIndex = 17;
-            this.btnHelp.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.btnHelp.TextColor = System.Drawing.Color.Transparent;
-            this.btnHelp.UseVisualStyleBackColor = false;
-            this.btnHelp.Click += new System.EventHandler(this.btnHelp_Click);
-            // 
-            // btnVoid
-            // 
-            this.btnVoid.BackColor = System.Drawing.Color.Transparent;
-            this.btnVoid.BackgroundColor = System.Drawing.Color.Transparent;
-            this.btnVoid.BorderColor = System.Drawing.Color.Transparent;
-            this.btnVoid.BorderRadius = 25;
-            this.btnVoid.BorderSize = 0;
-            this.btnVoid.FlatAppearance.BorderSize = 0;
-            this.btnVoid.FlatAppearance.MouseDownBackColor = System.Drawing.Color.CornflowerBlue;
-            this.btnVoid.FlatAppearance.MouseOverBackColor = System.Drawing.Color.CornflowerBlue;
-            this.btnVoid.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnVoid.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnVoid.ForeColor = System.Drawing.Color.White;
-            this.btnVoid.Image = ((System.Drawing.Image)(resources.GetObject("btnVoid.Image")));
-            this.btnVoid.Location = new System.Drawing.Point(313, 504);
-            this.btnVoid.Margin = new System.Windows.Forms.Padding(0);
-            this.btnVoid.Name = "btnVoid";
-            this.btnVoid.Size = new System.Drawing.Size(90, 59);
-            this.btnVoid.TabIndex = 16;
-            this.btnVoid.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.btnVoid.TextColor = System.Drawing.Color.White;
-            this.btnVoid.UseVisualStyleBackColor = false;
-            this.btnVoid.Visible = false;
-            this.btnVoid.Click += new System.EventHandler(this.btnVoid_Click);
-            // 
-            // btnItemCorrect
-            // 
-            this.btnItemCorrect.BackColor = System.Drawing.Color.Transparent;
-            this.btnItemCorrect.BackgroundColor = System.Drawing.Color.Transparent;
-            this.btnItemCorrect.BorderColor = System.Drawing.Color.Transparent;
-            this.btnItemCorrect.BorderRadius = 25;
-            this.btnItemCorrect.BorderSize = 0;
-            this.btnItemCorrect.FlatAppearance.BorderSize = 0;
-            this.btnItemCorrect.FlatAppearance.MouseDownBackColor = System.Drawing.Color.CornflowerBlue;
-            this.btnItemCorrect.FlatAppearance.MouseOverBackColor = System.Drawing.Color.CornflowerBlue;
-            this.btnItemCorrect.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnItemCorrect.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnItemCorrect.ForeColor = System.Drawing.Color.White;
-            this.btnItemCorrect.Image = ((System.Drawing.Image)(resources.GetObject("btnItemCorrect.Image")));
-            this.btnItemCorrect.Location = new System.Drawing.Point(218, 504);
-            this.btnItemCorrect.Margin = new System.Windows.Forms.Padding(0);
-            this.btnItemCorrect.Name = "btnItemCorrect";
-            this.btnItemCorrect.Size = new System.Drawing.Size(90, 59);
-            this.btnItemCorrect.TabIndex = 15;
-            this.btnItemCorrect.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.btnItemCorrect.TextColor = System.Drawing.Color.White;
-            this.btnItemCorrect.UseVisualStyleBackColor = false;
-            this.btnItemCorrect.Visible = false;
-            this.btnItemCorrect.Click += new System.EventHandler(this.btnItemCorrect_Click);
-            // 
-            // btnSearch
-            // 
-            this.btnSearch.BackColor = System.Drawing.Color.Transparent;
-            this.btnSearch.BackgroundColor = System.Drawing.Color.Transparent;
-            this.btnSearch.BorderColor = System.Drawing.Color.PaleVioletRed;
-            this.btnSearch.BorderRadius = 25;
-            this.btnSearch.BorderSize = 0;
-            this.btnSearch.FlatAppearance.BorderSize = 0;
-            this.btnSearch.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent;
-            this.btnSearch.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
-            this.btnSearch.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnSearch.Font = new System.Drawing.Font("Helvetica85-Heavy", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnSearch.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(46)))), ((int)(((byte)(95)))));
-            this.btnSearch.Image = ((System.Drawing.Image)(resources.GetObject("btnSearch.Image")));
-            this.btnSearch.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.btnSearch.Location = new System.Drawing.Point(228, 195);
-            this.btnSearch.Name = "btnSearch";
-            this.btnSearch.Size = new System.Drawing.Size(159, 127);
-            this.btnSearch.TabIndex = 16;
-            this.btnSearch.Text = "PLU && NAME";
-            this.btnSearch.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.btnSearch.TextColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(46)))), ((int)(((byte)(95)))));
-            this.btnSearch.UseVisualStyleBackColor = false;
-            this.btnSearch.Click += new System.EventHandler(this.btnSearch_Click);
-            // 
-            // btnSearch_Category
-            // 
-            this.btnSearch_Category.BackColor = System.Drawing.Color.Transparent;
-            this.btnSearch_Category.BackgroundColor = System.Drawing.Color.Transparent;
-            this.btnSearch_Category.BorderColor = System.Drawing.Color.Transparent;
-            this.btnSearch_Category.BorderRadius = 25;
-            this.btnSearch_Category.BorderSize = 0;
-            this.btnSearch_Category.FlatAppearance.BorderSize = 0;
-            this.btnSearch_Category.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent;
-            this.btnSearch_Category.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
-            this.btnSearch_Category.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnSearch_Category.Font = new System.Drawing.Font("Helvetica85-Heavy", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnSearch_Category.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(46)))), ((int)(((byte)(95)))));
-            this.btnSearch_Category.Image = ((System.Drawing.Image)(resources.GetObject("btnSearch_Category.Image")));
-            this.btnSearch_Category.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.btnSearch_Category.Location = new System.Drawing.Point(48, 195);
-            this.btnSearch_Category.Name = "btnSearch_Category";
-            this.btnSearch_Category.Size = new System.Drawing.Size(159, 127);
-            this.btnSearch_Category.TabIndex = 17;
-            this.btnSearch_Category.Text = "CATEGORY";
-            this.btnSearch_Category.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.btnSearch_Category.TextColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(46)))), ((int)(((byte)(95)))));
-            this.btnSearch_Category.UseVisualStyleBackColor = false;
-            this.btnSearch_Category.Click += new System.EventHandler(this.btnSearch_Category_Click);
-            // 
-            // btnItemDiscount
-            // 
-            this.btnItemDiscount.BackColor = System.Drawing.Color.Transparent;
-            this.btnItemDiscount.BackgroundColor = System.Drawing.Color.Transparent;
-            this.btnItemDiscount.BorderColor = System.Drawing.Color.Transparent;
-            this.btnItemDiscount.BorderRadius = 25;
-            this.btnItemDiscount.BorderSize = 0;
-            this.btnItemDiscount.FlatAppearance.BorderSize = 0;
-            this.btnItemDiscount.FlatAppearance.MouseDownBackColor = System.Drawing.Color.CornflowerBlue;
-            this.btnItemDiscount.FlatAppearance.MouseOverBackColor = System.Drawing.Color.CornflowerBlue;
-            this.btnItemDiscount.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnItemDiscount.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnItemDiscount.ForeColor = System.Drawing.Color.White;
-            this.btnItemDiscount.Image = ((System.Drawing.Image)(resources.GetObject("btnItemDiscount.Image")));
-            this.btnItemDiscount.Location = new System.Drawing.Point(313, 504);
-            this.btnItemDiscount.Margin = new System.Windows.Forms.Padding(0);
-            this.btnItemDiscount.Name = "btnItemDiscount";
-            this.btnItemDiscount.Size = new System.Drawing.Size(90, 59);
-            this.btnItemDiscount.TabIndex = 21;
-            this.btnItemDiscount.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.btnItemDiscount.TextColor = System.Drawing.Color.White;
-            this.btnItemDiscount.UseVisualStyleBackColor = false;
-            this.btnItemDiscount.Visible = false;
-            this.btnItemDiscount.Click += new System.EventHandler(this.btnItemDiscount_Click);
-            // 
-            // btnSearchPageLeft
-            // 
-            this.btnSearchPageLeft.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(46)))), ((int)(((byte)(95)))));
-            this.btnSearchPageLeft.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(46)))), ((int)(((byte)(95)))));
-            this.btnSearchPageLeft.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(46)))), ((int)(((byte)(95)))));
-            this.btnSearchPageLeft.BorderRadius = 30;
-            this.btnSearchPageLeft.BorderSize = 0;
-            this.btnSearchPageLeft.Enabled = false;
-            this.btnSearchPageLeft.FlatAppearance.BorderSize = 0;
-            this.btnSearchPageLeft.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnSearchPageLeft.Font = new System.Drawing.Font("Arial Rounded MT Bold", 36F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnSearchPageLeft.ForeColor = System.Drawing.Color.White;
-            this.btnSearchPageLeft.Location = new System.Drawing.Point(6, 59);
-            this.btnSearchPageLeft.Name = "btnSearchPageLeft";
-            this.btnSearchPageLeft.Size = new System.Drawing.Size(56, 253);
-            this.btnSearchPageLeft.TabIndex = 58;
-            this.btnSearchPageLeft.Text = "<";
-            this.btnSearchPageLeft.TextColor = System.Drawing.Color.White;
-            this.btnSearchPageLeft.UseVisualStyleBackColor = false;
-            this.btnSearchPageLeft.Click += new System.EventHandler(this.btnSearchPageLeft_Click);
-            // 
-            // btnSearchPageRight
-            // 
-            this.btnSearchPageRight.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(46)))), ((int)(((byte)(95)))));
-            this.btnSearchPageRight.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(46)))), ((int)(((byte)(95)))));
-            this.btnSearchPageRight.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(46)))), ((int)(((byte)(95)))));
-            this.btnSearchPageRight.BorderRadius = 30;
-            this.btnSearchPageRight.BorderSize = 0;
-            this.btnSearchPageRight.Enabled = false;
-            this.btnSearchPageRight.FlatAppearance.BorderSize = 0;
-            this.btnSearchPageRight.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnSearchPageRight.Font = new System.Drawing.Font("Arial Rounded MT Bold", 36F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnSearchPageRight.ForeColor = System.Drawing.Color.White;
-            this.btnSearchPageRight.Location = new System.Drawing.Point(946, 59);
-            this.btnSearchPageRight.Name = "btnSearchPageRight";
-            this.btnSearchPageRight.Size = new System.Drawing.Size(56, 253);
-            this.btnSearchPageRight.TabIndex = 57;
-            this.btnSearchPageRight.Text = ">";
-            this.btnSearchPageRight.TextColor = System.Drawing.Color.White;
-            this.btnSearchPageRight.UseVisualStyleBackColor = false;
-            this.btnSearchPageRight.Click += new System.EventHandler(this.btnSearchPageRight_Click);
-            // 
-            // btnBackToStart
-            // 
-            this.btnBackToStart.BackColor = System.Drawing.Color.Transparent;
-            this.btnBackToStart.BackgroundColor = System.Drawing.Color.Transparent;
-            this.btnBackToStart.BorderColor = System.Drawing.Color.Transparent;
-            this.btnBackToStart.BorderRadius = 30;
-            this.btnBackToStart.BorderSize = 0;
-            this.btnBackToStart.FlatAppearance.BorderSize = 0;
-            this.btnBackToStart.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent;
-            this.btnBackToStart.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
-            this.btnBackToStart.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnBackToStart.Font = new System.Drawing.Font("Microsoft Sans Serif", 27.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnBackToStart.ForeColor = System.Drawing.Color.White;
-            this.btnBackToStart.Image = ((System.Drawing.Image)(resources.GetObject("btnBackToStart.Image")));
-            this.btnBackToStart.Location = new System.Drawing.Point(3, 588);
-            this.btnBackToStart.Name = "btnBackToStart";
-            this.btnBackToStart.Size = new System.Drawing.Size(210, 65);
-            this.btnBackToStart.TabIndex = 49;
-            this.btnBackToStart.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.btnBackToStart.TextColor = System.Drawing.Color.White;
-            this.btnBackToStart.UseVisualStyleBackColor = false;
-            this.btnBackToStart.Click += new System.EventHandler(this.btnBackToStart_Click);
-            // 
-            // btnSkipPointCard
-            // 
-            this.btnSkipPointCard.BackColor = System.Drawing.Color.Transparent;
-            this.btnSkipPointCard.BackgroundColor = System.Drawing.Color.Transparent;
-            this.btnSkipPointCard.BorderColor = System.Drawing.Color.Transparent;
-            this.btnSkipPointCard.BorderRadius = 30;
-            this.btnSkipPointCard.BorderSize = 0;
-            this.btnSkipPointCard.FlatAppearance.BorderSize = 0;
-            this.btnSkipPointCard.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent;
-            this.btnSkipPointCard.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
-            this.btnSkipPointCard.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnSkipPointCard.Font = new System.Drawing.Font("Microsoft Sans Serif", 27.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnSkipPointCard.ForeColor = System.Drawing.Color.White;
-            this.btnSkipPointCard.Image = ((System.Drawing.Image)(resources.GetObject("btnSkipPointCard.Image")));
-            this.btnSkipPointCard.Location = new System.Drawing.Point(811, 588);
-            this.btnSkipPointCard.Name = "btnSkipPointCard";
-            this.btnSkipPointCard.Size = new System.Drawing.Size(210, 65);
-            this.btnSkipPointCard.TabIndex = 50;
-            this.btnSkipPointCard.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.btnSkipPointCard.TextColor = System.Drawing.Color.White;
-            this.btnSkipPointCard.UseVisualStyleBackColor = false;
-            this.btnSkipPointCard.Click += new System.EventHandler(this.btnSkipPointCard_Click);
-            // 
-            // btnAgeCheckExit
-            // 
-            this.btnAgeCheckExit.BackColor = System.Drawing.Color.Crimson;
-            this.btnAgeCheckExit.BackgroundColor = System.Drawing.Color.Crimson;
-            this.btnAgeCheckExit.BorderColor = System.Drawing.Color.White;
-            this.btnAgeCheckExit.BorderRadius = 10;
-            this.btnAgeCheckExit.BorderSize = 0;
-            this.btnAgeCheckExit.FlatAppearance.BorderSize = 0;
-            this.btnAgeCheckExit.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnAgeCheckExit.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnAgeCheckExit.ForeColor = System.Drawing.Color.White;
-            this.btnAgeCheckExit.Location = new System.Drawing.Point(241, -1);
-            this.btnAgeCheckExit.Name = "btnAgeCheckExit";
-            this.btnAgeCheckExit.Size = new System.Drawing.Size(40, 40);
-            this.btnAgeCheckExit.TabIndex = 57;
-            this.btnAgeCheckExit.Text = "X";
-            this.btnAgeCheckExit.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnAgeCheckExit.TextColor = System.Drawing.Color.White;
-            this.btnAgeCheckExit.UseVisualStyleBackColor = false;
-            this.btnAgeCheckExit.Click += new System.EventHandler(this.btnAgeCheckExit_Click);
-            // 
-            // btnSelectCreditCard
-            // 
-            this.btnSelectCreditCard.BackColor = System.Drawing.Color.White;
-            this.btnSelectCreditCard.BackgroundColor = System.Drawing.Color.White;
-            this.btnSelectCreditCard.BorderColor = System.Drawing.Color.PaleVioletRed;
-            this.btnSelectCreditCard.BorderRadius = 25;
-            this.btnSelectCreditCard.BorderSize = 0;
-            this.btnSelectCreditCard.FlatAppearance.BorderSize = 0;
-            this.btnSelectCreditCard.FlatAppearance.MouseDownBackColor = System.Drawing.Color.CornflowerBlue;
-            this.btnSelectCreditCard.FlatAppearance.MouseOverBackColor = System.Drawing.Color.CornflowerBlue;
-            this.btnSelectCreditCard.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnSelectCreditCard.Font = new System.Drawing.Font("Helvetica85-Heavy", 15F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnSelectCreditCard.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(46)))), ((int)(((byte)(95)))));
-            this.btnSelectCreditCard.Image = ((System.Drawing.Image)(resources.GetObject("btnSelectCreditCard.Image")));
-            this.btnSelectCreditCard.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnSelectCreditCard.Location = new System.Drawing.Point(57, 110);
-            this.btnSelectCreditCard.Margin = new System.Windows.Forms.Padding(0);
-            this.btnSelectCreditCard.Name = "btnSelectCreditCard";
-            this.btnSelectCreditCard.Size = new System.Drawing.Size(318, 92);
-            this.btnSelectCreditCard.TabIndex = 56;
-            this.btnSelectCreditCard.Text = "CREDIT/DEBIT CARD";
-            this.btnSelectCreditCard.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.btnSelectCreditCard.TextColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(46)))), ((int)(((byte)(95)))));
-            this.btnSelectCreditCard.UseVisualStyleBackColor = false;
-            this.btnSelectCreditCard.Click += new System.EventHandler(this.btnSelectCreditCard_Click);
-            // 
-            // btnSelectGiftCard
-            // 
-            this.btnSelectGiftCard.BackColor = System.Drawing.Color.White;
-            this.btnSelectGiftCard.BackgroundColor = System.Drawing.Color.White;
-            this.btnSelectGiftCard.BorderColor = System.Drawing.Color.PaleVioletRed;
-            this.btnSelectGiftCard.BorderRadius = 25;
-            this.btnSelectGiftCard.BorderSize = 0;
-            this.btnSelectGiftCard.FlatAppearance.BorderSize = 0;
-            this.btnSelectGiftCard.FlatAppearance.MouseDownBackColor = System.Drawing.Color.CornflowerBlue;
-            this.btnSelectGiftCard.FlatAppearance.MouseOverBackColor = System.Drawing.Color.CornflowerBlue;
-            this.btnSelectGiftCard.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnSelectGiftCard.Font = new System.Drawing.Font("Helvetica85-Heavy", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnSelectGiftCard.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(46)))), ((int)(((byte)(95)))));
-            this.btnSelectGiftCard.Image = ((System.Drawing.Image)(resources.GetObject("btnSelectGiftCard.Image")));
-            this.btnSelectGiftCard.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnSelectGiftCard.Location = new System.Drawing.Point(82, 213);
-            this.btnSelectGiftCard.Margin = new System.Windows.Forms.Padding(0);
-            this.btnSelectGiftCard.Name = "btnSelectGiftCard";
-            this.btnSelectGiftCard.Size = new System.Drawing.Size(241, 92);
-            this.btnSelectGiftCard.TabIndex = 59;
-            this.btnSelectGiftCard.Text = "GIFT CARD";
-            this.btnSelectGiftCard.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.btnSelectGiftCard.TextColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(46)))), ((int)(((byte)(95)))));
-            this.btnSelectGiftCard.UseVisualStyleBackColor = false;
-            this.btnSelectGiftCard.Visible = false;
-            this.btnSelectGiftCard.Click += new System.EventHandler(this.btnSelectGiftCard_Click);
-            // 
-            // btnEBT
-            // 
-            this.btnEBT.BackColor = System.Drawing.Color.White;
-            this.btnEBT.BackgroundColor = System.Drawing.Color.White;
-            this.btnEBT.BorderColor = System.Drawing.Color.RoyalBlue;
-            this.btnEBT.BorderRadius = 25;
-            this.btnEBT.BorderSize = 1;
-            this.btnEBT.Enabled = false;
-            this.btnEBT.FlatAppearance.BorderSize = 0;
-            this.btnEBT.FlatAppearance.MouseDownBackColor = System.Drawing.Color.CornflowerBlue;
-            this.btnEBT.FlatAppearance.MouseOverBackColor = System.Drawing.Color.CornflowerBlue;
-            this.btnEBT.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnEBT.Font = new System.Drawing.Font("Helvetica85-Heavy", 15F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnEBT.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(46)))), ((int)(((byte)(95)))));
-            this.btnEBT.Image = ((System.Drawing.Image)(resources.GetObject("btnEBT.Image")));
-            this.btnEBT.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnEBT.Location = new System.Drawing.Point(57, 213);
-            this.btnEBT.Margin = new System.Windows.Forms.Padding(0);
-            this.btnEBT.Name = "btnEBT";
-            this.btnEBT.Size = new System.Drawing.Size(318, 92);
-            this.btnEBT.TabIndex = 58;
-            this.btnEBT.Text = "FOOD STAMP CARD";
-            this.btnEBT.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.btnEBT.TextColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(46)))), ((int)(((byte)(95)))));
-            this.btnEBT.UseVisualStyleBackColor = false;
-            this.btnEBT.Visible = false;
-            this.btnEBT.Click += new System.EventHandler(this.btnEBT_Click);
-            // 
-            // btnSelectPointCard
-            // 
-            this.btnSelectPointCard.BackColor = System.Drawing.Color.White;
-            this.btnSelectPointCard.BackgroundColor = System.Drawing.Color.White;
-            this.btnSelectPointCard.BorderColor = System.Drawing.Color.PaleVioletRed;
-            this.btnSelectPointCard.BorderRadius = 25;
-            this.btnSelectPointCard.BorderSize = 0;
-            this.btnSelectPointCard.FlatAppearance.BorderSize = 0;
-            this.btnSelectPointCard.FlatAppearance.MouseDownBackColor = System.Drawing.Color.CornflowerBlue;
-            this.btnSelectPointCard.FlatAppearance.MouseOverBackColor = System.Drawing.Color.CornflowerBlue;
-            this.btnSelectPointCard.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnSelectPointCard.Font = new System.Drawing.Font("Helvetica85-Heavy", 15F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnSelectPointCard.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(46)))), ((int)(((byte)(95)))));
-            this.btnSelectPointCard.Image = ((System.Drawing.Image)(resources.GetObject("btnSelectPointCard.Image")));
-            this.btnSelectPointCard.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnSelectPointCard.Location = new System.Drawing.Point(57, 317);
-            this.btnSelectPointCard.Margin = new System.Windows.Forms.Padding(0);
-            this.btnSelectPointCard.Name = "btnSelectPointCard";
-            this.btnSelectPointCard.Size = new System.Drawing.Size(318, 92);
-            this.btnSelectPointCard.TabIndex = 57;
-            this.btnSelectPointCard.Text = "H-POINT CARD";
-            this.btnSelectPointCard.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.btnSelectPointCard.TextColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(46)))), ((int)(((byte)(95)))));
-            this.btnSelectPointCard.UseVisualStyleBackColor = false;
-            this.btnSelectPointCard.Visible = false;
-            this.btnSelectPointCard.Click += new System.EventHandler(this.btnSelectPointCard_Click);
-            // 
-            // btnErrorBoxBtn1
-            // 
-            this.btnErrorBoxBtn1.BackColor = System.Drawing.Color.White;
-            this.btnErrorBoxBtn1.BackgroundColor = System.Drawing.Color.White;
-            this.btnErrorBoxBtn1.BorderColor = System.Drawing.Color.Transparent;
-            this.btnErrorBoxBtn1.BorderRadius = 25;
-            this.btnErrorBoxBtn1.BorderSize = 0;
-            this.btnErrorBoxBtn1.FlatAppearance.BorderSize = 0;
-            this.btnErrorBoxBtn1.FlatAppearance.MouseDownBackColor = System.Drawing.Color.CornflowerBlue;
-            this.btnErrorBoxBtn1.FlatAppearance.MouseOverBackColor = System.Drawing.Color.CornflowerBlue;
-            this.btnErrorBoxBtn1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnErrorBoxBtn1.Font = new System.Drawing.Font("Helvetica85-Heavy", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnErrorBoxBtn1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(46)))), ((int)(((byte)(95)))));
-            this.btnErrorBoxBtn1.Image = ((System.Drawing.Image)(resources.GetObject("btnErrorBoxBtn1.Image")));
-            this.btnErrorBoxBtn1.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnErrorBoxBtn1.Location = new System.Drawing.Point(5, 222);
-            this.btnErrorBoxBtn1.Name = "btnErrorBoxBtn1";
-            this.btnErrorBoxBtn1.Size = new System.Drawing.Size(178, 50);
-            this.btnErrorBoxBtn1.TabIndex = 51;
-            this.btnErrorBoxBtn1.Text = "BACK";
-            this.btnErrorBoxBtn1.TextColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(46)))), ((int)(((byte)(95)))));
-            this.btnErrorBoxBtn1.UseVisualStyleBackColor = false;
-            this.btnErrorBoxBtn1.Click += new System.EventHandler(this.btnErrorBoxBtn1_Click);
-            // 
-            // btnErrorBoxBtn2
-            // 
-            this.btnErrorBoxBtn2.BackColor = System.Drawing.Color.White;
-            this.btnErrorBoxBtn2.BackgroundColor = System.Drawing.Color.White;
-            this.btnErrorBoxBtn2.BorderColor = System.Drawing.Color.Transparent;
-            this.btnErrorBoxBtn2.BorderRadius = 25;
-            this.btnErrorBoxBtn2.BorderSize = 0;
-            this.btnErrorBoxBtn2.FlatAppearance.BorderSize = 0;
-            this.btnErrorBoxBtn2.FlatAppearance.MouseDownBackColor = System.Drawing.Color.CornflowerBlue;
-            this.btnErrorBoxBtn2.FlatAppearance.MouseOverBackColor = System.Drawing.Color.CornflowerBlue;
-            this.btnErrorBoxBtn2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnErrorBoxBtn2.Font = new System.Drawing.Font("Helvetica85-Heavy", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnErrorBoxBtn2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(216)))), ((int)(((byte)(23)))), ((int)(((byte)(23)))));
-            this.btnErrorBoxBtn2.Image = ((System.Drawing.Image)(resources.GetObject("btnErrorBoxBtn2.Image")));
-            this.btnErrorBoxBtn2.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.btnErrorBoxBtn2.Location = new System.Drawing.Point(266, 222);
-            this.btnErrorBoxBtn2.Name = "btnErrorBoxBtn2";
-            this.btnErrorBoxBtn2.Size = new System.Drawing.Size(178, 50);
-            this.btnErrorBoxBtn2.TabIndex = 52;
-            this.btnErrorBoxBtn2.Text = "YES";
-            this.btnErrorBoxBtn2.TextColor = System.Drawing.Color.FromArgb(((int)(((byte)(216)))), ((int)(((byte)(23)))), ((int)(((byte)(23)))));
-            this.btnErrorBoxBtn2.UseVisualStyleBackColor = false;
-            this.btnErrorBoxBtn2.Click += new System.EventHandler(this.btnErrorBoxBtn2_Click);
-            // 
-            // btnReviewToStart
-            // 
-            this.btnReviewToStart.BackColor = System.Drawing.Color.Transparent;
-            this.btnReviewToStart.BackgroundColor = System.Drawing.Color.Transparent;
-            this.btnReviewToStart.BorderColor = System.Drawing.Color.Transparent;
-            this.btnReviewToStart.BorderRadius = 25;
-            this.btnReviewToStart.BorderSize = 0;
-            this.btnReviewToStart.FlatAppearance.BorderSize = 0;
-            this.btnReviewToStart.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnReviewToStart.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnReviewToStart.ForeColor = System.Drawing.Color.Transparent;
-            this.btnReviewToStart.Image = ((System.Drawing.Image)(resources.GetObject("btnReviewToStart.Image")));
-            this.btnReviewToStart.Location = new System.Drawing.Point(800, 515);
-            this.btnReviewToStart.Margin = new System.Windows.Forms.Padding(0);
-            this.btnReviewToStart.Name = "btnReviewToStart";
-            this.btnReviewToStart.Size = new System.Drawing.Size(210, 59);
-            this.btnReviewToStart.TabIndex = 42;
-            this.btnReviewToStart.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnReviewToStart.TextColor = System.Drawing.Color.Transparent;
-            this.btnReviewToStart.UseVisualStyleBackColor = false;
-            this.btnReviewToStart.Click += new System.EventHandler(this.btnReviewToStart_Click);
-            // 
-            // btnStart
-            // 
-            this.btnStart.BackColor = System.Drawing.Color.Transparent;
-            this.btnStart.BackgroundColor = System.Drawing.Color.Transparent;
-            this.btnStart.BorderColor = System.Drawing.Color.Transparent;
-            this.btnStart.BorderRadius = 60;
-            this.btnStart.BorderSize = 0;
-            this.btnStart.FlatAppearance.BorderSize = 0;
-            this.btnStart.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent;
-            this.btnStart.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
-            this.btnStart.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnStart.Font = new System.Drawing.Font("Microsoft Sans Serif", 27.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnStart.ForeColor = System.Drawing.Color.White;
-            this.btnStart.Image = ((System.Drawing.Image)(resources.GetObject("btnStart.Image")));
-            this.btnStart.Location = new System.Drawing.Point(549, 501);
-            this.btnStart.Name = "btnStart";
-            this.btnStart.Size = new System.Drawing.Size(405, 118);
-            this.btnStart.TabIndex = 3;
-            this.btnStart.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.btnStart.TextColor = System.Drawing.Color.White;
-            this.btnStart.UseVisualStyleBackColor = false;
-            this.btnStart.Click += new System.EventHandler(this.btnStart_Click);
+            this.btnscalescanTest2.BackColor = System.Drawing.Color.MediumSlateBlue;
+            this.btnscalescanTest2.BackgroundColor = System.Drawing.Color.MediumSlateBlue;
+            this.btnscalescanTest2.BorderColor = System.Drawing.Color.PaleVioletRed;
+            this.btnscalescanTest2.BorderRadius = 0;
+            this.btnscalescanTest2.BorderSize = 0;
+            this.btnscalescanTest2.FlatAppearance.BorderSize = 0;
+            this.btnscalescanTest2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnscalescanTest2.ForeColor = System.Drawing.Color.White;
+            this.btnscalescanTest2.Location = new System.Drawing.Point(770, 76);
+            this.btnscalescanTest2.Name = "btnscalescanTest2";
+            this.btnscalescanTest2.Size = new System.Drawing.Size(95, 25);
+            this.btnscalescanTest2.TabIndex = 91;
+            this.btnscalescanTest2.Text = "scaleScantest2";
+            this.btnscalescanTest2.TextColor = System.Drawing.Color.White;
+            this.btnscalescanTest2.UseVisualStyleBackColor = false;
+            this.btnscalescanTest2.Visible = false;
+            this.btnscalescanTest2.Click += new System.EventHandler(this.btnscalescanTest2_Click);
             // 
             // HanaSales_SelfCheckOut
             // 

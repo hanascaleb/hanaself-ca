@@ -10542,6 +10542,40 @@ namespace HanaSales_SelfCheckOut
                 {
                     if(GintLocation == 1)                   // 벤쿠버 인 경우
                     {
+                        // HVT Wednesday coupon: $20 or $30 coupons 
+                        if (c_poscominfo.ci_mkno == "69" && DateTime.Now.DayOfWeek == DayOfWeek.Wednesday)                         
+                        {
+                            // run if 'Tous Les Jours' (B3) or 'Gift card' (96) does not exist
+                            sQBuff = "SELECT COUNT(*) AS Cnt " +
+                                    "FROM tb_soldItem " +
+                                    "WHERE tInvNo = '" + GstrPrtInvno + "' " +
+                                    "AND tPtype IN ('B3','93')";
+                            lReturn = c_localdb.RsOpen(sQBuff);
+                            int cnt = Convert.ToInt32(c_localdb.rs.Fields["Cnt"].Value);
+                            if (cnt == 0)
+                            {                                
+                                // $50 - $99.99 : one $2 coupon
+                                if (dTotalDue >= 50 && dTotalDue < 100)
+                                {
+                                    imgCouponFilesPath = Directory.GetFiles(Application.StartupPath + "\\Coupon\\", "dc_2_van_20250525.jpg", SearchOption.TopDirectoryOnly);
+                                    PrtCoupon.PrintController = new System.Drawing.Printing.StandardPrintController();
+                                    PrtCoupon.Print();
+                                }
+                                // $100+ : one $5 coupon for every $100
+                                else if (dTotalDue >= 100)
+                                {
+                                    int couponCount = (int)Math.Floor(dTotalDue / 100);
+
+                                    for (int i = 0; i < couponCount; i++)
+                                    {
+                                        imgCouponFilesPath = Directory.GetFiles(Application.StartupPath + "\\Coupon\\", "dc_5_van_20250525.jpg", SearchOption.TopDirectoryOnly);
+                                        PrtCoupon.PrintController = new System.Drawing.Printing.StandardPrintController();
+                                        PrtCoupon.Print();
+                                    }
+                                }
+                            }
+                        }
+
                         // Not apply this coupon event on self-checkout
                         /*string strCurDate = DateTime.Now.ToString("yyyy-MM-dd");
 
@@ -16687,16 +16721,19 @@ namespace HanaSales_SelfCheckOut
         {
             // pds-test
             //ShowScannerData("761898665879");
-            //ShowScannerData("807176500293"); // CJ Chunhailmee Rice
-            ShowScannerData("031146013531");   // NS SHIN RAMYUN BLACK 130G*4
+            //ShowScannerData("807176500293");  // CJ Chunhailmee Rice, $49.99
+            //ShowScannerData("031146013531");  // NS SHIN RAMYUN BLACK 130G*4, $14.99
+            ShowScannerData("8809061492548");   // Punggi red ginseng whole roots 200g, $59.99
+            //ShowScannerData("8809019402605");   // CUCKOO RICE COOKER CR0351F, $205.99
+
 
             /*if (GintLocation == 1) 
                 ShowScannerData("822222342481"); // scan membership                
             else if (GintLocation == 3)
                 ShowScannerData("822282315302");*/
 
-
         }
+
         private void btnscalescanTest3_Click(object sender, EventArgs e)
         {
             // pds-test
