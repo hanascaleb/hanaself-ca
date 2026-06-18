@@ -10776,10 +10776,26 @@ namespace HanaSales_SelfCheckOut
                     Offset = Offset + (iFontHeightGap * 2);
                     imgFiles = imgCouponFilesPath;
                     Image igCouponImg = Image.FromFile(imgFiles[0]);
-                    e.Graphics.DrawImage(igCouponImg, 2, Offset, 275, 135);
+                    e.Graphics.DrawImage(igCouponImg, 2, Offset, 275, 150);
                     
                     // issued date
                     e.Graphics.DrawString(strCurDate , new Font("Arial", 8, FontStyle.Regular), new SolidBrush(Color.Black), iStartX, 0);
+                    
+                    string couponDate = DateTime.Now.AddMonths(1).ToString("yyMMdd");
+                    string validDate = DateTime.Now.AddDays(30).ToString("yyyy/MM/dd");
+                    Barcodefont = new Font("3 of 9 Barcode", 20, FontStyle.Regular);
+                    Offset = Offset + (iFontHeightGap * 1);
+
+                    if (imgFiles[0].Contains("dc_2_van")) {
+                        e.Graphics.DrawString("*62.02" + couponDate + "*", Barcodefont, new SolidBrush(Color.Black), iStartX + 30, iStartY + Offset);
+                    }
+                    else if (imgFiles[0].Contains("dc_5_van")) {
+                        e.Graphics.DrawString("*62.05" + couponDate + "*", Barcodefont, new SolidBrush(Color.Black), iStartX + 30, iStartY + Offset);
+                    }
+
+                    Offset = Offset + (iFontHeightGap * 2);
+                    e.Graphics.DrawString("Valid until " + validDate , new Font("Arial", 8, FontStyle.Regular), new SolidBrush(Color.Black), iStartX + 135, iStartY + Offset);
+
                     
                     /* disable barcode and event period
                     Barcodefont = new Font("3 of 9 Barcode", 25, FontStyle.Regular);
@@ -16723,10 +16739,9 @@ namespace HanaSales_SelfCheckOut
             //ShowScannerData("761898665879");
             //ShowScannerData("807176500293");  // CJ Chunhailmee Rice, $49.99
             //ShowScannerData("031146013531");  // NS SHIN RAMYUN BLACK 130G*4, $14.99
-            ShowScannerData("8809061492548");   // Punggi red ginseng whole roots 200g, $59.99
-            //ShowScannerData("8809019402605");   // CUCKOO RICE COOKER CR0351F, $205.99
-
-
+            //ShowScannerData("8809061492548");   // Punggi red ginseng whole roots 200g, $59.99
+            ShowScannerData("8809019402605");   // CUCKOO RICE COOKER CR0351F, $205.99
+    
             /*if (GintLocation == 1) 
                 ShowScannerData("822222342481"); // scan membership                
             else if (GintLocation == 3)
