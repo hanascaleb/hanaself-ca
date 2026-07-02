@@ -23,8 +23,6 @@ using System.Diagnostics;
 using System.Drawing.Imaging;
 using System.Management;
 using System.Media;
-//using OposScale_1_8_Lib;
-//using OposScanner_1_8_Lib;
 using OposScale_CCO;
 using OposScanner_CCO;
 using Custom.CuCustomWndAPI;
@@ -37,36 +35,41 @@ namespace HanaSales_SelfCheckOut
 
     public partial class HanaSales_SelfCheckOut : Form
     {
-        /************************* Global Common Libs Instance 변수 선언 ********************************************/
+        //-----------------------------------------------------------------------------------------------
+        // Common Libs
+        //-----------------------------------------------------------------------------------------------
         private static cls_codb00 c_localdb;
         private static cls_codb00 c_localdb2;
         private static cls_codb00 c_remotedb;
         private static cls_colibs00 c_colib = new cls_colibs00();
-
         private static commonClass c_poscomlibs = new commonClass();
         private static clsPOSComInfo c_poscominfo = new clsPOSComInfo();
-
-        string g_sProcessor = System.AppDomain.CurrentDomain.FriendlyName.Replace(".exe", "");
-        string g_sMessage = string.Empty;
-        /************************* Global Common Libs Instance 변수 선언 ********************************************/
-
-        /************************* Global Object Declaration Start ********************************************/
-        /*** Global Object Declaration Start ****/
+        
+        // Scale
         private static OPOSScannerClass OPOSScanner = new OPOSScannerClass();
         private static OPOSScaleClass OPOSScale = new OPOSScaleClass();
 
+
+        //-----------------------------------------------------------------------------------------------
+        // Member Variables 
+        //-----------------------------------------------------------------------------------------------
+        
+        // Test mode
+        bool g_bTestMode = false;        
+        bool g_bTestMembershipScan = false; // test for membership scan
+
+
+        string g_sProcessor = System.AppDomain.CurrentDomain.FriendlyName.Replace(".exe", "");
+        string g_sMessage = string.Empty;        
         private string s_scale_devicename = "SCRS232Scale";
         private string s_scanner_devicename = "SCRS232Scanner";
-        /************************* Global Object Declaration End ********************************************/
-
-        /************************* 사용 변수 선언 ********************************************/
         System.Windows.Forms.Timer objTimer = new System.Windows.Forms.Timer();
 
         bool g_bTouchUse = true;
         bool g_bCustomerMonitor = true;
-        string g_strCounterNum = "";
+        string g_sCounterNum = "";
 
-        // 핀패드 사용 여부
+        // Pinpad
         bool g_bPinpadUse = true;
 
         // QLight 사용 여부
@@ -76,7 +79,6 @@ namespace HanaSales_SelfCheckOut
         bool g_HelpModeOn    = false;
         bool g_ReprintModeOn = false;
         bool g_ItemDiscountModeOn = false;
-
         bool g_ManagerCardScanReady = false;
         bool g_ManagerCardScanOn = false;
 
@@ -87,10 +89,10 @@ namespace HanaSales_SelfCheckOut
         int  g_iStoredAdultLimit = 0;
 
         string g_strAgeCheckforProdID = string.Empty;
-        
-        bool GPinPadReady = false;
-        bool GPayFinish = false;
-        int GintAuthSeq = 1;
+        bool g_bPinPadReady = false;
+        bool g_bPayFinish = false;
+        int g_iAuthSeq = 1;
+
         public double[] CardPay = new double[10] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
         public const int iVisa = 0;
         public const int iMaster = 1;
@@ -107,20 +109,11 @@ namespace HanaSales_SelfCheckOut
         public const int iAli = 0;
         public const int iWechat = 1;
 
-        string GstrPayType = "";
-        string GstrStoreMerchantID = "";
-        string GstrStoreMerchantKey = "";
-        string GstrStorejobNo = "";
-        string GstrStoreLoginname = "hmart01";
-        string GstrStorePassword = "o8gcZZsXcPI=";
-
-        // 테스트 모드
-        bool GblTestMode = false;
-
         // 프린트 영수증 번호
         string GstrPrtInvno = "";
         string GstrReprint = "";
         string[] imgCouponFilesPath;
+        
         // 쿠폰 영수증 뒤 출력용
         bool bUseCoupon = false;
         void setUseCoupon(bool useCoupon)
@@ -129,26 +122,20 @@ namespace HanaSales_SelfCheckOut
         }
 
         // Store Area 
-        int GintLocation = c_poscominfo.ci_mklocation;
+        int g_iLocation = c_poscominfo.ci_mklocation;                
+
+        // Membership 
+        bool g_bMember = false;
+        bool g_bMemberEarn = false;
+        bool g_bMemberHPuse = false;
+        bool g_bDoublePoint = false;
+        string g_sTotalDCType = "";
+        string g_sStaffBal;
+        double g_dTotalDCRate = 0;
+        double g_dItemDCRate = 0;
+        double g_dHPTodayUsed = 0;
+        double g_dHPBonus = 0;
         
-        // Market Info
-        //string GstrMkno = "61";
-        //string GstrStno = "99";
-
-
-        // 멤버 관련 변수
-        bool GchkMember = false;
-        bool GblMemberEarn = false;
-        bool GblMemberHPuse = false;
-        string GstrTotalDCType = "";
-        double GdblTotalDCRate = 0;
-        double GdblItemDCRate = 0;
-        string GcID, GcName, GcFirst, GcStore, GcCustno, GcTelNo, GcEmail, GcHPBal, GcHPEarn, GcHPUsed, GcOrigin, GcBal, GcNPH, GcASLA, GcAPNo, GcTPNo, GcVoid;
-        double GdblHPTodayUsed = 0;
-        double GdblHPBal = 0;
-        double GdblHPEarn = 0;
-        double GdblHPUsed = 0;
-
         // EBT Calculation
         double GdblEBTAmountTotal = 0;          // EBT 대상 상품 합산 금액
         double GdblEBTTax1Total = 0;            // EBT 대상 상품 Tax1 합산 금액
@@ -156,16 +143,14 @@ namespace HanaSales_SelfCheckOut
         double GdblEBTTax3Total = 0;            // EBT 대상 상품 Tax3 합산 금액
         double GdblEBTTaxExemptAmountTotal = 0; // Tax Exemption 적용 받는 Total Amount 금액
         double GdblEBTTaxExemptTotal = 0;       // Tax Exemption 금액
-
         double GdblFoodStampAmt = 0;
         double GdblFoodStampTax = 0;
         double GdblFoodStampTaxableItemAmt = 0;
-
         bool GblEBTReusableBag = false;
         bool GblEBTTaxExamption = false;
 
         // Transaction Complete
-        bool GblComplete = false;
+        bool g_bComplete = false;
 
         // Update Check Folder
         string g_strUpdateCheckFolder = c_colib.app_path + "INI";           // Application.ExecutablePath.Substring(0, Application.ExecutablePath.LastIndexOf('\\'));
@@ -175,7 +160,6 @@ namespace HanaSales_SelfCheckOut
         int g_iUpdateInterval = 7000;                    // 10초 대기 후 업데이트 체크.
 
         //Back To Start Inverval
-        //int g_iBackToStartIntervalFromItemScan = 5000;        // 300초(5분) 대기 상태 후 Start 화면으로 전환
         int g_iBackToStartIntervalFromItemScan = 300000;        // 300초(5분) 대기 상태 후 Start 화면으로 전환 TEST
         int g_iBackToStartInterval = 60000;                     // 60초(1분) 대기 상태 후 Start 화면으로 전환.
         int g_iBackToStartExtensionInterval = 30;           // 60초(1분) 대기 상태 후 Start 화면으로 전환.
@@ -344,7 +328,7 @@ namespace HanaSales_SelfCheckOut
 
             InitializeComponent();
 
-            if(GintLocation == 1)               // 벤쿠버 일때 // 임시
+            if(g_iLocation == 1)               // 벤쿠버 일때 // 임시
             {
                 g_strManagerKey = "83800030";
             }
@@ -360,7 +344,7 @@ namespace HanaSales_SelfCheckOut
             {
                 chkPinpadInit();
             }
-            //GPinPadReady = true;
+            //g_bPinPadReady = true;
 
             initListView();
             ItemCSView.Enabled = false;
@@ -383,12 +367,12 @@ namespace HanaSales_SelfCheckOut
             // 임시 캐나다 테스트용----------------------
             //c_poscominfo.ci_mkno = "61";
             //c_poscominfo.ci_mklocation = 1;
-            //GintLocation = c_poscominfo.ci_mklocation;
+            //g_iLocation = c_poscominfo.ci_mklocation;
 
             ////임시 미국 테스트용---------------------- -
             //c_poscominfo.ci_mklocation = 1;
             //c_poscominfo.ci_mkno = "52";
-            //GintLocation = 3;
+            //g_iLocation = 3;
             //// ----------------------------------------
             //c_poscominfo.si_counternum = "99";
             //c_poscominfo.si_touchuse = g_bTouchUse;
@@ -415,7 +399,7 @@ namespace HanaSales_SelfCheckOut
 
             //txtSearchCode.TextAlignChanged += txtSearchCode_TextChanged;
 
-            if(GintLocation == 1)       // 벤쿠버 
+            if(g_iLocation == 1)       // 벤쿠버 
             {
                 //// 저울에서 스캔 되는거 방지.
                 //if (OPOSScanner.DeviceEnabled)
@@ -433,7 +417,7 @@ namespace HanaSales_SelfCheckOut
                         c_poscominfo.si_scaleuse = true;
                 }
             }
-            else if(GintLocation == 2)      //토론토
+            else if(g_iLocation == 2)      //토론토
             {
                 if (c_poscominfo.si_scaletype != 0)
                 {
@@ -479,7 +463,7 @@ namespace HanaSales_SelfCheckOut
             ProcessQLightControl("g1");     // Green Light On
           
             //Card 결제 버튼 선언 및 Bag Label 수정
-            if(GintLocation == 1)                   // 벤쿠버
+            if(g_iLocation == 1)                   // 벤쿠버
             {
                 btnSelectCreditCard.Size = new Size(318, 92);
                 btnSelectCreditCard.Text = "CREDIT/DEBIT CARD";
@@ -493,7 +477,7 @@ namespace HanaSales_SelfCheckOut
                 btnSearch.Location = new Point(76, 195);
 
                 // 마무스 커서 삭제.
-                if (GblTestMode == true)
+                if (g_bTestMode == true)
                 {
                     //btnscalescanTest.Visible = true;
                     btnscalescanTest2.Visible = true;
@@ -524,7 +508,7 @@ namespace HanaSales_SelfCheckOut
                 g_ManagerCardScanReady = true;
 
             }
-            else if (GintLocation == 2 )            // 토론토
+            else if (g_iLocation == 2 )            // 토론토
             {
                 btnSelectCreditCard.Size = new Size(318, 92);
                 btnSelectCreditCard.Text = "CREDIT/DEBIT CARD";
@@ -557,7 +541,7 @@ namespace HanaSales_SelfCheckOut
                 lbSearchOption.Text = "SEARCH ITEM";
                 lbCredit_DebitCardOnly.Visible = true;
 
-                if (GblTestMode == true)
+                if (g_bTestMode == true)
                 {
                     btnSelectPointCard.Visible = true;
                     btnEBT.Visible = true;
@@ -793,44 +777,22 @@ namespace HanaSales_SelfCheckOut
 
         private void InitMemberInfo()
         {
-            GchkMember = false;
-            GcID = "";
-            GcName = "";
-            GcFirst = "";
-            GcStore = "";
-
-            GcCustno = "";
-            GcTelNo = "";
-            GcEmail = "";
-
-            GcHPBal = "";
-            GcHPEarn = "";
-            GcHPUsed = "";
-
-            GcOrigin = "";
-            GcBal = "";
-            GcNPH = "";
-
-            GcASLA = "";
-            GcAPNo = "";
-            GcTPNo = "";
-            GcVoid = "";
+            g_bMember = false;
+            g_sStaffBal = "";
         }
 
         private void InitMemberPointInfo()
         {
-            GchkMember = false;
-            GblMemberEarn = false;
-            GblMemberHPuse = false;
-            GstrTotalDCType = "";
-            GdblTotalDCRate = 0;
-            GdblItemDCRate = 0;
-            //GcID, GcName, GcFirst, GcStore, GcCustno, GcTelNo, GcEmail, GcHPBal, GcHPEarn, GcHPUsed, GcOrigin, GcBal, GcNPH, GcASLA, GcAPNo, GcTPNo, GcVoid;
-            GdblHPTodayUsed = 0;
-            GdblHPBal = 0;
-            GdblHPEarn = 0;
-            GdblHPUsed = 0;
+            g_bMember = false;
+            g_bMemberEarn = false;
+            g_bMemberHPuse = false;
+            g_sTotalDCType = "";
+            g_dTotalDCRate = 0;
+            g_dItemDCRate = 0;
+            g_dHPTodayUsed = 0;
+            g_dHPBonus = 0;
         }
+
         private void InitMemberDisplay()
         {
             lbMemberNameCS.Text = "";
@@ -855,7 +817,7 @@ namespace HanaSales_SelfCheckOut
 
         private void initUSADisplay()
         {
-            if (GintLocation == 3)
+            if (g_iLocation == 3)
             {
                 // 스캔 화면에서 Tax 명칭 변경
                 lbHSTCS.Visible = false;
@@ -896,8 +858,8 @@ namespace HanaSales_SelfCheckOut
             lblPayBalance.Text = "0.00";
             lbSelectPaymentBalanceNum.Text = "0.00";
 
-            GPayFinish = false;
-            GintAuthSeq = 1;
+            g_bPayFinish = false;
+            g_iAuthSeq = 1;
             // Card Pay 저장 배열 초기화.
             for (int i = 0; i < 10; i++)
             {
@@ -917,7 +879,7 @@ namespace HanaSales_SelfCheckOut
             lblPayBalance.Text = "0.00";
             lbSelectPaymentBalanceNum.Text = "0.00";
 
-            if(GintLocation == 1)           // 벤쿠버 인경우
+            if(g_iLocation == 1)           // 벤쿠버 인경우
             {
                 lbGSTCS.Visible = true;
                 lbPSTCS.Visible = true;
@@ -927,7 +889,7 @@ namespace HanaSales_SelfCheckOut
                 lbPSTValCS.Visible = true;
                 lbHSTValCS.Visible = false;
             }
-            else if(GintLocation == 2)      // 토론토 인경우
+            else if(g_iLocation == 2)      // 토론토 인경우
             {
                 lbGSTCS.Visible = false;
                 lbPSTCS.Visible = false;
@@ -978,7 +940,7 @@ namespace HanaSales_SelfCheckOut
 
         private void KeyInReady()
         {
-            //if (GblTestMode == true)
+            //if (g_bTestMode == true)
             //{
             //    return;
             //}
@@ -1029,7 +991,7 @@ namespace HanaSales_SelfCheckOut
             initScale();
             initEBTTotal();
 
-            if(GintLocation == 1 || GintLocation == 3)       // 벤쿠버 일때만
+            if(g_iLocation == 1 || g_iLocation == 3)       // 벤쿠버 일때만
             {
                 if (c_poscominfo.si_scaletype != 0)
                 {
@@ -1053,7 +1015,7 @@ namespace HanaSales_SelfCheckOut
             InitMemberDisplay();
             c_poscominfo.ClearMemberInfo();
 
-            GblComplete = false;
+            g_bComplete = false;
 
             initDClabel();
 
@@ -1370,7 +1332,7 @@ namespace HanaSales_SelfCheckOut
                 UpdateCheckTimer.Start();
             }
 
-            //if(GintLocation == 1 )              // 벤쿠버 경우
+            //if(g_iLocation == 1 )              // 벤쿠버 경우
             //{
             //    // 저울에서 스캔 되는거 방지.
             //    if (OPOSScanner.DeviceEnabled)
@@ -1413,12 +1375,12 @@ namespace HanaSales_SelfCheckOut
             // 3. 멤버십 번호 체계 분석하여 chkMembership Call
             if (sMembershipNumber.Length == 12 || sMembershipNumber.Length == 10)
             {
-                if (GchkMember == false)
+                if (g_bMember == false)
                 {
                     chkMember = chkMemebership(sMembershipNumber);
                     if (chkMember == true)
                     {
-                        GchkMember = true;
+                        g_bMember = true;
                         lbMemberShipCS.Visible = true;
                         lbMemberNameCS.Visible = true;
                         lbBalanceCS.Visible = false;
@@ -1426,9 +1388,9 @@ namespace HanaSales_SelfCheckOut
                         lbBalancePointTop.Visible = true;
                         lbCurrentCusBal.Visible = true;
 
-                        if(GblMemberHPuse == true)              // 카드로 스캔한 경우만 결제가능 금액 출력하기.
+                        if(g_bMemberHPuse == true)              // 카드로 스캔한 경우만 결제가능 금액 출력하기.
                         {
-                            if(GintLocation != 3)                       // 미국이 아닌 경우만 표시.
+                            if(g_iLocation != 3)                       // 미국이 아닌 경우만 표시.
                             {
                                 lbAvailableAmount.Visible = true;
                                 lbAvailableAmountNum.Visible = true;
@@ -1450,7 +1412,7 @@ namespace HanaSales_SelfCheckOut
                     }
                     else
                     {
-                        GchkMember = false;
+                        g_bMember = false;
 
                         //Button Disable
                         btnSkipPointCard.Enabled = false;
@@ -1484,9 +1446,9 @@ namespace HanaSales_SelfCheckOut
                     lbBalancePointCS.Visible = false;
                     lbCurrentCusBal.Visible = true;
 
-                    if (GblMemberHPuse == true)              // 카드로 스캔한 경우만 결제가능 금액 출력하기.
+                    if (g_bMemberHPuse == true)              // 카드로 스캔한 경우만 결제가능 금액 출력하기.
                     {
-                        if (GintLocation != 3)                       // 미국이 아닌 경우만 표시.
+                        if (g_iLocation != 3)                       // 미국이 아닌 경우만 표시.
                         {
                             lbAvailableAmount.Visible = true;
                             lbAvailableAmountNum.Visible = true;
@@ -1573,7 +1535,7 @@ namespace HanaSales_SelfCheckOut
 
                         //c_poscominfo.si_StationEnabled = Convert.ToInt32(c_localdb.rs.Fields["st_enabled"].Value);
                         c_poscominfo.ci_mklocation = Convert.ToInt32(c_localdb.rs.Fields["bh_location"].Value);
-                        GintLocation = c_poscominfo.ci_mklocation;
+                        g_iLocation = c_poscominfo.ci_mklocation;
                         c_poscominfo.si_StationIPGroup = Convert.ToString(c_localdb.rs.Fields["bh_IPGroup"].Value);
                         c_poscominfo.si_StationDBSvr = Convert.ToString(c_localdb.rs.Fields["bh_DBSvr"].Value);
                         c_poscominfo.si_PinpadStationID = Convert.ToString(c_localdb.rs.Fields["st_pinpadStationID"].Value);
@@ -1649,12 +1611,12 @@ namespace HanaSales_SelfCheckOut
                 {
                     c_poscominfo.mi_cardno = strInputCode;
 
-                    GblMemberEarn = true;
-                    GblMemberHPuse = true;
+                    g_bMemberEarn = true;
+                    g_bMemberHPuse = true;
                 }
                 else
                 {
-                    GblMemberEarn = false;
+                    g_bMemberEarn = false;
 
                     return false;
                 }
@@ -1663,24 +1625,24 @@ namespace HanaSales_SelfCheckOut
             {
                 c_poscominfo.mi_telno = strInputCode;
 
-                GblMemberEarn = true;
-                GblMemberHPuse = false;
+                g_bMemberEarn = true;
+                g_bMemberHPuse = false;
             }
             else
             {
-                GblMemberEarn = false;
+                g_bMemberEarn = false;
 
                 return false;
             }
 
             // 3. Total DC인 경우 Membership 포인트 적립, 사용 안 되도록 표시
             // Member Information은 보여주는 걸로..
-            if (GstrTotalDCType == "41")
+            if (g_sTotalDCType == "41")
             {
                 MessageBox.Show("In Total DC Case, Membership CANNOT be Applied!");
 
-                GblMemberEarn = false;
-                GblMemberHPuse = false;
+                g_bMemberEarn = false;
+                g_bMemberHPuse = false;
 
                 return false;
             }
@@ -1756,20 +1718,20 @@ namespace HanaSales_SelfCheckOut
                     }
 
                     //4 - 2.멤버 Type 확인 : 내부거래 / 직원 / VIP / Wholesale(추후)
-                    if (GblMemberHPuse == true) //카드로 스캔한 경우
+                    if (g_bMemberHPuse == true) //카드로 스캔한 경우
                     {
                         if (fncVerifyVIPMembershipCard(c_poscominfo.mi_cardno)) // Bloor점 VIP 할인
                         {
-                            GdblTotalDCRate = 10;
-                            GstrTotalDCType = "42";
+                            g_dTotalDCRate = 10;
+                            g_sTotalDCType = "42";
                         }
 
-                        if (GintLocation == 1) // Vancouver
+                        if (g_iLocation == 1) // Vancouver
                         {
                             //if (GstrMkno == "64" && (strInputCode == "822222246208" || strInputCode == "822222246246")) // Bloor점 VIP 할인
                             //{
-                            //    GdblTotalDCRate = 10;
-                            //    GstrTotalDCType = "42";
+                            //    g_dTotalDCRate = 10;
+                            //    g_sTotalDCType = "42";
                             //}
 
                             if (c_poscominfo.mi_tpno == "2" && c_poscominfo.mi_apno != "")                      // 직원 맴버 할인
@@ -1791,31 +1753,31 @@ namespace HanaSales_SelfCheckOut
 
                                 if (intDatediff >= 90)
                                 {
-                                    GdblTotalDCRate = 5;                                                    //직원할인 10% -> 5%로 변경. 김종윤 팀장 요청.
-                                    GstrTotalDCType = "43";
-                                    GcBal = c_poscominfo.mi_staffbal.ToString();
+                                    g_dTotalDCRate = 5;                                                    //직원할인 10% -> 5%로 변경. 김종윤 팀장 요청.
+                                    g_sTotalDCType = "43";
+                                    g_sStaffBal = c_poscominfo.mi_staffbal.ToString();
                                 }
                                 else
                                 {
-                                    GdblTotalDCRate = 0;
-                                    GstrTotalDCType = "";
+                                    g_dTotalDCRate = 0;
+                                    g_sTotalDCType = "";
                                 }
 
                             }
                         }
-                        else if (GintLocation == 2) // Toronto
+                        else if (g_iLocation == 2) // Toronto
                         {
                             //if (c_poscominfo.si_counternum == "0" || c_poscominfo.si_counternum == "1")
                             //{
                             //    if (c_poscominfo.mi_asla == "1" || c_poscominfo.mi_asla == "2" || c_poscominfo.mi_asla == "3")
                             //    {
-                            //        GdblTotalDCRate = 100;
-                            //        GstrTotalDCType = "45";
+                            //        g_dTotalDCRate = 100;
+                            //        g_sTotalDCType = "45";
                             //    }
                             //    else
                             //    {
-                            //        GdblTotalDCRate = 0;
-                            //        GstrTotalDCType = "";
+                            //        g_dTotalDCRate = 0;
+                            //        g_sTotalDCType = "";
                             //    }
                             //}
                             //else
@@ -1826,11 +1788,11 @@ namespace HanaSales_SelfCheckOut
 
                             ////if (GstrMkno == "46" && strInputCode == "822260035000") // Bloor점 VIP 할인
                             ////{
-                            ////    GdblTotalDCRate = 10;
-                            ////    GstrTotalDCType = "42";
+                            ////    g_dTotalDCRate = 10;
+                            ////    g_sTotalDCType = "42";
                             ////}
                         }
-                        else if (GintLocation == 3) // USA
+                        else if (g_iLocation == 3) // USA
                         {
 
                         }
@@ -2104,7 +2066,7 @@ namespace HanaSales_SelfCheckOut
             //this.txtEmpNo.Text = info;
             // 테스트 용 번호. Self Check Out용 번호 생성 필요.
 
-            if(GintLocation == 1)                   //벤쿠버일 경우
+            if(g_iLocation == 1)                   //벤쿠버일 경우
             {
                 if( c_poscominfo.ci_mkno == "61")
                 {
@@ -2115,7 +2077,7 @@ namespace HanaSales_SelfCheckOut
                     this.txtEmpNo.Text = "H2049";       // 다운타운 이경미 팀장
                 }
             }
-            else if(GintLocation == 2)              // 토론토일 경우
+            else if(g_iLocation == 2)              // 토론토일 경우
             {
                 this.txtEmpNo.Text = "H1306002";            // 리치몬드힐 우지여 팀장
             }
@@ -2147,7 +2109,7 @@ namespace HanaSales_SelfCheckOut
         }
         public void SetCounterNum(string info)
         {
-            this.g_strCounterNum = info;
+            this.g_sCounterNum = info;
         }
 
         private void txtNumCS_KeyDown(object sender, KeyEventArgs e)
@@ -2204,7 +2166,7 @@ namespace HanaSales_SelfCheckOut
                     btnVoid.Visible = false;
                     btnItemDiscount.Visible = false;
 
-                    //if (GintLocation == 2)                   // 토론토인 경우
+                    //if (g_iLocation == 2)                   // 토론토인 경우
                     //{
                     //    btnBack.Visible = false;
                     //}
@@ -2256,7 +2218,7 @@ namespace HanaSales_SelfCheckOut
 
                     KeyInReady();
 
-                    //if (GintLocation != 3)                       // 미국이 아닌 경우
+                    //if (g_iLocation != 3)                       // 미국이 아닌 경우
                     //{
                     //    if (ctrlOnScreen != pn_ItemScan && ctrlOnScreen != pnItemScanSearchBtn && ctrlOnScreen != gbAgeCheck)
                     //    {
@@ -2319,14 +2281,14 @@ namespace HanaSales_SelfCheckOut
                         initScale();
                         initEBTTotal();
 
-                        if (GblComplete == true)
+                        if (g_bComplete == true)
                         {
                             InitMemberInfo();
                             InitMemberPointInfo();
                             InitMemberDisplay();
                             c_poscominfo.ClearMemberInfo();
 
-                            GblComplete = false;
+                            g_bComplete = false;
                         }
 
                         initDClabel();
@@ -2342,7 +2304,7 @@ namespace HanaSales_SelfCheckOut
 
 //                    if (strProdID.Length == 12 || strProdID.Length == 10)
 //                    {
-                        if (GchkMember == false)
+                        if (g_bMember == false)
                         {
                             if (strProdID.Length == 12 || strProdID.Length == 10)
                             {
@@ -2356,16 +2318,16 @@ namespace HanaSales_SelfCheckOut
                                     lbBalancePointTop.Visible = true;
                                     lbCurrentCusBal.Visible = true;
 
-                                    if (GblMemberHPuse == true)              // 카드로 스캔한 경우만 결제가능 금액 출력하기.
+                                    if (g_bMemberHPuse == true)              // 카드로 스캔한 경우만 결제가능 금액 출력하기.
                                     {
-                                        if (GintLocation != 3)                       // 미국이 아닌 경우만 표시.
+                                        if (g_iLocation != 3)                       // 미국이 아닌 경우만 표시.
                                         {
                                             lbAvailableAmount.Visible = true;
                                             lbAvailableAmountNum.Visible = true;
                                         }
                                     }
 
-                                    GchkMember = true;
+                                    g_bMember = true;
                                     ProcessTotalDC();
                                 }
                             }                       
@@ -2381,9 +2343,9 @@ namespace HanaSales_SelfCheckOut
                         //        lbBalancePointTop.Visible = true;
                         //        lbCurrentCusBal.Visible = true;
 
-                        //        if (GblMemberHPuse == true)              // 카드로 스캔한 경우만 결제가능 금액 출력하기.
+                        //        if (g_bMemberHPuse == true)              // 카드로 스캔한 경우만 결제가능 금액 출력하기.
                         //        {
-                        //            if (GintLocation != 3)                       // 미국이 아닌 경우만 표시.
+                        //            if (g_iLocation != 3)                       // 미국이 아닌 경우만 표시.
                         //            {
                         //                lbAvailableAmount.Visible = true;
                         //                lbAvailableAmountNum.Visible = true;
@@ -2437,7 +2399,7 @@ namespace HanaSales_SelfCheckOut
                     {
                         if (g_ItemDiscountModeOn == false)
                         {
-                            if (GintLocation == 1)                           // 벤쿠버 인 경우
+                            if (g_iLocation == 1)                           // 벤쿠버 인 경우
                             {
                                 btnHelpExit.Visible = false;
                                 lbHelpMessage3.Text = "ITEM DISCOUNT";
@@ -2450,7 +2412,7 @@ namespace HanaSales_SelfCheckOut
 
                                 return;
                             }
-                            else if (GintLocation == 2)                 // 토론토 인 경우 할인 바코드 사용 안하도록 요청함. 이은희 부팀장. 2023-03-22
+                            else if (g_iLocation == 2)                 // 토론토 인 경우 할인 바코드 사용 안하도록 요청함. 이은희 부팀장. 2023-03-22
                             {
                                 btnSearch.Enabled = false;
                                 btnSearch_Category.Enabled = false;
@@ -2474,7 +2436,7 @@ namespace HanaSales_SelfCheckOut
                             g_sMessage = string.Format("[{0}] Discount Barcode input.({1})", sMethod, strProdID);
                             c_colib.cWriteLogs(g_sProcessor, g_sMessage);
 
-                            GdblItemDCRate = Convert.ToDouble(strProdID.Substring(strProdID.LastIndexOf('.') + 1, 3));          // Rate 파싱에서 넣기.
+                            g_dItemDCRate = Convert.ToDouble(strProdID.Substring(strProdID.LastIndexOf('.') + 1, 3));          // Rate 파싱에서 넣기.
 
                             ProcessItemDiscountBarcode();
                             return;
@@ -2550,7 +2512,7 @@ namespace HanaSales_SelfCheckOut
                             initScale();
                             initEBTTotal();
 
-                            if (GintLocation == 1 || GintLocation == 3)       // 벤쿠버 일때만
+                            if (g_iLocation == 1 || g_iLocation == 3)       // 벤쿠버 일때만
                             {
                                 if (c_poscominfo.si_scaletype != 0)
                                 {
@@ -2574,7 +2536,7 @@ namespace HanaSales_SelfCheckOut
                             InitMemberDisplay();
                             c_poscominfo.ClearMemberInfo();
 
-                            GblComplete = false;
+                            g_bComplete = false;
 
                             initDClabel();
 
@@ -2679,7 +2641,7 @@ namespace HanaSales_SelfCheckOut
                     btnManualETCKey.Visible = true;
                     btnManualETCKey.BringToFront();
 
-                    if (GintLocation == 1)               // 벤쿠버 일 경우
+                    if (g_iLocation == 1)               // 벤쿠버 일 경우
                     {
                         if (ItemCSView.Items.Count < 1 || lbTotalValCS.Text == "0.00")
                         {
@@ -2690,7 +2652,7 @@ namespace HanaSales_SelfCheckOut
                             btnNext.Enabled = true;
                         }
                     }
-                    else if (GintLocation == 2)              // 토론토 일 경우
+                    else if (g_iLocation == 2)              // 토론토 일 경우
                     {
                         if (ItemCSView.Items.Count < 1 || lbTotalValCS.Text == "0.00")
                         {
@@ -2748,7 +2710,7 @@ namespace HanaSales_SelfCheckOut
                         ProcessBeepSoundTimer.Stop();
 
 
-                        if (GintLocation == 3)           // 미국인 경우
+                        if (g_iLocation == 3)           // 미국인 경우
                         {
                             transitionSiglePage(gbAgeCheck, 372, 200);
 
@@ -2767,7 +2729,7 @@ namespace HanaSales_SelfCheckOut
                             btnManualETCKey.Enabled = false;
 
                         }
-                        else if (GintLocation == 2)      // 토론토인 경우
+                        else if (g_iLocation == 2)      // 토론토인 경우
                         {
                             transitionSiglePage(gbAgeCheckConfirmation, 240, 200);
 
@@ -3136,7 +3098,7 @@ namespace HanaSales_SelfCheckOut
                 //strMkno = GstrMkno;
                 //strStno = GstrStno;
                 //strYear = "21";
-                //GintLocation = 1; // 밴쿠버 : 1, 토론토 : 2, 미국 : 3
+                //g_iLocation = 1; // 밴쿠버 : 1, 토론토 : 2, 미국 : 3
 
                 sQBuff = "SELECT MAX(colInvNo) AS MaxInvNo " +
                            "FROM hanamart.dbo.tb_Payment " +
@@ -3389,9 +3351,9 @@ namespace HanaSales_SelfCheckOut
 
             oiOrderItem.dQty = dQty;
 
-            if (GblMemberEarn == true && GdblTotalDCRate > 0)
+            if (g_bMemberEarn == true && g_dTotalDCRate > 0)
             {
-                oiOrderItem.dDCRate = GdblTotalDCRate;
+                oiOrderItem.dDCRate = g_dTotalDCRate;
             }
             else
             {
@@ -3419,7 +3381,7 @@ namespace HanaSales_SelfCheckOut
                 }
 
                 // 입력된 상품코드(UPC) 검색하여 존재 여부 확인.
-                if (GintLocation == 1)                                          // 벤쿠버, 토론토인 경우
+                if (g_iLocation == 1)                                          // 벤쿠버, 토론토인 경우
                 {
                     //sQBuff = "SELECT promoPrice, isnull(promoSdate, '2020-01-01') as promoSdate, isnull(promoEdate, '2020-01-01') as promoEdate, prodOUprice, prodTax, prodDeposit, prodCrf, " +
                     //            "(CASE WHEN prodPromo = '' THEN '0' ELSE prodPromo END) AS prodPromo, prodUnit, CASE WHEN prodecid IS NULL or prodecid = '' THEN '0' ELSE prodecid END as prodecid, " +
@@ -3436,7 +3398,7 @@ namespace HanaSales_SelfCheckOut
                            "LEFT JOIN hanamart.dbo.mfPtype ON pType = prodType " +
                           "WHERE prodId = '" + oiOrderItem.sProdId + "'";
                 }
-                else if (GintLocation == 2)                          // 토론토 인 경우
+                else if (g_iLocation == 2)                          // 토론토 인 경우
                 {
                     sQBuff = "SELECT promoPrice, isnull(promoSdate, '2020-01-01') as promoSdate, isnull(promoEdate, '2020-01-01') as promoEdate, prodOUprice, prodTax, prodDeposit, " +
                                 "(CASE WHEN prodPromo = '' THEN '0' ELSE prodPromo END) AS prodPromo, prodUnit, CASE WHEN prodecid IS NULL or prodecid = '' THEN '0' ELSE prodecid END as prodecid, pp_promotioncd, " +
@@ -3447,7 +3409,7 @@ namespace HanaSales_SelfCheckOut
                           "WHERE prodId = '" + oiOrderItem.sProdId + "'";
                 }
 
-                else if (GintLocation == 3)                          // 미국 인 경우
+                else if (g_iLocation == 3)                          // 미국 인 경우
                 {
                     //sQBuff = "SELECT promoPrice, isnull(promoSdate, '2020-01-01') as promoSdate, isnull(promoEdate, '2020-01-01') as promoEdate, prodOUprice, prodTax, prodDeposit, " +
                     //            "(CASE WHEN prodPromo = '' THEN '0' ELSE prodPromo END) AS prodPromo, prodUnit, prodcap, prodcapunit, prodPackQty, " +
@@ -3534,7 +3496,7 @@ namespace HanaSales_SelfCheckOut
                         oiOrderItem.sProdImportDate = Convert.ToString(c_localdb.rs.Fields["ProdImportDate"].Value);
                         oiOrderItem.sProdEdate = Convert.ToString(c_localdb.rs.Fields["ProdEdate"].Value);
 
-                        if (GintLocation == 3)               // 미국 인 경우
+                        if (g_iLocation == 3)               // 미국 인 경우
                         {
                             oiOrderItem.dCap = Convert.ToDouble(c_localdb.rs.Fields["prodcap"].Value);
                             oiOrderItem.sCapUnit = Convert.ToString(c_localdb.rs.Fields["prodcapunit"].Value);
@@ -3549,7 +3511,7 @@ namespace HanaSales_SelfCheckOut
                         }
 
                         // Item이 Void 인 경우 리턴
-                        if(GintLocation == 3)
+                        if(g_iLocation == 3)
                         {
                             if (Convert.ToInt32(c_localdb.rs.Fields["prodVoid"].Value) == 1)                     // Void 된 상품이면,
                             {
@@ -3595,9 +3557,9 @@ namespace HanaSales_SelfCheckOut
                             return;
                         }
 
-                        if (GintLocation == 1 || GintLocation == 2)    // 벤쿠버와 토론토 인 경우
+                        if (g_iLocation == 1 || g_iLocation == 2)    // 벤쿠버와 토론토 인 경우
                         {
-                            if(GintLocation == 1)
+                            if(g_iLocation == 1)
                             {
                                 oiOrderItem.dProdCrf = Convert.ToDouble(c_localdb.rs.Fields["prodCrf"].Value);
                             }
@@ -3635,7 +3597,7 @@ namespace HanaSales_SelfCheckOut
                             oiOrderItem.sProdHourDCR = "";
                         }
 
-                        //if(GintLocation != 3)                   // 벤쿠버, 토론토 인경우만
+                        //if(g_iLocation != 3)                   // 벤쿠버, 토론토 인경우만
                         //{
                         //    oiOrderItem.sProdecid = Convert.ToString(c_localdb.rs.Fields["prodecid"].Value);
                         //    oiOrderItem.iTaxRate3 = Convert.ToInt32(c_localdb.rs.Fields["tx_tax3"].Value);
@@ -3662,7 +3624,7 @@ namespace HanaSales_SelfCheckOut
                         //}
 
                         // EBT                        
-                        if (GintLocation == 3)
+                        if (g_iLocation == 3)
                         {
                             oiOrderItem.sFoodStamp = Convert.ToString(Convert.ToInt32(c_localdb.rs.Fields["prodFoodStamp"].Value));
                         }
@@ -3674,13 +3636,13 @@ namespace HanaSales_SelfCheckOut
 
                         // Adult Check
                         strAdultAge = (Convert.ToString(c_localdb.rs.Fields["pAdult"].Value)).Trim();
-                        if(GintLocation == 2)                   // 토론토 인 경우
+                        if(g_iLocation == 2)                   // 토론토 인 경우
                         {
                             strSAdultAge = (Convert.ToString(c_localdb.rs.Fields["pSAdult"].Value)).Trim();
                         }
                         
                         //AGE Check
-                        if(GintLocation == 3)               // 미국 인 경우
+                        if(g_iLocation == 3)               // 미국 인 경우
                         {
                             c_colib.cWriteLogs(g_sProcessor, "AgeCheck Start");
                             if (strAdultAge != "" && strAdultAge != "0" && g_CertifiedAdult == false)           // Need Adult Check Product
@@ -3727,7 +3689,7 @@ namespace HanaSales_SelfCheckOut
                             }
                             c_colib.cWriteLogs(g_sProcessor, "AgeCheck End");
                         }
-                        else if(GintLocation == 2)                  // 토론토 인 경우
+                        else if(g_iLocation == 2)                  // 토론토 인 경우
                         {
                             if (strSAdultAge != "" && strSAdultAge == "1" && g_CertifiedAdult == false)           // Need Adult Check Product
                             {
@@ -3814,7 +3776,7 @@ namespace HanaSales_SelfCheckOut
                 //oiOrderItem.dProdPromo 
                 //oiOrderItem.dProdMemberPromoQty
                 
-                if (GchkMember == true && oiOrderItem.dProdMemberPromoQty > 0)                 // Membership이 Scan 되어 있는 경우
+                if (g_bMember == true && oiOrderItem.dProdMemberPromoQty > 0)                 // Membership이 Scan 되어 있는 경우
                 {
                     iPromoType = checkPromo(oiOrderItem.sProdId, oiOrderItem.dProdMemberPromoQty.ToString(), oiOrderItem.sProdImportDate, oiOrderItem.sProdEdate, oiOrderItem.dQty.ToString(), oiOrderItem.dProdDeposit, oiOrderItem.dProdCrf);
                 }
@@ -3835,7 +3797,7 @@ namespace HanaSales_SelfCheckOut
                     }
                     else
                     {
-                        if (GchkMember == true && oiOrderItem.dProdMemberPromoQty > 0)                 // Membership이 Scan 되어 있는 경우
+                        if (g_bMember == true && oiOrderItem.dProdMemberPromoQty > 0)                 // Membership이 Scan 되어 있는 경우
                         {
                             oaCalcAmount.dProdPrice = oiOrderItem.dProdWprice;
                         }
@@ -3859,7 +3821,6 @@ namespace HanaSales_SelfCheckOut
                     }
                     oaCalcAmount.dProdAmount = (oaCalcAmount.dProdPrice * oiOrderItem.dQty);
                 }
-
                 else if (iPromoType > 1 ) // 멀티 수량 프로모션
                 {
                     oaCalcAmount.dProdPrice = oiOrderItem.dProdPromoPrice;
@@ -3931,7 +3892,7 @@ namespace HanaSales_SelfCheckOut
 
                 // Tax 계산. 미국 Hard Liquor Tax 적용 필요.
 
-                if(GintLocation == 3)                           // 미국 인 경우
+                if(g_iLocation == 3)                           // 미국 인 경우
                 {
                     if (oiOrderItem.sProdTax == "5" || oiOrderItem.sProdTax == "6")             // Hard Liquor 일 경우.
                     {
@@ -3967,7 +3928,7 @@ namespace HanaSales_SelfCheckOut
                     oaCalcAmount.dProdEcofee = Convert.ToDouble(strEcofee) * oiOrderItem.dQty;
                 }
                
-                if (GintLocation == 1)    // 벤쿠버 일때
+                if (g_iLocation == 1)    // 벤쿠버 일때
                 {
                     oaCalcAmount.dProdCrf = oiOrderItem.dProdCrf * oiOrderItem.dQty;
                 }
@@ -4044,13 +4005,13 @@ namespace HanaSales_SelfCheckOut
                 c_localdb.RsClose();
 
                 // 2. tb_OrderItem 입력 Query
-                if(GintLocation == 1)                               // 벤쿠버 인 경우
+                if(g_iLocation == 1)                               // 벤쿠버 인 경우
                 {
                     sQBuff = "INSERT INTO hanamart.dbo.tb_orderitem " +
                               "SELECT '" + oiOrderItem.sInvNo + "', " + oiOrderItem.iSeq.ToString() + ",'" + oiOrderItem.sCurDate + "','" + oiOrderItem.sCurTime + "' , prodId, prodType, ptCode, " +
                                      "ISNULL(prodCat1,0), ISNULL(prodCat2,0), ISNULL(prodCat3,0), ISNULL(prodCat4,0), ISNULL(prodCat5,0), '', " + oiOrderItem.dQty.ToString() + ", '" + oiOrderItem.sProdUnit + "', ";
                 }
-                else if (GintLocation == 2)                         // 토론토 인 경우
+                else if (g_iLocation == 2)                         // 토론토 인 경우
                 {
                     sQBuff = "INSERT INTO hanamart.dbo.tb_orderitem " +
                               "SELECT '" + oiOrderItem.sInvNo + "', " + oiOrderItem.iSeq.ToString() + ",'" + oiOrderItem.sCurDate + "','" + oiOrderItem.sCurTime + "' , prodId, prodType, ptCode, " +
@@ -4072,7 +4033,7 @@ namespace HanaSales_SelfCheckOut
                     if (iPromoType >= 1) // 일반 Date Range 프로모션
                     {
                         //sQBuff += "case when prodIUprice = 0 then prodOUprice else prodIUprice end as prodIUprice, prodOUprice, ";
-                        if (GchkMember == true && oiOrderItem.dProdMemberPromoQty > 0)                 // Membership이 Scan 되어 있는 경우
+                        if (g_bMember == true && oiOrderItem.dProdMemberPromoQty > 0)                 // Membership이 Scan 되어 있는 경우
                         {
                             sQBuff += oiOrderItem.dProdRegPrice + "," + oiOrderItem.dProdWprice + ",";
                         }
@@ -4096,7 +4057,7 @@ namespace HanaSales_SelfCheckOut
                 }
 
                 // EBT - 미국 Table과 컬럼 매치 후 EBT 관련 값 업데이트 필요
-                if(GintLocation == 1)                                   // 벤쿠버 인경우
+                if(g_iLocation == 1)                                   // 벤쿠버 인경우
                 {
                     //sQBuff += "prodWprice, " + oiOrderItem.dDCRate.ToString() + ", '" + oiOrderItem.dPromoQty.ToString() + "', ISNULL(pp_promotioncd,''), " +
                     //                  strProdAmount + ", " + strTax1Amount + "," + strTax2Amount + "," + strTax3Amount + ", prodTax, '0', '" + c_poscominfo.ui_epno + "', '" + c_poscominfo.si_counternum +
@@ -4110,7 +4071,7 @@ namespace HanaSales_SelfCheckOut
                                 "FROM hanamart.dbo.mfProd LEFT JOIN hanamart.dbo.mfPtype ON prodType = pType " +
                                "WHERE prodId = '" + oiOrderItem.sProdId + "'";
                 }
-                else if (GintLocation == 2)                           // 토론토 인경우
+                else if (g_iLocation == 2)                           // 토론토 인경우
                 {
                     sQBuff += "prodWprice, " + oiOrderItem.dDCRate.ToString() + ", '" + oiOrderItem.dPromoQty.ToString() + "', " +
                                       strProdAmount + ", " + strTax1Amount + ", " + strTax2Amount + ", " + strTax3Amount + ", prodTax, '" + c_poscominfo.mi_cardno +"', '" + txtEmpNo.Text + "', '" + c_poscominfo.si_counternum +
@@ -4148,7 +4109,7 @@ namespace HanaSales_SelfCheckOut
                     string strRelatedid = oiOrderItem.iSeq.ToString();
                     
                     oiOrderItem.iSeq = oiOrderItem.iSeq + 1;
-                    if (GintLocation == 1)                                   // 벤쿠버 인경우
+                    if (g_iLocation == 1)                                   // 벤쿠버 인경우
                     {
                         sQBuff = "INSERT INTO hanamart.dbo.tb_orderitem " +
                               "SELECT '" + oiOrderItem.sInvNo + "', " + oiOrderItem.iSeq.ToString() + ",'" + oiOrderItem.sCurDate + "','" + oiOrderItem.sCurTime + "' , prodId, prodType, ptCode, " +
@@ -4159,7 +4120,7 @@ namespace HanaSales_SelfCheckOut
                                 "FROM hanamart.dbo.mfProd LEFT JOIN hanamart.dbo.mfPtype ON prodType = pType " +
                                "WHERE prodId = '" + oiOrderItem.sProdId + "'";
                     }
-                    else if (GintLocation == 2)                                   // 토론토 인경우
+                    else if (g_iLocation == 2)                                   // 토론토 인경우
                     {
                         sQBuff = "INSERT INTO hanamart.dbo.tb_orderitem " +
                               "SELECT '" + oiOrderItem.sInvNo + "', " + oiOrderItem.iSeq.ToString() + ",'" + oiOrderItem.sCurDate + "','" + oiOrderItem.sCurTime + "' , prodId, prodType, ptCode, " +
@@ -4205,7 +4166,7 @@ namespace HanaSales_SelfCheckOut
                     string strRelatedid = (oiOrderItem.iSeq -1).ToString();
 
                     oiOrderItem.iSeq = oiOrderItem.iSeq + 1;
-                    if (GintLocation == 1)                                   // 벤쿠버 인경우
+                    if (g_iLocation == 1)                                   // 벤쿠버 인경우
                     {
                         sQBuff = "INSERT INTO hanamart.dbo.tb_orderitem " +
                               "SELECT '" + oiOrderItem.sInvNo + "', " + oiOrderItem.iSeq.ToString() + ",'" + oiOrderItem.sCurDate + "','" + oiOrderItem.sCurTime + "' , prodId, prodType, ptCode, " +
@@ -4231,7 +4192,7 @@ namespace HanaSales_SelfCheckOut
                             c_colib.cWriteLogs(g_sProcessor, g_sMessage);
                         }
                     }
-                    //else if (GintLocation == 2)                                   // 토론토 인경우
+                    //else if (g_iLocation == 2)                                   // 토론토 인경우
                     //{
                     //    sQBuff = "INSERT INTO hanamart.dbo.tb_orderitem " +
                     //          "SELECT '" + oiOrderItem.sInvNo + "', " + oiOrderItem.iSeq.ToString() + ",'" + oiOrderItem.sCurDate + "','" + oiOrderItem.sCurTime + "' , prodId, prodType, ptCode, " +
@@ -4304,7 +4265,7 @@ namespace HanaSales_SelfCheckOut
                         GMixMatchPST = GMixMatchPST * -1;
                         GMixMatchHST = GMixMatchHST * -1;
 
-                        if(GintLocation == 1)                       // 벤쿠버 인 경우
+                        if(g_iLocation == 1)                       // 벤쿠버 인 경우
                         {
                             sQBuff = "INSERT INTO hanamart.dbo.tb_orderitem " +
                               "SELECT '" + oiOrderItem.sInvNo + "', " + oiOrderItem.iSeq.ToString() + ",'" + oiOrderItem.sCurDate + "','" + oiOrderItem.sCurTime + "' , '2995200000033', prodType, ptCode, " +
@@ -4315,7 +4276,7 @@ namespace HanaSales_SelfCheckOut
                                 "FROM hanamart.dbo.mfProd LEFT JOIN hanamart.dbo.mfPtype ON prodType = pType " +
                                "WHERE prodId = '" + oiOrderItem.sProdId + "'";
                         }
-                        else if(GintLocation == 2)                                   // 토론토 인경우
+                        else if(g_iLocation == 2)                                   // 토론토 인경우
                         {
                             sQBuff = "INSERT INTO hanamart.dbo.tb_orderitem " +
                                   "SELECT '" + oiOrderItem.sInvNo + "', " + oiOrderItem.iSeq.ToString() + ",'" + oiOrderItem.sCurDate + "','" + oiOrderItem.sCurTime + "' , '2995200000033', prodType, ptCode, " +
@@ -4751,13 +4712,13 @@ namespace HanaSales_SelfCheckOut
                     return oTaxInfo;
                 }
 
-                if(GintLocation == 1)                                   // 벤쿠버 인 경우
+                if(g_iLocation == 1)                                   // 벤쿠버 인 경우
                 {
                     sQBuff = "SELECT tx_cd, tx_tax1 as tx_gst, tx_tax2 as tx_pst " +
                            "FROM hanamart.dbo.tb_Tax " +
                           "where tx_cd = 'B'";
                 }
-                else if(GintLocation == 3)                              // 미국 인 경우
+                else if(g_iLocation == 3)                              // 미국 인 경우
                 {
                     sQBuff = "SELECT tx_cd, tx_gst, tx_pst " +
                            "FROM hanamart.dbo.tb_Tax " +
@@ -4888,7 +4849,7 @@ namespace HanaSales_SelfCheckOut
                 //                "FORMAT(tHst, 'N2') AS tHst, ISNULL(tTax,'') AS prodTax " +
                 //            "FROM hanamart.dbo.tb_orderitem LEFT JOIN hanamart.dbo.mfProd ON prodId = tProd " +
                 //        "ORDER BY tID DESC ";
-                if (GintLocation == 1)                           // 벤쿠버 인경우
+                if (g_iLocation == 1)                           // 벤쿠버 인경우
                 {
                     //sQBuff = "SELECT tProd, tID, ISNULL(prodName,'') AS prodName, ISNULL(prodKname,'') AS prodKname, tQty, ISNULL(prodUnit,'') AS prodUnit, ISNULL(tType, '') AS tType, " +
                     //            "(CASE WHEN tPromo = '' THEN 0 ELSE tPromo END) AS prodPromo, ROUND(tOUprice, 2) AS prodOUprice, ROUND(tAmt, 2) AS tAmt, ROUND(tGst, 2) AS tGst, ROUND(tPst, 2) AS tPst, " +
@@ -4903,7 +4864,7 @@ namespace HanaSales_SelfCheckOut
                             "ORDER BY tID DESC ";
                 }
                 
-                else if (GintLocation == 2)                           // 토론토 인경우
+                else if (g_iLocation == 2)                           // 토론토 인경우
                 {
                     sQBuff = "SELECT tProd, tID, ISNULL(prodName,'') AS prodName, ISNULL(prodKname,'') AS prodKname, tQty, ISNULL(prodUnit,'') AS prodUnit, ISNULL(tType, '') AS tType, " +
                                 "(CASE WHEN tPromo = '' THEN '0' ELSE tPromo END) AS prodPromo, ROUND(tIUprice, 2) AS prodIUprice, ROUND(tOUprice, 2) AS prodOUprice, ROUND(tAmt, 2) AS tAmt, ROUND(tGst, 2) AS tGst, ROUND(tPst, 2) AS tPst, " +
@@ -4937,7 +4898,7 @@ namespace HanaSales_SelfCheckOut
                         oiOrderItem.dAmt = Convert.ToDouble(c_localdb.rs.Fields["tAmt"].Value);
                         oiOrderItem.dGst = Convert.ToDouble(c_localdb.rs.Fields["tGst"].Value);
                         oiOrderItem.dPst = Convert.ToDouble(c_localdb.rs.Fields["tPst"].Value);
-                        if (GintLocation != 3)                           // 벤쿠버, 토론토 인경우
+                        if (g_iLocation != 3)                           // 벤쿠버, 토론토 인경우
                         {
                             oiOrderItem.dHst = Convert.ToDouble(c_localdb.rs.Fields["tHst"].Value);
                             oiOrderItem.sProdTax = Convert.ToString(c_localdb.rs.Fields["prodTax"].Value);
@@ -5020,7 +4981,7 @@ namespace HanaSales_SelfCheckOut
                             //var prodItem = new ListViewItem(new[] { oiOrderItem.sProdId, oiOrderItem.iSeq.ToString(), oiOrderItem.sProdName, oiOrderItem.dQty.ToString(), oiOrderItem.dProdRegPrice.ToString(), oiOrderItem.dAmt.ToString(), oiOrderItem.sProdTax, oiOrderItem.sType });
                             var prodItem = new ListViewItem(new[] { oiOrderItem.sProdId, oiOrderItem.iSeq.ToString(), oiOrderItem.sProdName, String.Format("{0:#,##0.00}", oiOrderItem.dQty, 2), String.Format("{0:#,##0.00}", oiOrderItem.dProdRegPrice, 2), String.Format("{0:#,##0.00}", oiOrderItem.dAmt, 2), oiOrderItem.sProdTax, oiOrderItem.sType });
 
-                            if (GintLocation == 1 || GintLocation == 3)                   // 벤쿠버, 미국 인 경우
+                            if (g_iLocation == 1 || g_iLocation == 3)                   // 벤쿠버, 미국 인 경우
                             {
                                 if (oiOrderItem.dProdPromo >= 1)     // Promo 갯수가 1 이상
                                                                      //&& (oiOrderItem.sProdUnit == "EA" || oiOrderItem.sProdUnit == "PK" || oiOrderItem.sProdUnit == "BAG" || oiOrderItem.sProdUnit == "BOX" || oiOrderItem.sProdUnit == "BN")
@@ -5034,7 +4995,7 @@ namespace HanaSales_SelfCheckOut
                                 }                                 
                             }
 
-                            if(GintLocation == 3)                       // 미국인 경우 
+                            if(g_iLocation == 3)                       // 미국인 경우 
                             {       
                                 if (oiOrderItem.sFoodStamp == "1")      // Food Stamp 아이템인 인 경우 EBT Total Amount / TAX Amount 다시 합산함. Item Correct 했을 경우 만 해당.
                                 {
@@ -5169,7 +5130,7 @@ namespace HanaSales_SelfCheckOut
             sqlcon.Open();
 
             string sql = "";
-            if (GintLocation == 1)                           // 벤쿠버 인경우
+            if (g_iLocation == 1)                           // 벤쿠버 인경우
             {
                 sql += "SELECT tInvNo, tID, tDate, tTime, tProd, tPtype, tPtype2, tCat1, tCat2, tCat3, tCat4, tCat5, tCatCode, tQty, tPunit, tIUprice, " +
                           "tOUprice, tWprice, tNative, tPromo, tPromoCode, tAmt, tGst, tPst, tHst, tTax, tCust, tPassWord, tPassStation, tUpCode, " +
@@ -5177,7 +5138,7 @@ namespace HanaSales_SelfCheckOut
                      "FROM hanamart.dbo.tb_OrderItem WHERE tInvNo = '" + txtInvNo.Text + "' " +
                  "ORDER BY tID DESC";
             }
-            else if (GintLocation == 2)                           // 토론토 인경우
+            else if (g_iLocation == 2)                           // 토론토 인경우
             {
                 sql += "SELECT tInvNo, tID, tDate, tTime, tProd, tPtype, tPtype2, tCat1, tCat2, tCat3, tCat4, tCat5, tQty, tPunit, tIUprice, " +
                           "tOUprice, tWprice, tNative, tPromo, tAmt, tGst, tPst, tHst, tTax, tCust, tPassWord, tPassStation, tUpCode, " +
@@ -5254,7 +5215,7 @@ namespace HanaSales_SelfCheckOut
                 strtAmt = rs["tAmt"].ToString();
                 strtGst = rs["tGst"].ToString();
                 strtPst = rs["tPst"].ToString();
-                if (GintLocation != 3)                           // 벤쿠버, 토론토 인경우
+                if (g_iLocation != 3)                           // 벤쿠버, 토론토 인경우
                 {
                     strtHst = rs["tHst"].ToString();
                 }
@@ -5294,7 +5255,7 @@ namespace HanaSales_SelfCheckOut
 
                     }
 
-                    dblPayAmt = Math.Round(-(Convert.ToDouble(strtAmt)) * GdblTotalDCRate / 100,2);
+                    dblPayAmt = Math.Round(-(Convert.ToDouble(strtAmt)) * g_dTotalDCRate / 100,2);
                     dblGstAmt = Math.Round(dblPayAmt * dblGstRate,2);
                     dblPstAmt = Math.Round(dblPayAmt * dblPstRate, 2);
                     dblHstAmt = Math.Round(dblPayAmt * dblHstRate,2);
@@ -5334,7 +5295,7 @@ namespace HanaSales_SelfCheckOut
                     // 직원할인 제외 - 리치몬드 아궁이 (2020.09.08 김종윤 팀장 요청)
                     if (strtPtype == "28" || strtPtype == "10" || strtPtype == "13" || strtPtype == "22" || strtPtype == "96" || strtPtype == "G5" || strtPtype == "W1" || strtPtype == "M7" || strtPtype2 == "09")
                     {
-                        dblPayAmtEMP = Math.Round(-(Convert.ToDouble(strtAmt)) * GdblTotalDCRate / 100,2);
+                        dblPayAmtEMP = Math.Round(-(Convert.ToDouble(strtAmt)) * g_dTotalDCRate / 100,2);
                         dblGstAmtEMP = Math.Round(dblPayAmtEMP * dblGstRate,2);
                         dblPstAmtEMP = Math.Round(dblPayAmtEMP * dblPstRate,2);
                         dblHstAmtEMP = Math.Round(dblPayAmtEMP * dblHstRate,2);
@@ -5425,15 +5386,15 @@ namespace HanaSales_SelfCheckOut
 
             OrderItem o;
 
-            if (GstrTotalDCType == "41")
+            if (g_sTotalDCType == "41")
             {
                 lblDCtype.Text = "Total DC";
             }
-            else if (GstrTotalDCType == "42")
+            else if (g_sTotalDCType == "42")
             {
                 lblDCtype.Text = "VIP DC";
             }
-            else if (GstrTotalDCType == "43")
+            else if (g_sTotalDCType == "43")
             {
                 lblDCtype.Text = "Employee DC";
 
@@ -5449,11 +5410,11 @@ namespace HanaSales_SelfCheckOut
                 dblPayAmtTot = dblPayAmtTot - dblPayAmtTotEMP;
 
             }
-            else if (GstrTotalDCType == "45")
+            else if (g_sTotalDCType == "45")
             {
                 lblDCtype.Text = "Internal Trx";
             }
-            else if (GstrTotalDCType == "46")
+            else if (g_sTotalDCType == "46")
             {
                 lblDCtype.Text = "Wholesale Trx";
             }
@@ -5462,9 +5423,9 @@ namespace HanaSales_SelfCheckOut
                 lblDCtype.Text = "DISCOUNT";
             }
 
-            if (GdblTotalDCRate != 0)
+            if (g_dTotalDCRate != 0)
             {
-                if (GstrTotalDCType == "43")
+                if (g_sTotalDCType == "43")
                 {
                     sql = "SELECT tPtype2, Sum(tAmt) as tAmt, Sum(tGst) as tGst, Sum(tPst) as tPst, Sum(tHst) as tHst FROM tb_OrderItem Where tInvNo = '" + strInvNo + "' " +
                           "AND (tPtype != '28' AND tPtype != '22' AND tPtype2 != '10' AND tPtype2 != '13' AND tPtype != '96' AND tPtype != 'G5' AND tPtype != 'W1' AND tPtype2 != '09' and tPtype != 'M7') " +
@@ -5475,9 +5436,9 @@ namespace HanaSales_SelfCheckOut
                     sql = "SELECT tPtype2, Sum(tAmt) as tAmt, Sum(tGst) as tGst, Sum(tPst) as tPst, Sum(tHst) as tHst FROM tb_OrderItem Where tInvNo = '" + strInvNo + "' Group by tPtype2 ";
                 }
 
-                if (GcBal != "") // 직원 할인 밸런스 임시 변수에 저장 (중복해서 Total DC 모듈이 Call되는 경우 기존의 Balance값을 가지고 계산하도록 변수 할당)
+                if (g_sStaffBal != "") // 직원 할인 밸런스 임시 변수에 저장 (중복해서 Total DC 모듈이 Call되는 경우 기존의 Balance값을 가지고 계산하도록 변수 할당)
                 {
-                    dbltmpEMPbal = Convert.ToDouble(GcBal);
+                    dbltmpEMPbal = Convert.ToDouble(g_sStaffBal);
                 }
                 else
                 {
@@ -5497,7 +5458,7 @@ namespace HanaSales_SelfCheckOut
                     o.tInvNo = strInvNo;
                     o.tID = "";
                     o.tProd = "2995200000005";
-                    o.tProdName = lblDCtype.Text + " " + GdblTotalDCRate + "%";
+                    o.tProdName = lblDCtype.Text + " " + g_dTotalDCRate + "%";
                     o.tProdKname = "";
 
                     o.tPtype = "";
@@ -5564,7 +5525,7 @@ namespace HanaSales_SelfCheckOut
                         o.tHst = "0";
                     }
 
-                    if (GstrTotalDCType == "43")
+                    if (g_sTotalDCType == "43")
                     {
                         if (dbltmpEMPbal < Math.Abs(Convert.ToDouble(o.tAmt))) // 직원할인 잔여금액이 할인 금액보다 적을 경우
                         {
@@ -5612,8 +5573,8 @@ namespace HanaSales_SelfCheckOut
 
                     //wtFree = "" // 어디에서 사용되는 값인지 확인 필요
 
-                    o.tType = GstrTotalDCType;
-                    o.tNative = GdblTotalDCRate.ToString();
+                    o.tType = g_sTotalDCType;
+                    o.tNative = g_dTotalDCRate.ToString();
                     o.tTax = strtTax;
 
                     o.tPromo = "0";
@@ -5647,17 +5608,17 @@ namespace HanaSales_SelfCheckOut
             }
             else
             {
-                GdblTotalDCRate = 0;
+                g_dTotalDCRate = 0;
             }
 
-            if (GdblTotalDCRate > 0)
+            if (g_dTotalDCRate > 0)
             {
-                //lblDCtype.Text = GstrTotalDCType;
-                lblDCRate.Text = GdblTotalDCRate.ToString();
+                //lblDCtype.Text = g_sTotalDCType;
+                lblDCRate.Text = g_dTotalDCRate.ToString();
 
-                if (GstrTotalDCType == "43")
+                if (g_sTotalDCType == "43")
                 {
-                    lblDCAmount.Text = c_poscomlibs.getDoubleFormat(Convert.ToDouble(GcBal) - dbltmpEMPbal);
+                    lblDCAmount.Text = c_poscomlibs.getDoubleFormat(Convert.ToDouble(g_sStaffBal) - dbltmpEMPbal);
                 }
                 else
                 {
@@ -5689,8 +5650,8 @@ namespace HanaSales_SelfCheckOut
             o.tType = "";
             o.tNative = "0";
 
-            //GstrTotalDCType = "";
-            //GdblTotalDCRate = 0;
+            //g_sTotalDCType = "";
+            //g_dTotalDCRate = 0;
 
             //CntTotSalePayment();
 
@@ -5710,7 +5671,7 @@ namespace HanaSales_SelfCheckOut
 
             lbSubTotalValCS.Text = String.Format("{0:#,##0.00}", Convert.ToDouble(strCurAmt) + Convert.ToDouble(pAmt), 2);
 
-            if(GintLocation != 3)                   // 벤쿠버, 토론토 인 경우
+            if(g_iLocation != 3)                   // 벤쿠버, 토론토 인 경우
             {
                 lbGSTValCS.Text = String.Format("{0:#,##0.00}", Convert.ToDouble(strCurGst) + Convert.ToDouble(pGst), 2);
                 lbPSTValCS.Text = String.Format("{0:#,##0.00}", Convert.ToDouble(strCurPst) + Convert.ToDouble(pPst), 2);
@@ -5735,7 +5696,7 @@ namespace HanaSales_SelfCheckOut
         private void CntTotSalePayment()
         {
             // 전체 금액 계산, 결제 내역 확인, 결제가 완료된 경우 Receupt & Kitchen Slip & Coupon Print
-            //if (GblTestMode == true)
+            //if (g_bTestMode == true)
             //{
             //    return;
             //}
@@ -5758,7 +5719,7 @@ namespace HanaSales_SelfCheckOut
 
             string sql;
             // 1. tb_OrderItem Loop 돌면서 Amount, Item Count, Tax 계산
-            if (GintLocation != 3)                           // 벤쿠버, 토론토 인경우
+            if (g_iLocation != 3)                           // 벤쿠버, 토론토 인경우
             {
                 sql = "Select Sum(tamt) as tAmt, Sum(tGst) as tGst, Sum(tPst) as tPst , Sum(tHst) as tHst From tb_OrderItem " +
                             "Where tInvno = '" + txtInvNo.Text + "' ";
@@ -5776,7 +5737,7 @@ namespace HanaSales_SelfCheckOut
                 strtAmt = rs["tAmt"].ToString();
                 strtGst = rs["tGst"].ToString();
                 strtPst = rs["tPst"].ToString();
-                if (GintLocation != 3)                           // 벤쿠버, 토론토 인경우
+                if (g_iLocation != 3)                           // 벤쿠버, 토론토 인경우
                 {
                     strtHst = rs["tHst"].ToString();
                 }
@@ -5787,7 +5748,7 @@ namespace HanaSales_SelfCheckOut
             {
                 lbSubTotalValCS.Text = c_poscomlibs.getDoubleFormat(Convert.ToDouble(strtAmt));
 
-                if(GintLocation != 3)                       // 벤쿠버 토론토 인 경우
+                if(g_iLocation != 3)                       // 벤쿠버 토론토 인 경우
                 {
                     lbGSTValCS.Text = c_poscomlibs.getDoubleFormat(Convert.ToDouble(strtGst));
                     lbPSTValCS.Text = c_poscomlibs.getDoubleFormat(Convert.ToDouble(strtPst));
@@ -5802,7 +5763,7 @@ namespace HanaSales_SelfCheckOut
                 }
                 
                 
-                //if (GintLocation != 3)                           // 벤쿠버, 토론토 인경우
+                //if (g_iLocation != 3)                           // 벤쿠버, 토론토 인경우
                 //{
                 //    lbHSTValCS.Text = c_poscomlibs.getDoubleFormat(Convert.ToDouble(strtHst));
                 //    lbTotalValCS.Text = c_poscomlibs.getDoubleFormat(Convert.ToDouble(strtAmt) + Convert.ToDouble(strtGst) + Convert.ToDouble(strtPst) + Convert.ToDouble(strtHst));
@@ -5821,7 +5782,7 @@ namespace HanaSales_SelfCheckOut
                 lbTotalValCS.Text = "0.00";
             }
             
-            if (GintLocation == 3)              // 미국 인 경우
+            if (g_iLocation == 3)              // 미국 인 경우
             {
                 // EBT
                 //string sQBuff = string.Empty;
@@ -5908,7 +5869,7 @@ namespace HanaSales_SelfCheckOut
 
             //c_localdb.RsClose();
 
-            if (GPayFinish == true)
+            if (g_bPayFinish == true)
             {
                 // Deli POS의 경우 Kitchen OrderSlip 출력 부분 추가
 
@@ -6042,7 +6003,7 @@ namespace HanaSales_SelfCheckOut
             long lReturn = 0;
             string sMethod = System.Reflection.MethodBase.GetCurrentMethod().Name;
 
-            //if (GblTestMode == true)
+            //if (g_bTestMode == true)
             //{
             //    return;
             //}
@@ -6073,14 +6034,14 @@ namespace HanaSales_SelfCheckOut
             //2-1. tb_SoldItem
             string sql = "";
 
-            if(GintLocation == 1)                       // 벤쿠버 인경우
+            if(g_iLocation == 1)                       // 벤쿠버 인경우
             {
                 sql = "INSERT INTO HANAMART.dbo.tb_OrderItem (tInvNo,tID,tDate,tTime,tProd,tPtype,tPtype2,tCat1,tCat2,tCat3,tCat4,tCat5,tCatCode,tQty,tPunit," +
                   "tIUprice,tOUprice,tWprice,tNative,tPromo,tPromoCode,tAmt,tGst,tPst,tHst,tTax,tCust,tPassWord,tPassStation,tUpCode,tSpecial,tFree,tMMBC,tSupp," +
                   "tType,tEntryCode,tFoodStamp,tGiftCardRef,tRelatedID,tMixMatch,tShift,tMemo) VALUES ('";
 
             }
-            else if( GintLocation == 2)                 // 토론토 인경우
+            else if( g_iLocation == 2)                 // 토론토 인경우
             {
                 sql = "INSERT INTO HANAMART.dbo.tb_OrderItem (tInvNo,tID,tDate,tTime,tProd,tPtype,tPtype2,tCat1,tCat2,tCat3,tCat4,tCat5,tQty,tPunit," +
                   "tIUprice,tOUprice,tWprice,tNative,tPromo,tAmt,tGst,tPst,tHst,tTax,tCust,tPassWord,tPassStation,tUpCode,tSpecial,tFree,tSupp," +
@@ -6134,7 +6095,7 @@ namespace HanaSales_SelfCheckOut
             sql += "'" + o.tCat3 + "',";
             sql += "'" + o.tCat4 + "',";
             sql += "'" + o.tCat5 + "',";
-            if(GintLocation == 1)               // 벤쿠버 인경우
+            if(g_iLocation == 1)               // 벤쿠버 인경우
             {
                 sql += "'',";
             }
@@ -6147,7 +6108,7 @@ namespace HanaSales_SelfCheckOut
             sql += "0" + ",";
             sql += "'" + o.tNative + "',";
             sql += "'" + o.tPromo + "',";
-            if(GintLocation == 1)               // 벤쿠버 인 경우
+            if(g_iLocation == 1)               // 벤쿠버 인 경우
             {
                 sql += "'" + o.tPromoCode + "',";
             }
@@ -6163,7 +6124,7 @@ namespace HanaSales_SelfCheckOut
             sql += "'',"; // UpCode
             sql += "'" + o.tSpecial + "',";
             sql += "'" + o.tFree + "',";
-            if(GintLocation == 1)           // 벤쿠버 인 경우
+            if(g_iLocation == 1)           // 벤쿠버 인 경우
             {
                 sql += "'" + o.tMMBC + "',";
             }
@@ -6296,14 +6257,14 @@ namespace HanaSales_SelfCheckOut
                     }
 
                     //2-1. tb_SoldItem
-                    if (GintLocation == 1)                           // 벤쿠버 인경우
+                    if (g_iLocation == 1)                           // 벤쿠버 인경우
                     {
                         sQBuff = "INSERT INTO HANAMART.dbo.tb_SoldItem ";
                         sQBuff += "SELECT tInvNo,tID,tDate,tTime,tProd,tPtype,tPtype2,tCat1,tCat2,tCat3,tCat4,tCat5,tCatCode,tQty,tPunit,tIUprice";
                         sQBuff += ",tOUprice,tWprice,tNative,tPromo,tPromoCode,tAmt,tGst,tPst,tHst,tTax,tCust,tPassWord,tPassStation,tUpCode,tSpecial,tFree";
                         sQBuff += ",tMMBC,tSupp,tType,tEntryCode,tFoodStamp,tGiftCardRef,tRelatedID,tMixMatch,tShift,1 FROM HANAMART.dbo.tb_OrderItem ";
                     }
-                    else if (GintLocation == 2)                           // 토론토 인경우
+                    else if (g_iLocation == 2)                           // 토론토 인경우
                     {
                         sQBuff = "INSERT INTO HANAMART.dbo.tb_SoldItem ";
                         sQBuff += "SELECT tInvNo,tID,tDate,tTime,tProd,tPtype,tPtype2,tCat1,tCat2,tCat3,tCat4,tCat5,tQty,tPunit,tIUprice";
@@ -6368,7 +6329,7 @@ namespace HanaSales_SelfCheckOut
 
                     string strCurDate = DateTime.Now.ToString("yyyy-MM-dd");
                     string strCurTime = DateTime.Now.ToString("h:mm:ss tt");
-                    string strStationNo = g_strCounterNum;
+                    string strStationNo = g_sCounterNum;
                     double dblPaid = (Convert.ToDouble(strPayTotal));
                     //string strCash = c_poscomlibs.getDoubleFormat(Convert.ToDouble(lblPayCash.Text) + Convert.ToDouble(lblPayBalance.Text));
                     string strCash = c_poscomlibs.getDoubleFormat(Convert.ToDouble(lblPayCash.Text));
@@ -6390,7 +6351,7 @@ namespace HanaSales_SelfCheckOut
                     sQBuff = "INSERT INTO HANAMART.dbo.tb_Payment VALUES (";
                     sQBuff += "'" + txtInvNo.Text + "', '" + strCurDate + "', '" + strCurTime + "',";
                     // Payment 종류별 값 저장
-                    if(GintLocation == 1)                           // 벤쿠버인경우
+                    if(g_iLocation == 1)                           // 벤쿠버인경우
                     {
                         sQBuff += strCash + "," + lblPayDebit.Text + "," + c_poscomlibs.getDoubleFormat(CardPay[iVisa]) + "," + c_poscomlibs.getDoubleFormat(CardPay[iMaster]) + ",";
                         sQBuff += c_poscomlibs.getDoubleFormat(CardPay[iAmex]) + "," + c_poscomlibs.getDoubleFormat(CardPay[iDisc]) + "," + c_poscomlibs.getDoubleFormat(CardPay[iUP]) + ",";
@@ -6399,7 +6360,7 @@ namespace HanaSales_SelfCheckOut
                         sQBuff += lblPayCerti.Text + ",'','','',''," + lblPayHmoney.Text + "," + lblPayCoupon.Text + ",0," + lbGSTValCS.Text + "," + lbPSTValCS.Text + "," + lbHSTValCS.Text + ",";
                         sQBuff += dblPaid.ToString() + "," + lblPayPennyRounded.Text + "," + strChange + ",";
                     }
-                    else if (GintLocation == 2)                           // 토론토 인경우
+                    else if (g_iLocation == 2)                           // 토론토 인경우
                     {
                         sQBuff += strCash + "," + lblPayDebit.Text + "," + c_poscomlibs.getDoubleFormat(CardPay[iVisa]) + "," + c_poscomlibs.getDoubleFormat(CardPay[iMaster]) + ",";
                         sQBuff += c_poscomlibs.getDoubleFormat(CardPay[iAmex]) + "," + c_poscomlibs.getDoubleFormat(CardPay[iDisc]) + "," + c_poscomlibs.getDoubleFormat(CardPay[iUP]) + ",";
@@ -6426,8 +6387,8 @@ namespace HanaSales_SelfCheckOut
                     sQBuff += "'" + txtEmpNo.Text + "',"; //colPassword
                     sQBuff += "0,"; //colOrigin
                     sQBuff += (lbPrePointCS.Text == "" ? "0" : lbPrePointCS.Text.Replace(",", "")) + ","; //colHPPrev
-                    sQBuff += (lbEarnPointCS.Text == "" ? "0" : lbEarnPointCS.Text.Replace(",", "")) + ","; //colHPEarn
-                    sQBuff += "0,"; //colHPBonus
+                    sQBuff += (lbEarnPointCS.Text == "" ? "0" : lbEarnPointCS.Text.Replace(",", "")) + ","; //colHPEarn                    
+                    sQBuff += g_dHPBonus.ToString() + ","; //colHPBonus
                     sQBuff += (lbUsedPointCS.Text == "" ? "0" : lbUsedPointCS.Text.Replace(",", "")) + ","; //colHPUsed
                     sQBuff += (lbBalancePointCS.Text == "" ? "0" : lbBalancePointCS.Text.Replace(",", "")) + ","; //colHPBal
                     sQBuff += "'',"; //colShift
@@ -6500,7 +6461,7 @@ namespace HanaSales_SelfCheckOut
                     //5-3. New Invoice No
                     GetNewInvNo();
                     */
-                    GblComplete = true;
+                    g_bComplete = true;
                     
                     //5-4. New Item Scan 
                     KeyInReady();
@@ -6597,7 +6558,7 @@ namespace HanaSales_SelfCheckOut
                 string strprodDeposit = string.Empty;
                 string strCustomerReceipt = string.Empty;
 
-                if(GintLocation != 3)                           // 벤쿠버 토론토 인경우
+                if(g_iLocation != 3)                           // 벤쿠버 토론토 인경우
                 {
                     sQBuff = "Select tprod, tPtype, tType, tPunit, tIUprice, tOUPrice, tQty, tAmt, tWprice, tNative, tTax, tGst, tPst, tHst, tPromo, tspecial "
                             + "From HANAMART.dbo.tb_orderitem " + "where tInvNo = '" + txtInvNo.Text + "'";
@@ -6637,7 +6598,7 @@ namespace HanaSales_SelfCheckOut
                             strtTax = Convert.ToString(c_localdb.rs.Fields["tTax"].Value);
                             strtGst = Convert.ToString(c_localdb.rs.Fields["tGst"].Value);
                             strtPst = Convert.ToString(c_localdb.rs.Fields["tPst"].Value);
-                            if(GintLocation != 3)               // 벤쿠버 토론토 인 경우
+                            if(g_iLocation != 3)               // 벤쿠버 토론토 인 경우
                             {
                                 strtHst = Convert.ToString(c_localdb.rs.Fields["tHst"].Value);
                             }
@@ -6722,12 +6683,12 @@ namespace HanaSales_SelfCheckOut
                 c_localdb.DBClose();
             }
 
-            if (GintLocation == 1) // 밴쿠버
+            if (g_iLocation == 1) // 밴쿠버
             {
                 dblHMEarnToday = Math.Round(dblHMEarnToday, 2);
                 dblHMEarnTodayCard = 0;
             }
-            else if (GintLocation == 2) // 토론토
+            else if (g_iLocation == 2) // 토론토
             {
                 if (dblSkipAmt != 0)
                 {
@@ -6740,7 +6701,7 @@ namespace HanaSales_SelfCheckOut
                     dblHMEarnTodayCard = Math.Round(dblVisa + dblMaster + dblAmex + dblDisc + dblUP, 0);
                 }
             }
-            else if (GintLocation == 3) // 미국
+            else if (g_iLocation == 3) // 미국
             {
                 //dblHMEarnToday = Math.Truncate(dblHMEarnToday);
                 dblHMEarnToday = Math.Round(dblHMEarnToday, 2);
@@ -6755,7 +6716,7 @@ namespace HanaSales_SelfCheckOut
                 }
                 else
                 {
-                    if (GintLocation == 1)
+                    if (g_iLocation == 1)
                     {
                         if (blDCbit == false)
                         {
@@ -6766,11 +6727,11 @@ namespace HanaSales_SelfCheckOut
                             dblHPToday = 0;
                         }
                     }
-                    else if (GintLocation == 2)
+                    else if (g_iLocation == 2)
                     {
                         dblHPToday = Math.Round(dblHMEarnToday * 5, 0) + Math.Round(dblHMEarnTodayCard * 2, 0); // 토론토
                     }
-                    else if (GintLocation == 3) // 미국
+                    else if (g_iLocation == 3) // 미국
                     {
                         if (blDCbit == false)
                         {
@@ -6798,7 +6759,7 @@ namespace HanaSales_SelfCheckOut
                     }
                     else
                     {
-                        if (GintLocation == 1)
+                        if (g_iLocation == 1)
                         {
                             if (blDCbit == true)
                             {
@@ -6809,11 +6770,11 @@ namespace HanaSales_SelfCheckOut
                                 dblHPToday = 0;
                             }
                         }
-                        else if (GintLocation == 2)
+                        else if (g_iLocation == 2)
                         {
                             dblHPToday = Math.Round(dblHMEarnToday * 5, 0) + Math.Round(dblHMEarnTodayCard * 2, 0); // 토론토
                         }
-                        else if (GintLocation == 3) // 미국
+                        else if (g_iLocation == 3) // 미국
                         {
                             if (blDCbit == false)
                             {
@@ -6837,18 +6798,78 @@ namespace HanaSales_SelfCheckOut
                         wHPSrv = wHPToday
                     End If
 
-
                     wHPBonus = wHPSrv
                 End If
             End If
             */
 
-            lbEarnPointCS.Text = string.Format("{0:###,##0}", dblHPToday);
-            lbUsedPointCS.Text = string.Format("{0:###,##0}", GdblHPTodayUsed);
-            lbBalancePointCS.Text = string.Format("{0:###,##0}", c_poscominfo.mi_pointbalance + dblHPToday - GdblHPTodayUsed);
-            lbBalancePointTop.Text = string.Format("{0:###,##0}", c_poscominfo.mi_pointbalance + dblHPToday - GdblHPTodayUsed);
+            // Check event and apply double point 
+            bool bDoublePoint = ChkDoublePointEvent();
+            if (bDoublePoint) {
+                g_dHPBonus = dblHPToday;
+            }
 
+            lbEarnPointCS.Text = string.Format("{0:###,##0}", dblHPToday);
+            //lbBonusPointCS.Text = string.Format("{0:###,##0}", g_dHPBonus); // Not showing bonus point
+            lbUsedPointCS.Text = string.Format("{0:###,##0}", g_dHPTodayUsed);
+            lbBalancePointCS.Text = string.Format("{0:###,##0}", c_poscominfo.mi_pointbalance + dblHPToday + g_dHPBonus - g_dHPTodayUsed);
+            lbBalancePointTop.Text = string.Format("{0:###,##0}", c_poscominfo.mi_pointbalance + dblHPToday + g_dHPBonus - g_dHPTodayUsed);
         }
+
+        // check H-Point events
+        private bool ChkDoublePointEvent()
+        {            
+            string sQBuff = string.Empty;
+            long lReturn = 0;
+            string sMethod = System.Reflection.MethodBase.GetCurrentMethod().Name;
+            string strSdate = DateTime.Now.ToString("yyyy-MM-dd");
+
+            try
+            {
+                lReturn = c_localdb.DBConnection();
+                if (lReturn < 0)
+                {
+                    g_sMessage = string.Format("[{0}] Local database connection failed (error code: {1})\n[{0}] {2}", sMethod, lReturn.ToString(), c_localdb.error_message);
+                    c_colib.cWriteLogs(g_sProcessor, g_sMessage);
+                    return false;
+                }
+
+                sQBuff = "SELECT si_HpDblGb " +
+                        "FROM tb_salesinformation " +
+                        "WHERE '" + strSdate + "' BETWEEN si_HpsDate AND si_HpeDate " +
+                        "AND si_HpPromoGb = 1";
+
+                lReturn = c_localdb.RsOpen(sQBuff);        
+                if (lReturn < 0)
+                {
+                    // Query execution failed
+                    g_sMessage = string.Format("[{0}] Maket Information data query error (error code: {1})\n[{0}] {2}", sMethod, lReturn.ToString(), c_localdb.error_message);
+                    c_colib.cWriteLogs(g_sProcessor, g_sMessage);                    
+                    return false;
+                }
+                else if (c_localdb.rs.EOF)
+                {
+                    // No matching promotion found                    
+                    return false;
+                }
+
+                // read promotion info
+                return Convert.ToBoolean(c_localdb.rs.Fields["si_HpDblGb"].Value);       
+            }            
+            catch (Exception ex)
+            {
+                g_sMessage = string.Format("[{0}] Error caused while operating (line: {1})\n[{0}] {2}", sMethod, ex.Source.ToString(), ex.Message.ToString());
+                c_colib.cWriteLogs(g_sProcessor, g_sMessage);
+                return false;
+            }
+            finally
+            {
+                // cleanup
+                c_localdb.RsClose();
+                c_localdb.DBClose();
+            }
+        }
+
         private void btnBack_Click(object sender, EventArgs e)
         {
             string sQBuff = string.Empty;
@@ -6931,7 +6952,7 @@ namespace HanaSales_SelfCheckOut
                 tbStep1Name.ForeColor = System.Drawing.Color.DimGray;
                 st_ProcessStatus.CurrentStep = 1;
                 
-                if (GintLocation == 1)           // 벤쿠버 인 경우
+                if (g_iLocation == 1)           // 벤쿠버 인 경우
                 {
                     if (ItemCSView.Items.Count < 1 || lbTotalValCS.Text == "0.00")
                     {
@@ -6951,7 +6972,7 @@ namespace HanaSales_SelfCheckOut
                         btnBack.Image = global::HanaSales_SelfCheckOut.Properties.Resources.new_Back;
                     }
                 }
-                else if(GintLocation == 2)      // 토론토 인 경우
+                else if(g_iLocation == 2)      // 토론토 인 경우
                 {
                     if (ItemCSView.Items.Count < 1 || lbTotalValCS.Text == "0.00")
                     {
@@ -7209,7 +7230,7 @@ namespace HanaSales_SelfCheckOut
             btnKeyboardClear.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(46)))), ((int)(((byte)(95)))));
             
 
-            if (GintLocation != 3)               // 미국이 아닌 경우
+            if (g_iLocation != 3)               // 미국이 아닌 경우
             {
                 btnSearchOrKeyinItem.Text = "Search Key In Category";
                 btnBackToCategory.Text = "Back to Category";
@@ -7410,7 +7431,7 @@ namespace HanaSales_SelfCheckOut
             string strTotVal = lbTotalValCS.Text;
             string sMethod = System.Reflection.MethodBase.GetCurrentMethod().Name;
             
-            if (GPinPadReady == false)
+            if (g_bPinPadReady == false)
             {
                 DisplayErrorMessageBox("PIN Pad", "Pin Pad connection failed.", 1, sMethod);
 
@@ -7573,13 +7594,13 @@ namespace HanaSales_SelfCheckOut
             if (lbTotalValCS.Text != "0.00")
             {
                 // Point 카드를 스캔했을 경우 조건 추가 필요.
-                if (GblMemberHPuse == true)
+                if (g_bMemberHPuse == true)
                 {
-                    if (GintLocation == 1) // 밴쿠버
+                    if (g_iLocation == 1) // 밴쿠버
                     {
                         intHPUsablelimit = 2500;
                     }
-                    else if (GintLocation == 2) // 토론토
+                    else if (g_iLocation == 2) // 토론토
                     {
                         intHPUsablelimit = 5000;
                     }
@@ -7590,7 +7611,7 @@ namespace HanaSales_SelfCheckOut
 
                     if (c_poscominfo.mi_pointbalance < 0 || c_poscominfo.mi_pointbalance < intHPUsablelimit) // 현재 포인트가 없거나 Usable Limit보다 작은 경우 
                     {
-                        if (GintLocation == 1) // 밴쿠버
+                        if (g_iLocation == 1) // 밴쿠버
                         {
                             DisplayErrorMessageBox("Point Card", "NEED MORE POINTS TO REDEEM. \n\n Minimum Need Point : " + string.Format("{0:###,##0}", intHPUsablelimit) + "  P ($ 5 Values)", 1, sMethod);
                         }
@@ -7598,7 +7619,7 @@ namespace HanaSales_SelfCheckOut
                         {
                             DisplayErrorMessageBox("Point Card", "NEED MORE POINTS TO REDEEM. \n\n Minimum Need Point : " + string.Format("{0:###,##0}", intHPUsablelimit) + "  P", 1, sMethod);
                         }
-                        GPayFinish = false;
+                        g_bPayFinish = false;
                         //KeyInReady();
 
                         gbHelp.Visible = true;
@@ -7668,13 +7689,13 @@ namespace HanaSales_SelfCheckOut
             }
 
             //// Point 카드를 스캔했을 경우 조건 추가 필요.
-            //if (GblMemberHPuse == true)
+            //if (g_bMemberHPuse == true)
             //{
-            //    if (GintLocation == 1) // 밴쿠버
+            //    if (g_iLocation == 1) // 밴쿠버
             //    {
             //        intHPUsablelimit = 2500;
             //    }
-            //    else if (GintLocation == 2) // 토론토
+            //    else if (g_iLocation == 2) // 토론토
             //    {
             //        intHPUsablelimit = 5000;
             //    }
@@ -7686,7 +7707,7 @@ namespace HanaSales_SelfCheckOut
             //    if (c_poscominfo.mi_pointbalance < 0 || c_poscominfo.mi_pointbalance < intHPUsablelimit) // 현재 포인트가 없거나 Usable Limit보다 작은 경우 
             //    {
             //        DisplayErrorMessageBox("Point Card", "NEED MORE POINTS TO REDEEM. \n\n Minimum Need Point : " + string.Format("{0:###,##0}", intHPUsablelimit) + "  P", 1, sMethod);
-            //        GPayFinish = false;
+            //        g_bPayFinish = false;
             //        //KeyInReady();
 
             //        gbHelp.Visible = true;
@@ -8144,7 +8165,7 @@ namespace HanaSales_SelfCheckOut
                 GssHelp.SpeakAsync("Scan your Manager Card.");
             }
 
-            //if (GintLocation == 1 || GintLocation == 3)       // 벤쿠버 일때만
+            //if (g_iLocation == 1 || g_iLocation == 3)       // 벤쿠버 일때만
             //{
             //    if (c_poscominfo.si_scaletype != 0)
             //    {
@@ -8390,11 +8411,11 @@ namespace HanaSales_SelfCheckOut
             switch (g_mKeyinVale)
             {
                 case ManualETCKeyIN_DEP.GROCERY:
-                    if(GintLocation == 1)
+                    if(g_iLocation == 1)
                     {
                         strSelectedProdID = "9968";
                     }
-                    else if (GintLocation == 3)
+                    else if (g_iLocation == 3)
                     {
                         if (c_poscominfo.ci_mkno == "52")               // 페더럴 웨이 매장인 경우
                             strSelectedProdID = "2995200000074";
@@ -8407,11 +8428,11 @@ namespace HanaSales_SelfCheckOut
                     }                   
                     break;
                 case ManualETCKeyIN_DEP.PRODUCE:
-                    if (GintLocation == 1)
+                    if (g_iLocation == 1)
                     {
                         strSelectedProdID = "9966";
                     }
-                    else if (GintLocation == 3)
+                    else if (g_iLocation == 3)
                     {
                         if (c_poscominfo.ci_mkno == "52")               // 페더럴 웨이 매장인 경우
                             strSelectedProdID = "2995200000067";
@@ -8424,11 +8445,11 @@ namespace HanaSales_SelfCheckOut
                     }
                     break;
                 case ManualETCKeyIN_DEP.FISH:
-                    if (GintLocation == 1)
+                    if (g_iLocation == 1)
                     {
                         strSelectedProdID = "9974";
                     }
-                    else if (GintLocation == 3)
+                    else if (g_iLocation == 3)
                     {
                         if (c_poscominfo.ci_mkno == "52")               // 페더럴 웨이 매장인 경우
                             strSelectedProdID = "2995200000050";
@@ -8441,11 +8462,11 @@ namespace HanaSales_SelfCheckOut
                     }
                     break;
                 case ManualETCKeyIN_DEP.MEAT:
-                    if (GintLocation == 1)
+                    if (g_iLocation == 1)
                     {
                         strSelectedProdID = "9973";
                     }
-                    else if (GintLocation == 3)
+                    else if (g_iLocation == 3)
                     {
                         if (c_poscominfo.ci_mkno == "52")               // 페더럴 웨이 매장인 경우
                             strSelectedProdID = "2995200000043";
@@ -8458,11 +8479,11 @@ namespace HanaSales_SelfCheckOut
                     }
                     break;
                 case ManualETCKeyIN_DEP.DELI:
-                    if (GintLocation == 1)
+                    if (g_iLocation == 1)
                     {
                         strSelectedProdID = "9967";
                     }
-                    else if (GintLocation == 3)
+                    else if (g_iLocation == 3)
                     {
                         if (c_poscominfo.ci_mkno == "52")               // 페더럴 웨이 매장인 경우
                             strSelectedProdID = "2995200000036";
@@ -8475,11 +8496,11 @@ namespace HanaSales_SelfCheckOut
                     }
                     break;
                 case ManualETCKeyIN_DEP.HW:
-                    if (GintLocation == 1)
+                    if (g_iLocation == 1)
                     {
                         strSelectedProdID = "9969";
                     }
-                    else if (GintLocation == 3)
+                    else if (g_iLocation == 3)
                     {
                         if (c_poscominfo.ci_mkno == "52")               // 페더럴 웨이 매장인 경우
                             strSelectedProdID = "2995200000081";
@@ -8510,15 +8531,15 @@ namespace HanaSales_SelfCheckOut
                 }
 
                 // 입력된 상품코드(UPC) 검색하여 존재 여부 확인.
-                if (GintLocation == 1)                                          // 벤쿠버, 토론토인 경우
+                if (g_iLocation == 1)                                          // 벤쿠버, 토론토인 경우
                 {
                     sQBuff = "SELECT prodTax as pTax FROM hanamart.dbo.mfProd WHERE prodId = '" + strSelectedProdID + "'";
                 }
-                else if (GintLocation == 2)                          // 토론토 인 경우
+                else if (g_iLocation == 2)                          // 토론토 인 경우
                 {
                 }
 
-                else if (GintLocation == 3)                          // 미국 인 경우
+                else if (g_iLocation == 3)                          // 미국 인 경우
                 {
                     sQBuff = "SELECT (CASE WHEN pTax >= '1' THEN pTax ELSE 0 END) as pTax " +
                             "FROM hanamart.dbo.mfProd left join hanamart.dbo.mfPtype ON prodType = pType " +
@@ -8540,7 +8561,7 @@ namespace HanaSales_SelfCheckOut
                 {
                     if (c_localdb.rs.RecordCount == 1)
                     {
-                        if (GintLocation == 1)                          // 벤쿠버 인 경우
+                        if (g_iLocation == 1)                          // 벤쿠버 인 경우
                         {                            
                             if (Convert.ToString(c_localdb.rs.Fields["pTax"].Value).All(char.IsDigit))      //숫자인지 확인 True 면 숫자, False 면 문자.
                             {
@@ -8551,7 +8572,7 @@ namespace HanaSales_SelfCheckOut
                                 bTaxValue = true;
                             }
                         }
-                        else if (GintLocation == 3)                          // 미국 인 경우
+                        else if (g_iLocation == 3)                          // 미국 인 경우
                         {
                             if (Convert.ToInt32(c_localdb.rs.Fields["pTax"].Value) >= 1)             // TAX Code가 1보다 크면
                             {
@@ -8699,11 +8720,11 @@ namespace HanaSales_SelfCheckOut
             switch (g_mKeyinVale)
             {
                 case ManualETCKeyIN_DEP.GROCERY:
-                    if (GintLocation == 1)
+                    if (g_iLocation == 1)
                     {
                         strSelectedProdID = "9968";
                     }
-                    else if (GintLocation == 3)
+                    else if (g_iLocation == 3)
                     {
                         if (c_poscominfo.ci_mkno == "52")               // 페더럴 웨이 매장인 경우
                             strSelectedProdID = "2995200000074";
@@ -8716,11 +8737,11 @@ namespace HanaSales_SelfCheckOut
                     }
                     break;
                 case ManualETCKeyIN_DEP.PRODUCE:
-                    if (GintLocation == 1)
+                    if (g_iLocation == 1)
                     {
                         strSelectedProdID = "9966";
                     }
-                    else if (GintLocation == 3)
+                    else if (g_iLocation == 3)
                     {
                         if (c_poscominfo.ci_mkno == "52")               // 페더럴 웨이 매장인 경우
                             strSelectedProdID = "2995200000067";
@@ -8733,11 +8754,11 @@ namespace HanaSales_SelfCheckOut
                     }
                     break;
                 case ManualETCKeyIN_DEP.FISH:
-                    if (GintLocation == 1)
+                    if (g_iLocation == 1)
                     {
                         strSelectedProdID = "9974";
                     }
-                    else if (GintLocation == 3)
+                    else if (g_iLocation == 3)
                     {
                         if (c_poscominfo.ci_mkno == "52")               // 페더럴 웨이 매장인 경우
                             strSelectedProdID = "2995200000050";
@@ -8750,11 +8771,11 @@ namespace HanaSales_SelfCheckOut
                     }
                     break;
                 case ManualETCKeyIN_DEP.MEAT:
-                    if (GintLocation == 1)
+                    if (g_iLocation == 1)
                     {
                         strSelectedProdID = "9973";
                     }
-                    else if (GintLocation == 3)
+                    else if (g_iLocation == 3)
                     {
                         if (c_poscominfo.ci_mkno == "52")               // 페더럴 웨이 매장인 경우
                             strSelectedProdID = "2995200000043";
@@ -8767,11 +8788,11 @@ namespace HanaSales_SelfCheckOut
                     }
                     break;
                 case ManualETCKeyIN_DEP.DELI:
-                    if (GintLocation == 1)
+                    if (g_iLocation == 1)
                     {
                         strSelectedProdID = "9967";
                     }
-                    else if (GintLocation == 3)
+                    else if (g_iLocation == 3)
                     {
                         if (c_poscominfo.ci_mkno == "52")               // 페더럴 웨이 매장인 경우
                             strSelectedProdID = "2995200000036";
@@ -8784,11 +8805,11 @@ namespace HanaSales_SelfCheckOut
                     }
                     break;
                 case ManualETCKeyIN_DEP.HW:
-                    if (GintLocation == 1)
+                    if (g_iLocation == 1)
                     {
                         strSelectedProdID = "9969";
                     }
-                    else if (GintLocation == 3)
+                    else if (g_iLocation == 3)
                     {
                         if (c_poscominfo.ci_mkno == "52")               // 페더럴 웨이 매장인 경우
                             strSelectedProdID = "2995200000081";
@@ -8921,7 +8942,7 @@ namespace HanaSales_SelfCheckOut
 
             if (lbBagCount.Text != "0")
             {
-                if(GintLocation == 1)                   // 벤쿠버 인 경우
+                if(g_iLocation == 1)                   // 벤쿠버 인 경우
                 {
                     //ProcessItemSale("9988", Convert.ToDouble(lbBagCount.Text)); // 쇼핑백 코드 
                     if (c_poscominfo.ci_mkno == "61")
@@ -8937,7 +8958,7 @@ namespace HanaSales_SelfCheckOut
                         ProcessItemSale("9006", Convert.ToDouble(lbBagCount.Text)); // 쇼핑백 코드
                     }
                 }
-                else if(GintLocation == 2)              // 토론토 인 경우
+                else if(g_iLocation == 2)              // 토론토 인 경우
                 {
                     string strCurDate = DateTime.Now.ToString("yyyy-MM-dd");
                     if ((Convert.ToDateTime("2023-05-31") <= Convert.ToDateTime(strCurDate)))         
@@ -9471,7 +9492,7 @@ namespace HanaSales_SelfCheckOut
                     sbHead.AppendLine();
                     sbHead.AppendLine();
                     sbHead.AppendLine(strAddress);
-                    if(GintLocation == 1 || GintLocation == 2)              // 벤쿠버, 토론토 인경우
+                    if(g_iLocation == 1 || g_iLocation == 2)              // 벤쿠버, 토론토 인경우
                     {
                         sbHead.AppendLine("Tel. " + strPhoneNumber + " / www.hmart.ca");
                     }
@@ -9524,14 +9545,14 @@ namespace HanaSales_SelfCheckOut
                             strcolStation = Convert.ToString(c_localdb.rs.Fields["colStation"].Value);
                             strcolHMoney = Convert.ToString(c_localdb.rs.Fields["colHmoney"].Value);
                             strcolCash = Convert.ToString(c_localdb.rs.Fields["colCash"].Value);
-                            if(GintLocation == 1)                           // 벤쿠버인 경우
+                            if(g_iLocation == 1)                           // 벤쿠버인 경우
                             {
                                 strcolPennyRounded = string.Format("{0:0.00}", double.Parse(Convert.ToString(c_localdb.rs.Fields["colPennyRounded"].Value))); //////Convert.ToString(c_localdb.rs.Fields["colPennyRounded"].Value); 
                                 strcolAli = Convert.ToString(c_localdb.rs.Fields["colAli"].Value);
                                 strcolWechat = Convert.ToString(c_localdb.rs.Fields["colWechat"].Value);
                                 strcolUnion = Convert.ToString(c_localdb.rs.Fields["colUnion"].Value);
                             }
-                            else if(GintLocation == 2)              // 토론토 인경우
+                            else if(g_iLocation == 2)              // 토론토 인경우
                             {
                                 strcolPennyRounded = "0.0000";
                                 strcolAli = "0.0000";
@@ -9618,7 +9639,7 @@ namespace HanaSales_SelfCheckOut
                     sbListInfo.AppendLine("-----------------------------------------------------------------------");
 
                     // Qty Description Amount
-                    if(GintLocation != 3)                   // 벤쿠버, 토론토 인경우
+                    if(g_iLocation != 3)                   // 벤쿠버, 토론토 인경우
                     {
                         sbListInfo.AppendLine(String.Format("{0, -3}{1, 15}{2, 46}", "Qty", "Description", "Amount"));
                         sbListInfo.AppendLine();
@@ -9652,14 +9673,14 @@ namespace HanaSales_SelfCheckOut
 
                 if (GstrReprint == "S")
                 {
-                    if (GintLocation == 1)                          // 벤쿠버인 경우
+                    if (g_iLocation == 1)                          // 벤쿠버인 경우
                     {
                         sQBuff = "Select tprod, prodName, prodKname, prodDeposit, prodCrf, tPtype, tType, tPunit, tIUprice, " +
                         "tOUPrice, tQty, tAmt, tWprice, tNative, tTax, tGst, tPst, tHst, (CASE WHEN tPromo = '' THEN '0' ELSE tPromo END) AS tPromo, tspecial, promoPrice "
                         + "From HANAMART.dbo.tb_SuspendTrans left join HANAMART.dbo.mfProd ON tprod = prodId "
                         + "where tInvNo = '" + strInvoNum + "' order by tID ";
                     }
-                    else if(GintLocation == 2)                  // 토론토 인경우
+                    else if(g_iLocation == 2)                  // 토론토 인경우
                     {
                         sQBuff = "Select tprod, prodName, prodKname, prodDeposit, tPtype, tType, tPunit, tIUprice, " +
                         "tOUPrice, tQty, tAmt, tWprice, tNative, tTax, tGst, tPst, tHst, (CASE WHEN tPromo = '' THEN '0' ELSE tPromo END) AS tPromo, tspecial, promoPrice "
@@ -9676,14 +9697,14 @@ namespace HanaSales_SelfCheckOut
                 }
                 else if (GstrReprint == "N" || GstrReprint == "R")
                 {
-                    if (GintLocation == 1)                          // 벤쿠버인 경우
+                    if (g_iLocation == 1)                          // 벤쿠버인 경우
                     {                   
                         sQBuff = "Select tprod, prodName, prodKname, prodDeposit, prodCrf, tPtype, tType, tPunit, tIUprice, " +
                             "tOUPrice, tQty, tAmt, tWprice, tNative, tTax, tGst, tPst, tHst, (CASE WHEN tPromo = '' THEN '0' ELSE tPromo END) AS tPromo, tspecial, promoPrice "
                           + "From HANAMART.dbo.tb_solditem left join HANAMART.dbo.mfProd ON tprod = prodId "
                           + "where tInvNo = '" + strInvoNum + "' order by tID ";
                     }
-                    else if (GintLocation == 2)                          // 토론토 인 경우
+                    else if (g_iLocation == 2)                          // 토론토 인 경우
                     {
                         sQBuff = "Select tprod, prodName, prodKname, prodDeposit, tPtype, tType, tPunit, tIUprice, " +
                             "tOUPrice, tQty, tAmt, tWprice, tNative, tTax, tGst, tPst, tHst, (CASE WHEN tPromo = '' THEN '0' ELSE tPromo END) AS tPromo, tspecial, promoPrice "
@@ -9726,7 +9747,7 @@ namespace HanaSales_SelfCheckOut
                             strtTax = Convert.ToString(c_localdb.rs.Fields["tTax"].Value);
                             strtGst = Convert.ToString(c_localdb.rs.Fields["tGst"].Value);
                             strtPst = Convert.ToString(c_localdb.rs.Fields["tPst"].Value);
-                            if(GintLocation != 3)               // 벤쿠버, 토론토 인 경우
+                            if(g_iLocation != 3)               // 벤쿠버, 토론토 인 경우
                             {
                                 strtHst = Convert.ToString(c_localdb.rs.Fields["tHst"].Value);
                             }
@@ -9739,7 +9760,7 @@ namespace HanaSales_SelfCheckOut
                             strprodName = Convert.ToString(c_localdb.rs.Fields["prodName"].Value);
                             strprodKname = Convert.ToString(c_localdb.rs.Fields["prodKname"].Value);
                             strprodDeposit = Convert.ToString(c_localdb.rs.Fields["prodDeposit"].Value);
-                            if(GintLocation == 1)               // 벤쿠버인 경우
+                            if(g_iLocation == 1)               // 벤쿠버인 경우
                             {
                                 strprodCrf = Convert.ToString(c_localdb.rs.Fields["prodCrf"].Value);
                             }
@@ -9784,7 +9805,7 @@ namespace HanaSales_SelfCheckOut
                             }
 
                             // Reusable Bag Exemption 표시
-                            if(GintLocation == 3)                   // 미국 인 경우
+                            if(g_iLocation == 3)                   // 미국 인 경우
                             {
                                 if (strtType == "49" && strtprod == "2995000000009")
                                 {
@@ -9816,7 +9837,7 @@ namespace HanaSales_SelfCheckOut
                                                                     
                                 e.Graphics.DrawString(strtQty, font, new SolidBrush(Color.Black), iStartX, iStartY + Offset);           // QTY 수량, 무게 값
                                 
-                                if (GintLocation != 3)                       // 벤쿠버 토론토 인경우
+                                if (g_iLocation != 3)                       // 벤쿠버 토론토 인경우
                                 {
                                     // 상품 명 가격 리스트 찍기
                                     if (Convert.ToInt16(strtPromo) >= 1)                           // Promotion 제품인 경우
@@ -9876,7 +9897,7 @@ namespace HanaSales_SelfCheckOut
                                         }
                                     }
                                 }
-                                else if(GintLocation == 3)      // 미국 인 경우
+                                else if(g_iLocation == 3)      // 미국 인 경우
                                 {
                                     e.Graphics.DrawString(strprodName, font, new SolidBrush(Color.Black), iStartX + 7, iStartY + Offset);
                                     e.Graphics.DrawString(strtOUPrice, font, new SolidBrush(Color.Black), 52 - strtOUPrice.Length, iStartY + Offset);
@@ -9903,7 +9924,7 @@ namespace HanaSales_SelfCheckOut
 
                             dGSTTotal = dGSTTotal + Convert.ToDouble(strtGst);
                             dPSTTotal = dPSTTotal + Convert.ToDouble(strtPst);
-                            if(GintLocation != 3)                   // 벤쿠버, 토론토 인 경우
+                            if(g_iLocation != 3)                   // 벤쿠버, 토론토 인 경우
                             {
                                 dHSTTotal = dHSTTotal + Convert.ToDouble(strtHst);
                             }
@@ -9975,7 +9996,7 @@ namespace HanaSales_SelfCheckOut
                 // USA Tax 표시
                 string strTax1Name = "";
                 string strTax2Name = "";
-                if (GintLocation == 3)                  // 미국 인 경우
+                if (g_iLocation == 3)                  // 미국 인 경우
                 {
                     strTax1Name = "Tax1";
                     strTax2Name = "Tax2";
@@ -10185,7 +10206,7 @@ namespace HanaSales_SelfCheckOut
                     c_localdb.RsClose();
 
                     //WeChat Trans
-                    if(GintLocation == 1)                       // 벤쿠버경우
+                    if(g_iLocation == 1)                       // 벤쿠버경우
                     {
                         sQBuff = "Select wt_transtype, wt_status, wt_payorderid, wt_channelId, wt_mchid From HANAMART.dbo.tb_wechatpaytrans where wt_InvNo = '"
                             + strInvoNum + "' " + "And wt_status = 'SUCCESS'  Order by wt_seq";
@@ -10276,12 +10297,12 @@ namespace HanaSales_SelfCheckOut
                                 e.Graphics.DrawString("YOUR SAVING & H-POINT SUMMARY", new Font("Arial", 8, FontStyle.Bold), new SolidBrush(Color.Black), iStartX + 7, iStartY + Offset);
                                 Offset = Offset + iFontHeightGap;
 
-                                if(GintLocation == 1)                           // 벤쿠버 인 경우
+                                if(g_iLocation == 1)                           // 벤쿠버 인 경우
                                 {
                                     e.Graphics.DrawString("Member : " + strcFirst + " " + strcName + " (" + strcolCust.Substring((strcolCust.Length) - 8, 8) + ")", new Font("Arial", 8, FontStyle.Regular), new SolidBrush(Color.Black), iStartX + 3, iStartY + Offset);
                                     Offset = Offset + iFontHeightGap;
                                 }
-                                else if(GintLocation == 2)                      // 토론토 인 경우
+                                else if(g_iLocation == 2)                      // 토론토 인 경우
                                 {
                                     e.Graphics.DrawString("Member : " + strcolCust.Substring((strcolCust.Length) - 8, 8), new Font("Arial", 8, FontStyle.Regular), new SolidBrush(Color.Black), iStartX + 3, iStartY + Offset);
                                     Offset = Offset + iFontHeightGap;
@@ -10326,7 +10347,7 @@ namespace HanaSales_SelfCheckOut
 
                                 e.Graphics.DrawString("Balance : ", font, new SolidBrush(Color.Black), iStartX + 3, iStartY + Offset);
 
-                                if (GintLocation == 1)                               // 벤쿠버 인 경우
+                                if (g_iLocation == 1)                               // 벤쿠버 인 경우
                                 {
                                     //e.Graphics.DrawString(string.Format("{0:0,0}", double.Parse(strcolHPBal)) + " P ($" + string.Format("{0:0.00}", double.Parse(strcolHPBal) / 500) + ")", font, new SolidBrush(Color.Black), 60 - (string.Format("{0:0,0}", double.Parse(strcolHPBal)) + " P ($" + string.Format("{0:0.00}", double.Parse(strcolHPBal) / 500) + ")").Length, iStartY + Offset);
 
@@ -10372,7 +10393,7 @@ namespace HanaSales_SelfCheckOut
                     //    //Market Notice
                     ///////////////////////////////////// 매장 코드 별로 메세지 구분 필요//////////////
 
-                    if (GintLocation == 1)                               // 벤쿠버 인 경우
+                    if (g_iLocation == 1)                               // 벤쿠버 인 경우
                     {
                         //Survey QR URL 
                         sQBuff = "Select sm_id, sm_title_eng, sm_sdate, sm_edate, sm_url, sm_status FROM tb_SurveyMaster where sm_status = 1";                                
@@ -10434,7 +10455,7 @@ namespace HanaSales_SelfCheckOut
                             }
                         }
                     }
-                    else if (GintLocation == 2)                          // 토론토 인 경우
+                    else if (g_iLocation == 2)                          // 토론토 인 경우
                     {
                         e.Graphics.DrawString("****************************************************************", new Font("Arial", 7, FontStyle.Regular), new SolidBrush(Color.Black), iStartX + 2, iStartY + Offset);
                         Offset = Offset + iFontHeightGap;
@@ -10525,7 +10546,7 @@ namespace HanaSales_SelfCheckOut
                 {
                     e.Graphics.DrawString("-----------------------------------------------------------------------", font, new SolidBrush(Color.Black), iStartX, iStartY + Offset);
                     Offset = Offset + iFontHeightGap;
-                    if(GintLocation != 3)                   // 미국이 아닌 경우
+                    if(g_iLocation != 3)                   // 미국이 아닌 경우
                     {
                         e.Graphics.DrawString("*1." + strInvoNum + "*", Barcodefont, new SolidBrush(Color.Black), iStartX + 3, iStartY + Offset);
                     }
@@ -10540,7 +10561,7 @@ namespace HanaSales_SelfCheckOut
                 //Coupon 출력 로직 .
                 if (GstrReprint == "N")       // 신규 영수증인 때만 출력,, Reprint시 출력 안되게.
                 {
-                    if(GintLocation == 1)                   // 벤쿠버 인 경우
+                    if(g_iLocation == 1)                   // 벤쿠버 인 경우
                     {
                         // HVT Wednesday coupon: $20 or $30 coupons 
                         if (c_poscominfo.ci_mkno == "69" && DateTime.Now.DayOfWeek == DayOfWeek.Wednesday)                         
@@ -10597,7 +10618,7 @@ namespace HanaSales_SelfCheckOut
                             c_localdb.RsClose();
                         }*/
                     }
-                    else if (GintLocation == 2)             // 토론토 인 경우
+                    else if (g_iLocation == 2)             // 토론토 인 경우
                     {
                         if (c_poscominfo.ci_mkno == "11" && strcolStation != "2")
                         {
@@ -10763,9 +10784,9 @@ namespace HanaSales_SelfCheckOut
             //c_poscominfo.ci_mkno
 
             // Coupon Path
-            if (GintLocation != 3)
+            if (g_iLocation != 3)
             {
-                if (GintLocation != 1) // 토론토 인 경우
+                if (g_iLocation != 1) // 토론토 인 경우
                 {
                     imgFiles = imgCouponFilesPath;
                     Image igCouponImg = Image.FromFile(imgFiles[0]);
@@ -10786,10 +10807,10 @@ namespace HanaSales_SelfCheckOut
                     Barcodefont = new Font("3 of 9 Barcode", 20, FontStyle.Regular);
                     Offset = Offset + (iFontHeightGap * 1);
 
-                    if (imgFiles[0].Contains("dc_2_van")) {
+                    if (imgFiles[0].Contains("dc_2_van_20250525")) {
                         e.Graphics.DrawString("*62.02" + couponDate + "*", Barcodefont, new SolidBrush(Color.Black), iStartX + 30, iStartY + Offset);
                     }
-                    else if (imgFiles[0].Contains("dc_5_van")) {
+                    else if (imgFiles[0].Contains("dc_5_van_20250525")) {
                         e.Graphics.DrawString("*62.05" + couponDate + "*", Barcodefont, new SolidBrush(Color.Black), iStartX + 30, iStartY + Offset);
                     }
 
@@ -11515,7 +11536,7 @@ namespace HanaSales_SelfCheckOut
             ProcessQLightControl("a0");     // all Light Off
             ProcessQLightControl("g1");     // Green Light On
 
-            if(GintLocation == 1)       //벤쿠버 인 경우
+            if(g_iLocation == 1)       //벤쿠버 인 경우
             {
                 if (OPOSScanner.DeviceEnabled == false)
                 {
@@ -11528,7 +11549,7 @@ namespace HanaSales_SelfCheckOut
                 //    OPOSScanner.DeviceEnabled = false;
                 //}
             }
-            else if(GintLocation == 2)      // 토론토 인경우
+            else if(g_iLocation == 2)      // 토론토 인경우
             {
                 if (OPOSScanner.DeviceEnabled == false)
                 {
@@ -12018,7 +12039,7 @@ namespace HanaSales_SelfCheckOut
                 sQBuff = "SELECT cc_code " +
                            "FROM hanamart.dbo.tb_comcodes " +
                           "WHERE cc_category = 1 " +
-                            "AND cc_area = '" + GintLocation + "' " +
+                            "AND cc_area = '" + g_iLocation + "' " +
                             "AND cc_active = 'Y'";
 
                 lReturn = c_localdb.RsOpen(sQBuff);
@@ -12084,7 +12105,7 @@ namespace HanaSales_SelfCheckOut
                 sQBuff = "SELECT cc_code " +
                            "FROM hanamart.dbo.tb_comcodes " +
                           "WHERE cc_category = 2 " +
-                            "AND cc_area = '" + GintLocation + "' " +
+                            "AND cc_area = '" + g_iLocation + "' " +
                             "AND cc_mkno = '" + c_poscominfo.ci_mkno + "' " +
                             "AND cc_active = 'Y'";
 
@@ -12138,7 +12159,7 @@ namespace HanaSales_SelfCheckOut
             //string strTotVal = lblPayBalance.Text;
             
 
-            //if (GPinPadReady == false)
+            //if (g_bPinPadReady == false)
             //{
             //    DisplayErrorMessageBox("PIN Pad", "Pin Pad connection failed.", 1, sMethod);
             //    KeyInReady();
@@ -12168,7 +12189,7 @@ namespace HanaSales_SelfCheckOut
             if (dblPaid == 0)
             {
                 DisplayErrorMessageBox("PIN Pad", "Payment Incomplete.", 1, sMethod);
-                GPayFinish = false;
+                g_bPayFinish = false;
 
                 transitionSiglePage(gbProcessCreditCard, 1024, 200);
 
@@ -12200,7 +12221,7 @@ namespace HanaSales_SelfCheckOut
             blCardApproved = pinpadprocess(strTRcode, strTotVal);
             //blCardApproved = true;      // 임시
            
-            GintAuthSeq += 1;
+            g_iAuthSeq += 1;
 
             if (blCardApproved == true)
             {
@@ -12220,7 +12241,7 @@ namespace HanaSales_SelfCheckOut
                     //    dblBalance = (Convert.ToDouble(strPaid) / 100) - (Convert.ToDouble(strTotVal));
                     //    lblPayBalance.Text = c_poscomlibs.getDoubleFormat(dblBalance);
                     //}
-                    GPayFinish = true;
+                    g_bPayFinish = true;
 
                     calcPaymentTotal(); // 결제 내역 모두 합산한 뒤 완료되었으면 Transaction 종료 처리
                 }
@@ -12228,7 +12249,7 @@ namespace HanaSales_SelfCheckOut
                 {
                     DisplayErrorMessageBox("PIN Pad", "Payment Incomplete.", 1, sMethod);
 
-                    GPayFinish = false;
+                    g_bPayFinish = false;
 
                     transitionSiglePage(gbProcessCreditCard, 1024, 200);
                     //ctrlOnScreen = ctrTemp;
@@ -12259,7 +12280,7 @@ namespace HanaSales_SelfCheckOut
             else
             {
                 DisplayErrorMessageBox("PIN Pad", "Payment Incomplete.", 1, sMethod);
-                GPayFinish = false;
+                g_bPayFinish = false;
 
                 transitionSiglePage(gbProcessCreditCard, 1024, 200);
 
@@ -12302,7 +12323,7 @@ namespace HanaSales_SelfCheckOut
             if (dblPaid == 0)
             {
                 DisplayErrorMessageBox("PIN Pad", "Payment Incomplete.", 1, sMethod);
-                GPayFinish = false;
+                g_bPayFinish = false;
 
                 transitionSiglePage(gbProcessEBT, 1024, 200);
                 return;
@@ -12331,7 +12352,7 @@ namespace HanaSales_SelfCheckOut
 
             // Card 결재 창 출력 프로세스 표시
             //blCardApproved = pinpadprocess(strTRcode, strTotVal);
-            GintAuthSeq += 1;
+            g_iAuthSeq += 1;
 
             if (blCardApproved == true)
             {
@@ -12340,7 +12361,7 @@ namespace HanaSales_SelfCheckOut
                 if (Convert.ToDouble(lblPayBalance.Text) <= 0)
                     //if (Convert.ToDouble(lbSelectPaymentBalanceNum.Text) <= 0)  // Pay할 금액이 남아 있는 경우 Pay 계속 진행
                 {
-                    GPayFinish = true;
+                    g_bPayFinish = true;
 
                     calcPaymentTotal(); // 결제 내역 모두 합산한 뒤 완료되었으면 Transaction 종료 처리
                 }
@@ -12348,7 +12369,7 @@ namespace HanaSales_SelfCheckOut
                 {
                     //DisplayErrorMessageBox("PIN Pad", "Payment Incomplete.", 1, sMethod);
                     DisplayErrorMessageBox("Payment", "PAYMENT INCOMPLETE. \n Please Select another Payment Type.", 1, sMethod);
-                    GPayFinish = false;
+                    g_bPayFinish = false;
                     transitionSiglePage(gbProcessEBT, 1023, 200);
                 
                     ctrlOnScreen = pnSelectPayment;     // 강제로 컨트롤 화면 설정함.
@@ -12365,7 +12386,7 @@ namespace HanaSales_SelfCheckOut
             {
                 //DisplayErrorMessageBox("PIN Pad", "Payment Incomplete.", 1, sMethod);
                 DisplayErrorMessageBox("Payment", "PAYMENT INCOMPLETE. \n Please Select another Payment Type.", 1, sMethod);
-                GPayFinish = false;
+                g_bPayFinish = false;
                 transitionSiglePage(gbProcessEBT, 1023, 200);
 
                 ctrlOnScreen = pnSelectPayment;     // 강제로 컨트롤 화면 설정함.
@@ -12414,13 +12435,13 @@ namespace HanaSales_SelfCheckOut
             long lReturn = 0;
             string sMethod = System.Reflection.MethodBase.GetCurrentMethod().Name;
             
-            if (GblTestMode == true)
+            if (g_bTestMode == true)
             {
                 HanaMiraX.StationID = "EIGEN";
             }
             else
             {
-                //HanaMiraX.StationID = g_strCounterNum;
+                //HanaMiraX.StationID = g_sCounterNum;
                 HanaMiraX.StationID = c_poscominfo.si_PinpadStationID;
 
                 g_sMessage = string.Format("[{0}] HanaMiraX.StationID : {1}", sMethod, HanaMiraX.StationID);
@@ -12704,7 +12725,7 @@ namespace HanaSales_SelfCheckOut
                                                   "0" + ", " + GdblEBTTax1Total.ToString() + ", " + "0" + ", '0'" + ", '', '0', '" + c_poscominfo.ui_epno + "', '" + c_poscominfo.si_counternum +
                                                  "','','','','','','','',0,'',0,'','','' ";
 
-                            if (GintLocation == 3) // 미국일 경우 테이블 컬럼 구성 다름
+                            if (g_iLocation == 3) // 미국일 경우 테이블 컬럼 구성 다름
                             {
                                 sQBuff = "INSERT INTO hanamart.dbo.tb_orderitem " +
                                           "SELECT '" + txtInvNo.Text + "', " + maxseq2 + ",'" + DateTime.Now.ToString("yyyy-MM-dd") + "','" + DateTime.Now.ToString("h:mm:ss tt") + "' , '" +
@@ -12847,19 +12868,19 @@ namespace HanaSales_SelfCheckOut
                 
                 if (blHandshake == true)
                 {
-                    GPinPadReady = true;
+                    g_bPinPadReady = true;
                     return false;
                 }
                 else
                 {
-                    if (GblTestMode == true)
+                    if (g_bTestMode == true)
                     {
-                        GPinPadReady = true;
+                        g_bPinPadReady = true;
                         return true;
                     }
                     else
                     {
-                        GPinPadReady = false;
+                        g_bPinPadReady = false;
                     }
                 }
             }
@@ -12993,7 +13014,7 @@ namespace HanaSales_SelfCheckOut
                 case "UP":            //UNION PAY
                     wCardTranType = 2;
 
-                    if(GintLocation != 3)               // 미국이 아닌 경우 ColUnion 컬럼이 있음.
+                    if(g_iLocation != 3)               // 미국이 아닌 경우 ColUnion 컬럼이 있음.
                     {
                         wCreditCardCode = 4;
                     }
@@ -13109,7 +13130,7 @@ namespace HanaSales_SelfCheckOut
                 sQBuff = "Insert Into tb_CardTrans (ct_year, ct_Seq, ct_InvNo, ct_OrderSeq, ct_Station, ct_TranType, ct_Amount, ct_balance, ct_CardType, ct_Pan, ct_exp," +
                             "ct_Language, ct_RefNum, ct_SwipeManual, ct_AccountType, ct_AuthCode, ct_TranNo, ct_TranDate, ct_TranTime, ct_ActionCode, ct_ResponseCode," +
                             "ct_Response, ct_Track2, ct_MerchantReceipt, ct_CustomerReceipt, ct_Token, ct_upflag)";
-                sQBuff += "Values ('" + DateTime.Now.ToString("yy") + "'," + iSeq.ToString() + ",'" + txtInvNo.Text + "'," + GintAuthSeq.ToString() +
+                sQBuff += "Values ('" + DateTime.Now.ToString("yy") + "'," + iSeq.ToString() + ",'" + txtInvNo.Text + "'," + g_iAuthSeq.ToString() +
                             "," + c_poscominfo.si_counternum + ",'" + pTranCode.Trim() + "'," + HanaMiraX.Amount + "," + "0" + ",'" + HanaMiraX.CardType + "','','',0,'" +
                             HanaMiraX.ReceiptRefNum + "','" + pSwipeManual + "','" + HanaMiraX.AccountType + "','" + HanaMiraX.Approval_CD + "','','" +
                             strTranDate + "','" + strTranTime + "','" + HanaMiraX.ActionCode.Trim() + "','" + HanaMiraX.Response_Code.Trim() + "','" + HanaMiraX.Display_Msg +
@@ -13528,7 +13549,7 @@ namespace HanaSales_SelfCheckOut
                 {
                     //g_ItemDiscountModeOn = false;
                     // 바코드에서 DC Rate 가져오기.
-                    GdblItemDCRate = Convert.ToDouble(txtItemDiscountBarcode.Text.Substring(txtItemDiscountBarcode.Text.LastIndexOf('.') + 1, 3));          // Rate 파싱에서 넣기.
+                    g_dItemDCRate = Convert.ToDouble(txtItemDiscountBarcode.Text.Substring(txtItemDiscountBarcode.Text.LastIndexOf('.') + 1, 3));          // Rate 파싱에서 넣기.
 
                     ProcessItemDiscountBarcode();
                 }
@@ -13931,7 +13952,7 @@ namespace HanaSales_SelfCheckOut
             KeyInReady();
 
             // Sync Process 실행
-            if(GblTestMode == false)
+            if(g_bTestMode == false)
             {
                 ProcessHanaSyncData();
             }
@@ -14014,7 +14035,7 @@ namespace HanaSales_SelfCheckOut
 
 
                 //2-1. tb_SoldItem
-                if(GintLocation == 1)                           // 벤쿠버 일때
+                if(g_iLocation == 1)                           // 벤쿠버 일때
                 {
                     sQBuff = "INSERT INTO HANAMART.dbo.tb_SuspendTrans ";
                     sQBuff += "SELECT tInvNo,tID,tDate,tTime,tProd,tPtype,tPtype2,tCat1,tCat2,tCat3,tCat4,tCat5,tCatCode,tQty,tPunit,tIUprice";
@@ -14023,7 +14044,7 @@ namespace HanaSales_SelfCheckOut
                     sQBuff += "FROM HANAMART.dbo.tb_OrderItem ";
 
                 }
-                else if(GintLocation == 2)                      // 토론토 일때
+                else if(g_iLocation == 2)                      // 토론토 일때
                 {
                     sQBuff = "INSERT INTO HANAMART.dbo.tb_SuspendTrans ";
                     sQBuff += "SELECT tInvNo,tID,tDate,tTime,tProd,tPtype,tPtype2,tCat1,tCat2,tCat3,tCat4,tCat5,tQty,tPunit,tIUprice";
@@ -14249,17 +14270,17 @@ namespace HanaSales_SelfCheckOut
             btnSearchCategory_A.Enabled = true;
             btnSearchCategory_All.Enabled = true;
 
-            if (GintLocation == 1)               // 벤쿠버인  경우
+            if (g_iLocation == 1)               // 벤쿠버인  경우
             {
                 btnSearchOrKeyinItem.Text = "Search Key In Item";
                 btnBackToCategory.Text = "Back";
             }
-            else if (GintLocation == 2)               // 토론토인 경우
+            else if (g_iLocation == 2)               // 토론토인 경우
             {
                 btnSearchOrKeyinItem.Text = "Search Key In Category";
                 btnBackToCategory.Text = "Back to Category";
             }
-            else if (GintLocation == 3)               // 미국인 경우
+            else if (g_iLocation == 3)               // 미국인 경우
             {
                 btnSearchOrKeyinItem.Text = "Search Key In Item";
                 btnBackToCategory.Text = "Back";
@@ -14316,7 +14337,7 @@ namespace HanaSales_SelfCheckOut
             btnSearchCategory_A.Enabled = true;
             btnSearchCategory_All.Enabled = true;
 
-            //if (GintLocation != 3)               // 미국이 아닌 경우
+            //if (g_iLocation != 3)               // 미국이 아닌 경우
             //{
             //    btnSearchOrKeyinItem.Text = "Search Key In Category";
             //    btnBackToCategory.Text = "Back to Category";
@@ -14329,7 +14350,7 @@ namespace HanaSales_SelfCheckOut
             //}
 
             // All Image 출력
-            if (GintLocation != 3)               // 미국이 아닌 경우
+            if (g_iLocation != 3)               // 미국이 아닌 경우
             {
                 if (g_SearchCategory == true)
                 {
@@ -14481,7 +14502,7 @@ namespace HanaSales_SelfCheckOut
             g_SearchKeyInputPLU_Number = false;
 
             // All Image 출력
-            if (GintLocation != 3)               // 미국이 아닌 경우
+            if (g_iLocation != 3)               // 미국이 아닌 경우
             {
                 if (g_SearchCategory == true)
                 {
@@ -14554,12 +14575,12 @@ namespace HanaSales_SelfCheckOut
                     lvSearchImage_Category.Clear();
 
                     if (eImageType == ImageType.Item)
-                        if(GintLocation == 3)                   // 미국인 경우
+                        if(g_iLocation == 3)                   // 미국인 경우
                             imgFiles = Directory.GetFiles(Application.StartupPath + "\\Image\\", "*.jpg", SearchOption.TopDirectoryOnly); // 경로 변경 필요. 프로젝트내부로 이동
                         else
                             imgFiles = Directory.GetFiles(Application.StartupPath + "\\Image\\", "*.png", SearchOption.TopDirectoryOnly); // 경로 변경 필요. 프로젝트내부로 이동
                     else if (eImageType == ImageType.Category)
-                        if (GintLocation == 3)                   // 미국인 경우
+                        if (g_iLocation == 3)                   // 미국인 경우
                             imgFiles = Directory.GetFiles(Application.StartupPath + "\\Image\\Category\\", "*.jpg", SearchOption.AllDirectories); // 경로 변경 필요. 프로젝트내부로 이동
                         else
                             imgFiles = Directory.GetFiles(Application.StartupPath + "\\Image\\Category\\", "*.png", SearchOption.AllDirectories); // 경로 변경 필요. 프로젝트내부로 이동
@@ -14625,7 +14646,7 @@ namespace HanaSales_SelfCheckOut
                         }
                             
                         else if (eImageType == ImageType.Category)
-                            if (GintLocation == 3)                   // 미국인 경우
+                            if (g_iLocation == 3)                   // 미국인 경우
                                 list.AddRange(Directory.GetFiles(Application.StartupPath + "\\Image\\Category\\", "*_" + strSplitChar + "*.jpg", SearchOption.AllDirectories)); // 경로 변경 필요. 프로젝트내부로 이동
                             else
                                 list.AddRange(Directory.GetFiles(Application.StartupPath + "\\Image\\Category\\", "*_" + strSplitChar + "*.png", SearchOption.AllDirectories)); // 경로 변경 필요. 프로젝트내부로 이동
@@ -14640,7 +14661,7 @@ namespace HanaSales_SelfCheckOut
                         if (strContents.All(char.IsDigit))      //숫자인지 확인 True 면 숫자, False 면 문자.
                         {
                             // 숫자 PLU 검색
-                            if (GintLocation == 3)                   // 미국인 경우
+                            if (g_iLocation == 3)                   // 미국인 경우
                                 imgFiles = Directory.GetFiles(Application.StartupPath + "\\Image\\Category\\", strContents + "*_" + "*.jpg", SearchOption.AllDirectories); // 경로 변경 필요. 프로젝트내부로 이동
                             else
                                 imgFiles = Directory.GetFiles(Application.StartupPath + "\\Image\\Category\\", strContents + "*_" + "*.png", SearchOption.AllDirectories); // 경로 변경 필요. 프로젝트내부로 이동
@@ -14648,7 +14669,7 @@ namespace HanaSales_SelfCheckOut
                         else
                         {
                             // 문자 Category Name 검색
-                            if (GintLocation == 3)                   // 미국인 경우
+                            if (g_iLocation == 3)                   // 미국인 경우
                                 imgFiles = Directory.GetFiles(Application.StartupPath + "\\Image\\Category\\", "*_" + strContents + "*.jpg", SearchOption.AllDirectories); // 경로 변경 필요. 프로젝트내부로 이동
                             else
                                 imgFiles = Directory.GetFiles(Application.StartupPath + "\\Image\\Category\\", "*_" + strContents + "*.png", SearchOption.AllDirectories); // 경로 변경 필요. 프로젝트내부로 이동
@@ -14718,7 +14739,7 @@ namespace HanaSales_SelfCheckOut
             int j = 0;
             for (int i = 0; i < imgFiles.Length; i++)
             {
-                if (eImageType == ImageType.Item && GintLocation == 3)
+                if (eImageType == ImageType.Item && g_iLocation == 3)
                 //if (eImageType == ImageType.Item )
                 {
                     strTemp = imgFiles[i];
@@ -14818,7 +14839,7 @@ namespace HanaSales_SelfCheckOut
 
                         ListViewItem item;
 
-                        if (GintLocation == 3)                                                 // 미국 인 경우
+                        if (g_iLocation == 3)                                                 // 미국 인 경우
                         {
                             if (GetImageDisplaySettingStatus(strprodId) == true)             // ProdCat3 Image Display Enable/Disable 설정 확인.
                             {
@@ -15035,16 +15056,16 @@ namespace HanaSales_SelfCheckOut
                 }
 
                 // 입력된 상품코드(UPC) 검색하여 존재 여부 확인.
-                if (GintLocation == 3)                                          // 미국인 경우
+                if (g_iLocation == 3)                                          // 미국인 경우
                 {
                     sQBuff = "SELECT prodCat3 FROM hanamart.dbo.mfProd " +
                              "WHERE prodId = '" + strprodId + "'";
                 }
-                else if (GintLocation == 2)                          // 토론토 인 경우
+                else if (g_iLocation == 2)                          // 토론토 인 경우
                 {
                 }
 
-                else if (GintLocation == 1)                          // 벤쿠버 인 경우
+                else if (g_iLocation == 1)                          // 벤쿠버 인 경우
                 {
                     sQBuff = "SELECT prodCat3 FROM hanamart.dbo.mfProd " +
                              "WHERE prodId = '" + strprodId + "'";
@@ -16016,7 +16037,7 @@ namespace HanaSales_SelfCheckOut
             string strTemp;
             string strCategoryNumber = string.Empty;
             // 숫자 PLU 검색
-            if(GintLocation == 3)                   // 미국 인 경우
+            if(g_iLocation == 3)                   // 미국 인 경우
                 imgFiles = Directory.GetFiles(Application.StartupPath + "\\Image\\Category\\", "*_" + strSelectedCategoryName + "*.jpg", SearchOption.AllDirectories); // 경로 변경 필요. 프로젝트내부로 이동
             else
                 imgFiles = Directory.GetFiles(Application.StartupPath + "\\Image\\Category\\", "*_" + strSelectedCategoryName + "*.png", SearchOption.AllDirectories); // 경로 변경 필요. 프로젝트내부로 이동
@@ -16313,11 +16334,11 @@ namespace HanaSales_SelfCheckOut
                 
                 // 음성 실행.
                 GssHowManyUseBag.SelectVoice(GstrVoice);
-                if (GintLocation == 1)               // 벤쿠버
+                if (g_iLocation == 1)               // 벤쿠버
                 {
                     GssHowManyUseBag.SpeakAsync("How many bags did you use? ");
                 }
-                else if (GintLocation == 2)          // 토론토
+                else if (g_iLocation == 2)          // 토론토
                 {
                     GssHowManyUseBag.SpeakAsync("How many bags did you use? ");
                 }
@@ -16341,7 +16362,7 @@ namespace HanaSales_SelfCheckOut
             btnSearch.Enabled = true;
             btnSearch_Category.Enabled = true;
 
-            if (GintLocation == 1 || GintLocation == 3)               // 벤쿠버, 미국인 경우
+            if (g_iLocation == 1 || g_iLocation == 3)               // 벤쿠버, 미국인 경우
             {
                 btnBack.Visible = true;
                 btnBack.Enabled = true;
@@ -16377,7 +16398,7 @@ namespace HanaSales_SelfCheckOut
                 btnHelp.Enabled = true;
                 btnHelp.BringToFront();
 
-                if (GintLocation != 3)               // 미국이 아닌 경우
+                if (g_iLocation != 3)               // 미국이 아닌 경우
                 {
                     txtNumCS.Enabled = false;       // 아이템 스캔 방지.
                 }
@@ -16437,7 +16458,7 @@ namespace HanaSales_SelfCheckOut
             lbSelectPaymentBalanceNum.Text = c_poscomlibs.getDoubleFormat(Convert.ToDouble(lbTotalValCS.Text) - dblTotal + Convert.ToDouble(lblPayPennyRounded.Text));
 
             double dblPayAmt = Math.Round((dblTotal + Convert.ToDouble(lblPayBalance.Text) - Convert.ToDouble(lblPayPennyRounded.Text)), 2);
-            if ((GPayFinish == true) && (Convert.ToDouble(lbTotalValCS.Text) == dblPayAmt))
+            if ((g_bPayFinish == true) && (Convert.ToDouble(lbTotalValCS.Text) == dblPayAmt))
             {
                 completeTransaction();
             }
@@ -16732,34 +16753,36 @@ namespace HanaSales_SelfCheckOut
         {
             ShowScannerData("FF83800030");
         }
-
+        
         private void btnscalescanTest2_Click(object sender, EventArgs e)
         {
-            // pds-test
+            if (g_bTestMembershipScan)
+            {
+                ShowScannerData("822222342481"); // scan membership, Vancouver
+                // ShowScannerData("822282315302"); // scan membership, US
+                g_bTestMembershipScan = false;
+            } 
+            else
+            {
+                ShowScannerData("031146013531");  // NS SHIN RAMYUN BLACK 130G*4, $14.99
+            }
+
+            // Test: scan items
             //ShowScannerData("761898665879");
             //ShowScannerData("807176500293");  // CJ Chunhailmee Rice, $49.99
             //ShowScannerData("031146013531");  // NS SHIN RAMYUN BLACK 130G*4, $14.99
-            //ShowScannerData("8809061492548");   // Punggi red ginseng whole roots 200g, $59.99
-            ShowScannerData("8809019402605");   // CUCKOO RICE COOKER CR0351F, $205.99
-    
-            /*if (GintLocation == 1) 
-                ShowScannerData("822222342481"); // scan membership                
-            else if (GintLocation == 3)
-                ShowScannerData("822282315302");*/
-
+            //ShowScannerData("8809061492548"); // Punggi red ginseng whole roots 200g, $59.99
+            //ShowScannerData("8809019402605");   // CUCKOO RICE COOKER CR0351F, $205.99
         }
 
         private void btnscalescanTest3_Click(object sender, EventArgs e)
         {
-            // pds-test
-            // test print
+            // complete transaction and print
             testCompleteAndPrint();
 
-            //ShowScannerData("822222342481"); // scan membership
-
-            /*if (GintLocation == 1)
+            /*if (g_iLocation == 1)
                 ShowScannerData("011152036458");
-            else if (GintLocation == 3)
+            else if (g_iLocation == 3)
                 ShowScannerData("FF83800030");*/
         }
 
@@ -16778,7 +16801,7 @@ namespace HanaSales_SelfCheckOut
             ProcessTotalDC();    // recalculate with DC Rate (?)
             CntTotSalePayment(); // OrderItem 금액과 Item Count 재계산
                         
-            GPayFinish = true;
+            g_bPayFinish = true;
             lblPayCash.Text = lblPayBalance.Text;
             lblPayBalance.Text = c_poscomlibs.getDoubleFormat(dblBalance);
                             
@@ -17633,7 +17656,7 @@ namespace HanaSales_SelfCheckOut
 
                     btnSelectPointCard.Enabled = true;                  // Point Card 초기화.
 
-                    //if (GintLocation == 1)       // 벤쿠버 일 경우
+                    //if (g_iLocation == 1)       // 벤쿠버 일 경우
                     //{
                     //    저울에서 스캔 되는거 방지.
                     //    if (OPOSScanner.DeviceEnabled)
@@ -18084,7 +18107,7 @@ namespace HanaSales_SelfCheckOut
             // OPEN/CLOSE 버튼 활성화.
             //swbOpenClose.Visible = true;
 
-            //if (GintLocation == 1 || GintLocation == 3)       // 벤쿠버, 미국 일 경우
+            //if (g_iLocation == 1 || g_iLocation == 3)       // 벤쿠버, 미국 일 경우
             //{
             //    // 저울에서 스캔 되는거 방지.
             //    if (OPOSScanner.DeviceEnabled)
@@ -18186,7 +18209,7 @@ namespace HanaSales_SelfCheckOut
              
             double dblPayAmt = Convert.ToDouble(strPaid == "" ? "0" : strPaid);
             double dblHPNow = Convert.ToDouble(c_poscominfo.mi_pointbalance);
-            GdblHPTodayUsed = Convert.ToDouble(lbUsedPointCS.Text);
+            g_dHPTodayUsed = Convert.ToDouble(lbUsedPointCS.Text);
 
 //            if (Convert.ToDouble(lblPayBalance.Text) > 0)  // 판매 시
             if (Convert.ToDouble(lbSelectPaymentBalanceNum.Text) > 0)  // 판매 시
@@ -18197,9 +18220,9 @@ namespace HanaSales_SelfCheckOut
                     dblPayAmt = Convert.ToDouble(lbSelectPaymentBalanceNum.Text) * 500;
                     
 
-                    if (dblPayAmt > (dblHPNow - GdblHPTodayUsed))
+                    if (dblPayAmt > (dblHPNow - g_dHPTodayUsed))
                     {
-                        dblPayAmt = (dblHPNow - GdblHPTodayUsed);
+                        dblPayAmt = (dblHPNow - g_dHPTodayUsed);
                     }
                 }
                 else
@@ -18211,9 +18234,9 @@ namespace HanaSales_SelfCheckOut
                         dblPayAmt = Convert.ToDouble(lbSelectPaymentBalanceNum.Text) * 500;
                     }
 
-                    if (dblPayAmt > (dblHPNow - GdblHPTodayUsed))
+                    if (dblPayAmt > (dblHPNow - g_dHPTodayUsed))
                     {
-                        dblPayAmt = (dblHPNow - GdblHPTodayUsed);
+                        dblPayAmt = (dblHPNow - g_dHPTodayUsed);
                     }
                 }
             }
@@ -18233,9 +18256,9 @@ namespace HanaSales_SelfCheckOut
                 }
             }
 
-            GdblHPTodayUsed = GdblHPTodayUsed + dblPayAmt;
+            g_dHPTodayUsed = g_dHPTodayUsed + dblPayAmt;
                     //c_poscominfo.mi_pointbalance = Convert.ToInt64(dblHPNow - dblPayAmt);
-                    //lbUsedPointCS.Text = GdblHPTodayUsed.ToString();
+                    //lbUsedPointCS.Text = g_dHPTodayUsed.ToString();
                     //lbBalancePointCS.Text = c_poscominfo.mi_pointbalance.ToString();
 
             dblPayAmt = dblPayAmt / 500;
@@ -18247,7 +18270,7 @@ namespace HanaSales_SelfCheckOut
             if (dblBalance > 0)
             {
                 DisplayErrorMessageBox("Payment", "PAYMENT INCOMPLETE. \n Please Select another Payment Type.", 1, sMethod);
-                GPayFinish = false;
+                g_bPayFinish = false;
                 
                 calcPaymentTotal();
 
@@ -18256,7 +18279,7 @@ namespace HanaSales_SelfCheckOut
             }
 
             // Pay 완료 상태.
-            GPayFinish = true;
+            g_bPayFinish = true;
             calcPaymentTotal();  
         }
 
@@ -18340,7 +18363,7 @@ namespace HanaSales_SelfCheckOut
             ////////////////////////////
             // Sync Process 실행
             //Process.Start(Application.StartupPath + "\\HanaSyncData.bat");
-            if (GblTestMode == false)
+            if (g_bTestMode == false)
             {
                 ProcessHanaSyncData();
             }
@@ -18844,7 +18867,7 @@ namespace HanaSales_SelfCheckOut
             long lReturn = 0;
 
             string sMethod = System.Reflection.MethodBase.GetCurrentMethod().Name;
-            g_sMessage = string.Format("[{0}] Item Discount : ({1} %) (ctrlOnScreen : {2}).", sMethod, GdblItemDCRate, ctrlOnScreen.Name);
+            g_sMessage = string.Format("[{0}] Item Discount : ({1} %) (ctrlOnScreen : {2}).", sMethod, g_dItemDCRate, ctrlOnScreen.Name);
             c_colib.cWriteLogs(g_sProcessor, g_sMessage);
 
             if (ItemCSView.Items.Count > 0 && ItemCSView.SelectedItems.Count > 0)
@@ -18871,7 +18894,7 @@ namespace HanaSales_SelfCheckOut
                 // 2. 변수 Clear 확인
 
                 // 3. Total DC 적용된 경우 Exit
-                if (GdblTotalDCRate > 0)
+                if (g_dTotalDCRate > 0)
                 {
                     DisplayErrorMessageBox("Item Discount", "Total DC was already applied.", 1, sMethod);
                     return;
@@ -18887,8 +18910,8 @@ namespace HanaSales_SelfCheckOut
                 }
 
                 // 6. DC Rate 할당 (바코드 파싱해서 가져옴)
-                dblDCRate = GdblItemDCRate;
-                GdblItemDCRate = 0; // Item Add 전에 조건에 의해 빠져나갈 경우를 대비 미리 변수 초기화
+                dblDCRate = g_dItemDCRate;
+                g_dItemDCRate = 0; // Item Add 전에 조건에 의해 빠져나갈 경우를 대비 미리 변수 초기화
 
                 // 7. Item DC 50% 넘어가면 Exit
                 if (dblDCRate > 50)
@@ -19031,7 +19054,7 @@ namespace HanaSales_SelfCheckOut
                 c_localdb.DBExcute(sQBuff);
 
                 // 10. 변수 Clear 확인 & New Item 스캔 준비
-                GdblItemDCRate = 0;
+                g_dItemDCRate = 0;
                 
                 // ItemDiscount 창 삭제.
                 transitionSiglePage(gbItemDiscount, 1023, 200);
