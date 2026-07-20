@@ -137,17 +137,17 @@ namespace HanaSales_SelfCheckOut
         double g_dHPBonus = 0;
         
         // EBT Calculation
-        double GdblEBTAmountTotal = 0;          // EBT 대상 상품 합산 금액
-        double GdblEBTTax1Total = 0;            // EBT 대상 상품 Tax1 합산 금액
-        double GdblEBTTax2Total = 0;            // EBT 대상 상품 Tax2 합산 금액
-        double GdblEBTTax3Total = 0;            // EBT 대상 상품 Tax3 합산 금액
-        double GdblEBTTaxExemptAmountTotal = 0; // Tax Exemption 적용 받는 Total Amount 금액
-        double GdblEBTTaxExemptTotal = 0;       // Tax Exemption 금액
-        double GdblFoodStampAmt = 0;
-        double GdblFoodStampTax = 0;
-        double GdblFoodStampTaxableItemAmt = 0;
-        bool GblEBTReusableBag = false;
-        bool GblEBTTaxExamption = false;
+        double g_dEBTAmountTotal = 0;          // EBT 대상 상품 합산 금액
+        double g_dEBTTax1Total = 0;            // EBT 대상 상품 Tax1 합산 금액
+        double g_dEBTTax2Total = 0;            // EBT 대상 상품 Tax2 합산 금액
+        double g_dEBTTax3Total = 0;            // EBT 대상 상품 Tax3 합산 금액
+        double g_dEBTTaxExemptAmountTotal = 0; // Tax Exemption 적용 받는 Total Amount 금액
+        double g_dEBTTaxExemptTotal = 0;       // Tax Exemption 금액
+        double g_dFoodStampAmt = 0;
+        double g_dFoodStampTax = 0;
+        double g_dFoodStampTaxableItemAmt = 0;
+        bool g_bEBTReusableBag = false;
+        bool g_bEBTTaxExamption = false;
 
         // Transaction Complete
         bool g_bComplete = false;
@@ -927,15 +927,15 @@ namespace HanaSales_SelfCheckOut
 
         private void initEBTTotal()
         {
-            GdblEBTAmountTotal = 0;
-            GdblEBTTax1Total = 0;
-            GdblEBTTax2Total = 0;
-            GdblEBTTax3Total = 0;
-            GdblEBTTaxExemptAmountTotal = 0;
-            GdblEBTTaxExemptTotal = 0;
+            g_dEBTAmountTotal = 0;
+            g_dEBTTax1Total = 0;
+            g_dEBTTax2Total = 0;
+            g_dEBTTax3Total = 0;
+            g_dEBTTaxExemptAmountTotal = 0;
+            g_dEBTTaxExemptTotal = 0;
 
-            GblEBTReusableBag = false;
-            GblEBTTaxExamption = false;
+            g_bEBTReusableBag = false;
+            g_bEBTTaxExamption = false;
         }
 
         private void KeyInReady()
@@ -3945,10 +3945,10 @@ namespace HanaSales_SelfCheckOut
                     oaCalcAmount.dEBTTax2Amount = oaCalcAmount.dTax2Amount;
                     oaCalcAmount.dEBTTax3Amount = oaCalcAmount.dTax3Amount;
 
-                    GdblEBTAmountTotal += oaCalcAmount.dEBTamount;
-                    GdblEBTTax1Total += oaCalcAmount.dEBTTax1Amount;
-                    GdblEBTTax2Total += oaCalcAmount.dEBTTax2Amount;
-                    GdblEBTTax3Total += oaCalcAmount.dEBTTax3Amount;
+                    g_dEBTAmountTotal += oaCalcAmount.dEBTamount;
+                    g_dEBTTax1Total += oaCalcAmount.dEBTTax1Amount;
+                    g_dEBTTax2Total += oaCalcAmount.dEBTTax2Amount;
+                    g_dEBTTax3Total += oaCalcAmount.dEBTTax3Amount;
 
                 }
                 else
@@ -4781,10 +4781,10 @@ namespace HanaSales_SelfCheckOut
 
             OrderInfo oiOrderItem;
 
-            GdblEBTAmountTotal = 0;
-            GdblEBTTax1Total = 0;
-            GdblEBTTax2Total = 0;
-            GdblEBTTax3Total = 0;
+            g_dEBTAmountTotal = 0;
+            g_dEBTTax1Total = 0;
+            g_dEBTTax2Total = 0;
+            g_dEBTTax3Total = 0;
 
             try
             {
@@ -4999,10 +4999,10 @@ namespace HanaSales_SelfCheckOut
                             {       
                                 if (oiOrderItem.sFoodStamp == "1")      // Food Stamp 아이템인 인 경우 EBT Total Amount / TAX Amount 다시 합산함. Item Correct 했을 경우 만 해당.
                                 {
-                                    GdblEBTAmountTotal += oiOrderItem.dAmt;
-                                    GdblEBTTax1Total += oiOrderItem.dGst;
-                                    GdblEBTTax2Total += oiOrderItem.dPst;
-                                    GdblEBTTax3Total += 0;                                                                      
+                                    g_dEBTAmountTotal += oiOrderItem.dAmt;
+                                    g_dEBTTax1Total += oiOrderItem.dGst;
+                                    g_dEBTTax2Total += oiOrderItem.dPst;
+                                    g_dEBTTax3Total += 0;                                                                      
                                 }
                             }
                             ItemCSView.Items.Add(prodItem);
@@ -5789,9 +5789,9 @@ namespace HanaSales_SelfCheckOut
                 //long lReturn = 0;
                 //double dblTaxSum = 0;
 
-                GdblFoodStampAmt = 0;
-                GdblFoodStampTax = 0;
-                GdblFoodStampTaxableItemAmt = 0;
+                g_dFoodStampAmt = 0;
+                g_dFoodStampTax = 0;
+                g_dFoodStampTaxableItemAmt = 0;
 
                 lReturn = c_localdb.DBConnection();
 
@@ -5813,12 +5813,12 @@ namespace HanaSales_SelfCheckOut
                     {
                         dblTaxSum = Convert.ToDouble(c_localdb.rs.Fields["tGst"].Value) + Convert.ToDouble(c_localdb.rs.Fields["tPst"].Value);
 
-                        GdblFoodStampAmt += Convert.ToDouble(c_localdb.rs.Fields["tAmt"].Value);
-                        GdblFoodStampTax += dblTaxSum;
+                        g_dFoodStampAmt += Convert.ToDouble(c_localdb.rs.Fields["tAmt"].Value);
+                        g_dFoodStampTax += dblTaxSum;
 
                         if (dblTaxSum != 0)
                         {
-                            GdblFoodStampTaxableItemAmt += Convert.ToDouble(c_localdb.rs.Fields["tAmt"].Value);
+                            g_dFoodStampTaxableItemAmt += Convert.ToDouble(c_localdb.rs.Fields["tAmt"].Value);
                         }
 
                         c_localdb.rs.MoveNext();
@@ -12499,8 +12499,8 @@ namespace HanaSales_SelfCheckOut
                         */
                         
                         /* EBT Tax Exemption 계산 */
-                        dblEBTpayTotal = GdblEBTAmountTotal + GdblEBTTax1Total + GdblEBTTax2Total + GdblEBTTax3Total;
-                        //dblEBTTaxExRate = dblEBTpayTotal / (GdblEBTAmountTotal + GdblEBTTax1Total); // 수식 검증 필요
+                        dblEBTpayTotal = g_dEBTAmountTotal + g_dEBTTax1Total + g_dEBTTax2Total + g_dEBTTax3Total;
+                        //dblEBTTaxExRate = dblEBTpayTotal / (g_dEBTAmountTotal + g_dEBTTax1Total); // 수식 검증 필요
                         dblEBTTaxExRate = dblEBTpayTotal / (payAmount); // 수식 검증 필요
                         //dblEBTTaxExRate = 100; // 임시 할당
 
@@ -12580,7 +12580,7 @@ namespace HanaSales_SelfCheckOut
 
 
                         // 이미 Bag Exemption 받은 경우 중복 실행되지 않도록
-                        if (iCnt > 0 && GblEBTReusableBag == false)
+                        if (iCnt > 0 && g_bEBTReusableBag == false)
                         {
                             int maxseq = 0;
                             sQBuff = "SELECT max(tID) as maxseq FROM tb_OrderItem WHERE tInvNo = '" + txtInvNo.Text + "' ";
@@ -12668,7 +12668,7 @@ namespace HanaSales_SelfCheckOut
                                 //calcTotalDisplay("0.00", "-" + tAmt, "-" + tGst, "0.00"); // Bag Exemption 받는 금액 반영
                                 calcTotalDisplay("-" + tAmt, "-" + tGst, "0.00", "0.00"); // Bag Exemption 받는 금액 반영 순서 수정함.
 
-                                GblEBTReusableBag = true;
+                                g_bEBTReusableBag = true;
                             }
                         }
 
@@ -12696,9 +12696,9 @@ namespace HanaSales_SelfCheckOut
                         }
                         c_localdb.RsClose();
 
-                        if (GdblEBTTax1Total != 0) // Exenmtion 받을 Tax가 있는 경우에만 추가
+                        if (g_dEBTTax1Total != 0) // Exenmtion 받을 Tax가 있는 경우에만 추가
                         {
-                            GdblEBTTax1Total = Math.Round(GdblEBTTax1Total - dblExistEBTGst,2);
+                            g_dEBTTax1Total = Math.Round(g_dEBTTax1Total - dblExistEBTGst,2);
 
                             // Tax Exemption 항목 추가
                             int maxseq2 = 0;
@@ -12722,7 +12722,7 @@ namespace HanaSales_SelfCheckOut
                                           "SELECT '" + txtInvNo.Text + "', " + maxseq2 + ",'" + DateTime.Now.ToString("yyyy-MM-dd") + "','" + DateTime.Now.ToString("h:mm:ss tt") + "' , '" +
                                                  "2995000000008" + "', '099', '99', " + "0,0,0,0,0, '', " +
                                                  "1" + ", '', " + "0" + ", " + "0" + ", 0, " + dblEBTTaxExRate.ToString() + ", '', '', " +
-                                                  "0" + ", " + GdblEBTTax1Total.ToString() + ", " + "0" + ", '0'" + ", '', '0', '" + c_poscominfo.ui_epno + "', '" + c_poscominfo.si_counternum +
+                                                  "0" + ", " + g_dEBTTax1Total.ToString() + ", " + "0" + ", '0'" + ", '', '0', '" + c_poscominfo.ui_epno + "', '" + c_poscominfo.si_counternum +
                                                  "','','','','','','','',0,'',0,'','','' ";
 
                             if (g_iLocation == 3) // 미국일 경우 테이블 컬럼 구성 다름
@@ -12731,7 +12731,7 @@ namespace HanaSales_SelfCheckOut
                                           "SELECT '" + txtInvNo.Text + "', " + maxseq2 + ",'" + DateTime.Now.ToString("yyyy-MM-dd") + "','" + DateTime.Now.ToString("h:mm:ss tt") + "' , '" +
                                                  "2995000000008" + "', '099', '99', " + "0,0,0,0,0, " +
                                                  "1" + ", '', " + "0" + ", " + "0" + ", 0, " + dblEBTTaxExRate.ToString() + ", '', " +
-                                                  "0" + ", " + (GdblEBTTax1Total * -1).ToString() + ", " + "0" +  ", '', " +  // Amt, Tax1, Tax2, Tax
+                                                  "0" + ", " + (g_dEBTTax1Total * -1).ToString() + ", " + "0" +  ", '', " +  // Amt, Tax1, Tax2, Tax
                                                   "0,0" + ",'0', '" + c_poscominfo.mi_cardno + "','" + c_poscominfo.ui_epno + "', '" + c_poscominfo.si_counternum +
                                                  "','','','',''," +  // UpCode, Special, Free, Supp,
                                                  "'44','',0,'',0,'',0,'' ";
@@ -12820,9 +12820,9 @@ namespace HanaSales_SelfCheckOut
                             dblRecalcEBTAmt = Math.Round(Convert.ToDouble(c_localdb.rs.Fields["tAmt"].Value),2);
                             dblRecalcEBTTax1 = Math.Round(Convert.ToDouble(c_localdb.rs.Fields["tGst"].Value), 2);
                             dblRecalcEBTTax2 = Math.Round(Convert.ToDouble(c_localdb.rs.Fields["tPst"].Value), 2);
-                            GdblEBTTaxExemptTotal = Math.Round(Convert.ToDouble(c_localdb.rs.Fields["TxExem"].Value), 2);
+                            g_dEBTTaxExemptTotal = Math.Round(Convert.ToDouble(c_localdb.rs.Fields["TxExem"].Value), 2);
 
-                            calcTotalDisplay("0.00", (GdblEBTTaxExemptTotal * -1).ToString(), "0.00", "0.00");
+                            calcTotalDisplay("0.00", (g_dEBTTaxExemptTotal * -1).ToString(), "0.00", "0.00");
 
                         }
                         else
