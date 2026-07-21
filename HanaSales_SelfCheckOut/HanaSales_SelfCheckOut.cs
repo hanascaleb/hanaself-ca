@@ -156,8 +156,9 @@ namespace HanaSales_SelfCheckOut
         string g_strUpdateCheckFolder = c_colib.app_path + "INI";           // Application.ExecutablePath.Substring(0, Application.ExecutablePath.LastIndexOf('\\'));
         string g_strServerUpdateTime = string.Empty;
         string g_strServerPgmVersion = string.Empty;
+        
         // Update Image 관련
-        int g_iUpdateInterval = 7000;                    // 10초 대기 후 업데이트 체크.
+        int g_iUpdateInterval = 1000 * 10;                    // 10초 대기 후 업데이트 체크.
 
         //Back To Start Inverval
         int g_iBackToStartIntervalFromItemScan = 300000;        // 300초(5분) 대기 상태 후 Start 화면으로 전환 TEST
@@ -6631,8 +6632,9 @@ namespace HanaSales_SelfCheckOut
                                     // 할인상품에 대한 포인트 지급 안함
                                 }
                                 else
-                                {
-                                    dblHMEarnToday = dblHMEarnToday + Convert.ToDouble(strtAmt) + Convert.ToDouble(strtGst) + Convert.ToDouble(strtPst) + Convert.ToDouble(strtHst);
+                                {                                    
+                                    // Updated H-point payout method to be based on the pre-tax amount.
+                                    dblHMEarnToday = dblHMEarnToday + Convert.ToDouble(strtAmt);
                                 }
 
                             }
